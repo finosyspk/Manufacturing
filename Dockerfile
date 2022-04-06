@@ -5,11 +5,12 @@ ENV PORT=110
 ENV JWT_KEY="Finosys@GLSYS123!"
 ENV SecretKey="SBSFinosys2020"
 ENV NODE_ENV="production"
-ENV dbHost="localhost"
-ENV dbPort="1433"
+ENV dbHost="20.195.8.140"
+ENV dbPort="1533"
 ENV dbUser="sa"
 ENV dbPass="kfk9072p!"
-ENV dbName="SBS_MSTR"
+dbName="SBS_DEMO"
+dbName_master="SBS_MSTR"
 ENV Build="2.0.0"
 
 COPY ./package.json ./
