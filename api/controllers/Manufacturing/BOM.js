@@ -31,9 +31,11 @@ exports.getList = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   try {
-    let BOM = await SeqFunc.getOne(db[req.headers.compcode].MOP_BOMHeader, {
-      BOMID: req.query.BOMID,
-    });
+    let where = { BOMID: req.query.BOMID }
+    if (req.query?.BillStatus){
+      where.BillStatus = req.query?.BillStatus
+    }
+    let BOM = await SeqFunc.getOne(db[req.headers.compcode].MOP_BOMHeader, where);
 
     if (BOM.success) {
       let BOMDetail = await SeqFunc.getAll(

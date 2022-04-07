@@ -80,10 +80,6 @@ exports.getOne = async (req, res) => {
         return val;
       });
 
-
-
-      console.log({PMenuData})
-
       Module.map((val) => {
         if (val.id === '2') {
           val.children = CMenuData.filter((f) => f.PCID === val.id);
