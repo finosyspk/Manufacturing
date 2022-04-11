@@ -15,6 +15,14 @@ module.exports = function(sequelize, DataTypes) {
         key: 'ItemID'
       }
     },
+    ItemCode: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    Item: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
     AttributeCode: {
       type: DataTypes.STRING(255),
       allowNull: false,

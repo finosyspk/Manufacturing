@@ -10,10 +10,14 @@ module.exports = function(sequelize, DataTypes) {
     ItemClassID: {
       type: DataTypes.BIGINT,
       allowNull: false,
-      references: {
-        model: 'IN_ItemClass',
-        key: 'ItemClassID'
-      }
+    },
+    ItemClassCode: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    ItemClass: {
+      type: DataTypes.STRING(255),
+      allowNull: false
     },
     AttributeCode: {
       type: DataTypes.STRING(255),

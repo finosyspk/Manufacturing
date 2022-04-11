@@ -54,7 +54,11 @@ exports.delete = async (req, res) => {
 
     if (ItemClassData.success) {
       await SeqFunc.Delete(db[req.headers.compcode].IN_ItemClassAttributes, {
-        where: { ItemClassID: ItemClassData.Data.ItemClassID },
+        where: { ItemClassCode: ItemClassData.Data.ItemClassCode },
+      });
+
+      await SeqFunc.Delete(db[req.headers.compcode].IN_ItemClass, {
+        where: { ItemClassCode: ItemClassData.Data.ItemClassCode },
       });
       ResponseLog.Delete200(req, res);
     } else {
@@ -69,17 +73,23 @@ exports.CreateOrUpdate = async (req, res) => {
   try {
     let Header = req.body.Header;
     let Detail = req.body.Detail;
+    delete Header.ItemClassID
 
     let ItemClassData = await SeqFunc.updateOrCreate(
       db[req.headers.compcode].IN_ItemClass,
-      { where:{ItemClassCode: req.query.ItemClassCode} },
+      { where:{ItemClassCode: Header.ItemClassCode} },
       Header
     );
 
     if (ItemClassData.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].IN_ItemClassAttributes, { where:{ItemClassCode: req.query.ItemClassCode} });
+      await SeqFunc.Delete(db[req.headers.compcode].IN_ItemClassAttributes, { where:{ItemClassCode: Header.ItemClassCode} });
 
-      Detail.map(o => o.ItemClassCode = ItemClassData.Data.ItemClassCode)
+      Detail.map(o => {
+        o.ItemClassID = ItemClassData.Data.ItemClassID
+        o.ItemClassCode = ItemClassData.Data.ItemClassCode
+        o.ItemClass = ItemClassData.Data.ItemClass
+        o.IsActive = true
+      })
 
       await SeqFunc.bulkCreate(db[req.headers.compcode].IN_ItemClassAttributes,Detail)
 

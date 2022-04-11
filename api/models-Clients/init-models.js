@@ -78,9 +78,9 @@ function initModels(sequelize) {
   IN_AttributeHead.hasMany(IN_AttributeCode, { as: "IN_AttributeCodes", foreignKey: "AttHeadID"});
   IN_ItemClassAttributes.belongsTo(IN_AttributeHead, { as: "AttributeCode_IN_AttributeHead", foreignKey: "AttributeCode"});
   IN_AttributeHead.hasMany(IN_ItemClassAttributes, { as: "IN_ItemClassAttributes", foreignKey: "AttributeCode"});
-  IN_ItemAttributes.belongsTo(IN_Item, { as: "Item", foreignKey: "ItemID"});
+  IN_ItemAttributes.belongsTo(IN_Item, { as: "ItemA", foreignKey: "ItemID"});
   IN_Item.hasMany(IN_ItemAttributes, { as: "IN_ItemAttributes", foreignKey: "ItemID"});
-  IN_ItemLocation.belongsTo(IN_Item, { as: "Item", foreignKey: "ItemID"});
+  IN_ItemLocation.belongsTo(IN_Item, { as: "ItemL", foreignKey: "ItemID"});
   IN_Item.hasMany(IN_ItemLocation, { as: "IN_ItemLocations", foreignKey: "ItemID"});
   IN_ItemUOM.belongsTo(IN_Item, { as: "IN_Item", foreignKey: "ItemID"});
   IN_Item.hasMany(IN_ItemUOM, { as: "IN_ItemUOMs", foreignKey: "ItemID"});
@@ -88,7 +88,7 @@ function initModels(sequelize) {
   IN_Item.hasMany(IN_TransferDetail, { as: "IN_TransferDetails", foreignKey: "ItemID"});
   IN_Item.belongsTo(IN_ItemClass, { as: "IN_ItemClass", foreignKey: "ItemClassID"});
   IN_ItemClass.hasMany(IN_Item, { as: "IN_Items", foreignKey: "ItemClassID"});
-  IN_ItemClassAttributes.belongsTo(IN_ItemClass, { as: "ItemClass", foreignKey: "ItemClassID"});
+  IN_ItemClassAttributes.belongsTo(IN_ItemClass, { as: "ItemClassA", foreignKey: "ItemClassID"});
   IN_ItemClass.hasMany(IN_ItemClassAttributes, { as: "IN_ItemClassAttributes", foreignKey: "ItemClassID"});
   IN_ItemLocation.belongsTo(IN_Location, { as: "Location", foreignKey: "LocationID"});
   IN_Location.hasMany(IN_ItemLocation, { as: "IN_ItemLocations", foreignKey: "LocationID"});

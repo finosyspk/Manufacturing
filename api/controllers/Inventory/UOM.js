@@ -73,21 +73,28 @@ exports.CreateOrUpdate = async (req, res) => {
   try {
     let Header = req.body.Header;
     let Detail = req.body.Detail;
+    delete Header.UOMHID
 
-    let AttributeData = await SeqFunc.updateOrCreate(
-      db.IN_UOMHeader,
-      { where:{UOMHeaderCode: req.query.UOMHeaderCode} },
+    let UOMData = await SeqFunc.updateOrCreate(
+      db[req.headers.compcode].IN_UOMHeader,
+      { where:{UOMHeaderCode: Header.UOMHeaderCode} },
       Header
     );
 
-    if (AttributeData.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].IN_UOMDetail, { where:{UOMHeaderCode: req.query.UOMHeaderCode} });
+    if (UOMData.success) {
+      await SeqFunc.Delete(db[req.headers.compcode].IN_UOMDetail, { where:{UOMHeaderCode: Header.UOMHeaderCode} });
 
-      Detail.map(o => o.UOMHeaderCode = AttributeData.Data.UOMHeaderCode)
+      Detail.map(o => {
+        o.UOMHID = UOMData.Data.UOMHID
+        o.UOMHeaderCode = UOMData.Data.UOMHeaderCode
+        o.UOMHeader = UOMData.Data.UOMHeader
+        o.IsActive = true
+        return o
+      })
 
       await SeqFunc.bulkCreate(db[req.headers.compcode].IN_UOMDetail,Detail)
 
-      if (AttributeData.created) {
+      if (UOMData.created) {
         ResponseLog.Create200(req, res);
       } else {
         ResponseLog.Update200(req, res);

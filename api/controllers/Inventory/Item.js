@@ -34,7 +34,7 @@ exports.getOne = async (req, res) => {
         db[req.headers.compcode].IN_ItemUOM,
         { where: {ItemID: Item.Data.ItemID} },
         false,
-        ["UOMDID", "IsActive", "QTYEQV"]
+        ["UOMCode","UOM", "IsActive", "QTYEQV"]
       );
 
       let ItemLocation = await SeqFunc.getAll(
@@ -76,17 +76,17 @@ exports.delete = async (req, res) => {
 
     if (ItemData.success) {
       await SeqFunc.Delete(db[req.headers.compcode].IN_ItemUOM, {
-        where: { ItemID: ItemData.Data.ItemID },
+        where: { ItemCode: ItemData.Data.ItemCode },
       });
       await SeqFunc.Delete(db[req.headers.compcode].IN_ItemLocation, {
-        where: { ItemID: ItemData.Data.ItemID },
+        where: { ItemCode: ItemData.Data.ItemCode },
       });
       await SeqFunc.Delete(db[req.headers.compcode].IN_ItemAttributes, {
-        where: { ItemID: ItemData.Data.ItemID },
+        where: { ItemCode: ItemData.Data.ItemCode },
       });
 
       await SeqFunc.Delete(db[req.headers.compcode].IN_Item, {
-        where: { ItemID: ItemData.Data.ItemID },
+        where: { ItemCode: ItemData.Data.ItemCode },
       });
       ResponseLog.Delete200(req, res);
     } else {
@@ -101,8 +101,9 @@ exports.CreateOrUpdate = async (req, res) => {
   try {
     let Header = req.body.Header;
     let UOM = req.body.UOM;
-    let Location = req.body.Location;
     let Attributes = req.body.Attributes;
+    delete Header.ItemID
+
 
     let ItemData = await SeqFunc.updateOrCreate(
       db[req.headers.compcode].IN_Item,
@@ -114,19 +115,24 @@ exports.CreateOrUpdate = async (req, res) => {
       await SeqFunc.Delete(db[req.headers.compcode].IN_ItemUOM, {
         where: { ItemID: ItemData.Data.ItemID },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].IN_ItemLocation, {
-        where: { ItemID: ItemData.Data.ItemID },
-      });
       await SeqFunc.Delete(db[req.headers.compcode].IN_ItemAttributes, {
         where: { ItemID: ItemData.Data.ItemID },
       });
 
-      UOM.map((o) => (o.ItemID = ItemData.Data.ItemID));
-      Location.map((o) => (o.ItemID = ItemData.Data.ItemID));
-      Attributes.map((o) => (o.ItemID = ItemData.Data.ItemID));
-
+      UOM.map(o => {
+        o.ItemID = ItemData.Data.ItemID
+        o.ItemCode = ItemData.Data.ItemCode
+        o.Item = ItemData.Data.Item
+        o.IsActive = true
+        return o
+      })
+      Attributes.map(o => {
+        o.ItemID = ItemData.Data.ItemID
+        o.ItemCode = ItemData.Data.ItemCode
+        o.Item = ItemData.Data.Item
+        return o
+      })
       await SeqFunc.bulkCreate(db[req.headers.compcode].IN_ItemUOM, UOM);
-      await SeqFunc.bulkCreate(db[req.headers.compcode].IN_ItemLocation, UOM);
       await SeqFunc.bulkCreate(db[req.headers.compcode].IN_ItemAttributes, Attributes);
 
       if (ItemData.created) {
