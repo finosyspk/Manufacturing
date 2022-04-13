@@ -22,8 +22,8 @@ exports.getOne = async (req, res) => {
 
     if (Attribute.success) {
       let AttributeDetail = await SeqFunc.getAll(
-        db.IN_AttributeCode,
-        { AttHeadCode: req.query.AttHeadCode },
+        db[req.headers.compcode].IN_AttributeCode,
+        { where: {AttHeadCode: req.query.AttHeadCode} },
         false,
         [["AttCodeID","Attribute Code"],["AttCodeDesc","Attribute Desc"]]
       );

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('MOP_MOHeader', {
+  const MOP_MOHeader = sequelize.define('MOP_MOHeader', {
     MOID: {
       autoIncrement: true,
       type: DataTypes.BIGINT,
@@ -110,4 +110,13 @@ module.exports = function(sequelize, DataTypes) {
       },
     ]
   });
+
+  MOP_MOHeader.associate = function (models) {
+    MOP_MOHeader.hasMany(models.MOP_MODetail, {
+      targetKey: "MOID",
+      foreignKey: "MOID",
+    });
+  }
+
+  return MOP_MOHeader;
 };

@@ -63,6 +63,13 @@ const Fnd_GetAll = require("../api/routes/Foundation/GetAll");
 const Fnd_Delete = require("../api/routes/Foundation/Delete");
 const Fnd_LookUp = require("../api/routes/Foundation/LookUp");
 
+const Fin_Testing = require("../api/routes/Financial/Testing");
+const Fin_Create = require("../api/routes/Financial/Create");
+const Fin_Get = require("../api/routes/Financial/Get");
+const Fin_GetAll = require("../api/routes/Financial/GetAll");
+const Fin_Delete = require("../api/routes/Financial/Delete");
+const Fin_LookUp = require("../api/routes/Financial/LookUp");
+
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Expose-Headers", "build");
@@ -125,6 +132,13 @@ app.use("/api/v1/Foundation/Get", Fnd_Get);
 app.use("/api/v1/Foundation/GetAll", Fnd_GetAll);
 app.use("/api/v1/Foundation/Delete", Fnd_Delete);
 app.use("/api/v1/Foundation/LookUp", Fnd_LookUp);
+
+app.use("/api/v1/Financial/Testing", Fin_Testing);
+app.use("/api/v1/Financial/Create", Fin_Create);
+app.use("/api/v1/Financial/Get", Fin_Get);
+app.use("/api/v1/Financial/GetAll", Fin_GetAll);
+app.use("/api/v1/Financial/Delete", Fin_Delete);
+app.use("/api/v1/Financial/LookUp", Fin_LookUp);
 
 app.use("/*", (req, res) => {
   res.sendFile(path.join(__dirname + "/../build/index.html"));

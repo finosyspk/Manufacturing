@@ -16,6 +16,21 @@ router.get("/", CheckAuth, (req, res) => {
     case "Locations":
       controller.LookUp.getLocations(req, res);
       break;
+    case "UOMClass":
+      controller.LookUp.getUOMClass(req, res);
+      break;
+    case "UOM":
+      controller.LookUp.getUOM(req, res);
+      break;
+    case "AttributeHeads":
+      controller.LookUp.getAttributeHeads(req, res);
+      break;
+    case "AttributeCodes":
+      controller.LookUp.getAttributeCodes(req, res);
+      break;
+      case "ItemClass":
+        controller.LookUp.getItemClass(req, res);
+        break;
     default:
       break;
   }

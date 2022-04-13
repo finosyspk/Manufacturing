@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('IN_StockMaster', {
+  let IN_StockMaster = sequelize.define('IN_StockMaster', {
     HeaderNo: {
       autoIncrement: true,
       type: DataTypes.BIGINT,
@@ -31,6 +31,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: false,
       defaultValue: ""
+    },
+    ItemTrackBy: {
+      type: DataTypes.STRING(255),
+      allowNull: false
     },
     BatchNo: {
       type: DataTypes.STRING(255),
@@ -108,4 +112,18 @@ module.exports = function(sequelize, DataTypes) {
       },
     ]
   });
+
+  IN_StockMaster.associate = function (models) {
+    IN_StockMaster.hasMany(models.IN_StockAlloc, {
+      targetKey: "HeaderNo",
+      foreignKey: "HeaderNo",
+    });
+    IN_StockMaster.hasMany(models.IN_StockDetail, {
+      targetKey: "HeaderNo",
+      foreignKey: "HeaderNo",
+    });
+  }
+
+  return IN_StockMaster;
 };
+

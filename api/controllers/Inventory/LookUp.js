@@ -1,7 +1,6 @@
 const db = require("../../models-Clients/index");
 const ResponseLog = require("../../../core/ResponseLog");
 const SeqFunc = require("../../../core/SeqFunc");
-const MaterialData = require("../../../core/MaterialData");
 
 
 exports.getLocations = async (req, res) => {
@@ -40,21 +39,113 @@ exports.getItems = async (req, res) => {
 
 exports.getItemUOM = async (req, res) => {
   try {
-    let UOM = await db[req.headers.compcode].IN_ItemUOM.findAll({
-      attributes: [
-        "UOMCode",
-        "UOM",
-        ["QTYEQV","UnitQuantity"]
-      ],
-      where: { ItemCode: req.query.ItemCode, IsActive: 1 },
+
+    let Columns = [];
+
+    Columns = ["UOMCode","UOM",["QTYEQV","UnitQuantity"]];
+    let UOM = await SeqFunc.getAll(db[req.headers.compcode].IN_ItemUOM, {where: { ItemCode: req.query.ItemCode, IsActive: 1 }}, true, Columns);
+    ResponseLog.Send200(req, res, {
+      UOM: UOM.Data,
     });
 
-    let RegData = await MaterialData.Register(UOM, [
-      "UOMCode",
-      "UOM",
-      "UnitQuantity"
-    ]);
-    ResponseLog.Send200(req, res, { ItemUOM: RegData });
+  } catch (err) {
+    console.log(err);
+    ResponseLog.Error200(req, res, err.message);
+  }
+};
+
+exports.getUOMClass = async (req, res) => {
+  try {
+    let Columns = [];
+
+    Columns = ["UOMHeaderCode", "UOMHeader"];
+    let UOMClass = await SeqFunc.getAll(db[req.headers.compcode].IN_UOMHeader, {where :{IsActive:true}}, true, Columns);
+    
+    ResponseLog.Send200(req, res, {
+      UOMClass: UOMClass.Data,
+    });
+  } catch (err) {
+    console.log(err);
+    ResponseLog.Error200(req, res, err.message);
+  }
+};
+
+exports.getUOM = async (req, res) => {
+  try {
+    let Columns = [];
+
+    Columns = ["UOMCode", "UOM"];
+    let UOMClass = await SeqFunc.getAll(db[req.headers.compcode].IN_UOMDetail, {where :{UOMHeaderCode: req.query.UOMHeaderCode, IsActive:true}}, true, Columns);
+    
+    ResponseLog.Send200(req, res, {
+      UOMClass: UOMClass.Data,
+    });
+  } catch (err) {
+    console.log(err);
+    ResponseLog.Error200(req, res, err.message);
+  }
+};
+
+exports.getAttributeHeads = async (req, res) => {
+  try {
+    let Columns = [];
+
+    Columns = ["AttHeadCode", "AttHead"];
+    let AttributeHead = await SeqFunc.getAll(db[req.headers.compcode].IN_AttributeHead, {where :{IsActive:true}}, true, Columns);
+    
+    ResponseLog.Send200(req, res, {
+      AttributeHead: AttributeHead.Data,
+    });
+  } catch (err) {
+    console.log(err);
+    ResponseLog.Error200(req, res, err.message);
+  }
+};
+
+exports.getAttributeCodes = async (req, res) => {
+  try {
+    let Columns = [];
+
+    Columns = ["AttCode", "AttValue"];
+    let AttributeCode = await SeqFunc.getAll(db[req.headers.compcode].IN_AttributeCode, {where :{AttHeadCode: req.query.AttHeadCode}}, true, Columns);
+    
+    ResponseLog.Send200(req, res, {
+      AttributeCode: AttributeCode.Data,
+    });
+  } catch (err) {
+    console.log(err);
+    ResponseLog.Error200(req, res, err.message);
+  }
+};
+
+exports.getItemClass = async (req, res) => {
+  try {
+    let Columns = [];
+
+    Columns = ["ItemClassCode", "ItemClass"];
+    let ItemClass = await SeqFunc.getAll(db[req.headers.compcode].IN_ItemClass, {where :{IsActive: 1}}, true, Columns);
+    
+    ResponseLog.Send200(req, res, {
+      ItemClass: ItemClass.Data,
+    });
+  } catch (err) {
+    console.log(err);
+    ResponseLog.Error200(req, res, err.message);
+  }
+};
+
+exports.getInventoryItems = async (req, res) => {
+  try {
+
+    let sqlQuery =  `SELECT LocationCode, ItemCode, Price = AVG(UnitPrice), QtyIn = SUM(QtyIn), QtyAlloc = SUM(ISNULL(A.QtyOut,0)), QtyOut = SUM(ISNULL(D.QtyOut,0)) FROM IN_StockMaster S
+                    LEFT OUTER JOIN (SELECT HeaderNo, QtyOut = SUM(QtyOut) FROM IN_StockAlloc GROUP BY HeaderNo) AS A ON S.HeaderNo = A.HeaderNo
+                    LEFT OUTER JOIN (SELECT HeaderNo, QtyOut = SUM(QtyOut) FROM IN_StockDetail GROUP BY HeaderNo) AS D ON S.HeaderNo = D.HeaderNo
+                    WHERE LocationCode = '${req.body.LocationCode}'
+                    GROUP BY LocationCode, ItemCode`;
+
+    let InvItems = await db[req.headers.compcode].sequelize.query(sqlQuery,{replacements : {LocationCode : req.query.LocationCode},type : db[req.headers.compcode].Sequelize.QueryTypes.SELECT}) 
+
+    ResponseLog.Send200(req, res, { InvItems: InvItems });
   } catch (err) {
     console.log(err);
     ResponseLog.Error200(req, res, err.message);
