@@ -60,8 +60,8 @@ exports.getOne = async (req, res) => {
       PMenuData = JSON.stringify(PMenuData)
       PMenuData = JSON.parse(PMenuData)
 
-      sqlQuery = `SELECT id=Menu.ControlID,title=ControlName,type='item',url='/' + REPLACE(ControlName, ' ', ''),PCID,
-          [Create]=RD.[Create], [Edit]=RD.Edit, [View]=RD.[View], [Delete]=RD.[Delete],[Post]=RD.[Post], [Approval]=RD.Approval
+      sqlQuery = `SELECT id=Menu.ControlID,title=ControlName,type='item',url='/' + Module + '/' + REPLACE(ControlName, ' ', ''),PCID
+          --,[Create]=RD.[Create], [Edit]=RD.Edit, [View]=RD.[View], [Delete]=RD.[Delete],[Post]=RD.[Post], [Approval]=RD.Approval
           FROM Menu INNER JOIN RoleDetail RD ON RD.ControlID = Menu.ControlID
           INNER JOIN [UserRoles] UR ON UR.RoleID = RD.RoleID
           WHERE UR.UserID=:UserID AND
@@ -96,6 +96,20 @@ exports.getOne = async (req, res) => {
       };
 
       response.Menu = pages;
+
+      sqlQuery = `SELECT ControlID, [Create]=RD.[Create], [Edit]=RD.Edit, [View]=RD.[View], [Delete]=RD.[Delete],[Post]=RD.[Post], [Approval]=RD.Approval FROM RoleDetail RD 
+          INNER JOIN [UserRoles] UR ON UR.RoleID = RD.RoleID
+          WHERE UR.UserID=:UserID`;
+
+      let RoleDetail = await db.sequelize.query(sqlQuery, {
+        replacements: { UserID: user.UserID },
+        type: db.Sequelize.QueryTypes.SELECT,
+      });
+
+      RoleDetail = JSON.stringify(RoleDetail)
+      RoleDetail = JSON.parse(RoleDetail)
+
+      response.Roles = RoleDetail;
 
       res.status(200).send(response);
     } else {

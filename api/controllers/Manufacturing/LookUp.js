@@ -9,21 +9,13 @@ exports.getRouting = async (req, res) => {
   try {
     let Columns = [];
 
-    let Machine = await db[req.headers.compcode].MOP_Machine.findAll({
-      attributes: [
-        "MachineCode",
-        "MachineName",
-        "PowerPerUnit",
-        "LaborPerUnit",
-        "OutputPerUnit",
-      ],
-      where: { IsActive: "1" },
-    });
-
-    let RegMachineData = await MaterialData.Register(Machine, [
-      "MachineCode",
-      "MachineName",
-    ]);
+    Columns = ["MachineCode", "MachineName"];
+    let Machine = await SeqFunc.getAll(
+      db[req.headers.compcode].MOP_Machine,
+      { where: { IsActive: "1" } },
+      true,
+      Columns
+    );
 
     Columns = ["StageCode", "StageName"];
     let Stages = await SeqFunc.getAll(
@@ -33,7 +25,7 @@ exports.getRouting = async (req, res) => {
       Columns
     );
     ResponseLog.Send200(req, res, {
-      Machine: RegMachineData,
+      Machine: Machine.Data,
       Stages: Stages.Data,
     });
   } catch (err) {
@@ -64,10 +56,7 @@ exports.getBOM = async (req, res) => {
 
     let BOMData = await MaterialData.Register(BOM, ["ItemCode", "ItemName"]);
 
-    let RegData = await MaterialData.Register(Routing, [
-      "RoutingCode",
-      "RoutingName",
-    ]);
+    let RegData = await MaterialData.Register(Routing, ["RoutingCode","RoutingName"]);
 
     ResponseLog.Send200(req, res, { Routing: RegData, BOM: BOMData });
   } catch (err) {
@@ -208,6 +197,11 @@ exports.getMODetail = async (req, res) => {
 exports.getActiveMO = async (req, res) => {
   try {
     let MO = await db[req.headers.compcode].MOP_MOHeader.findAll({
+      include:[{
+        model: db[req.headers.compcode].MOP_MODetail,
+        attributes:["StageCode","StageName","StageSeq","MachineCode","MachineName"],
+        require: true,
+      }],
       where: { TransStatus: 1, MOStatus: "Release" },
     });
 
@@ -256,7 +250,7 @@ exports.getMOStages = async (req, res) => {
 exports.getMOReceipt = async (req, res) => {
   try {
     let MO = await db[req.headers.compcode].MOP_MOHeader.findAll({
-      where: { TransStatus: 1, MOStatus: "3" },
+      where: { TransStatus: 1, MOStatus: "Ready to Receive" },
     });
 
     let RegData = await MaterialData.Register(MO, [

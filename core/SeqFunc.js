@@ -59,6 +59,7 @@ exports.getAll = async (model, where, mt, columns) => {
     foundItem = JSON.stringify(foundItem);
     foundItem = JSON.parse(foundItem);
     if (mt) {
+      
       let RegData = await MaterialData.Register(foundItem, columns);
       return { Data: RegData, success: true };
     } else {

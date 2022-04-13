@@ -49,6 +49,7 @@ exports.delete = async (req, res) => {
 exports.CreateOrUpdate = async (req, res) => {
   try {
     let Header = req.body.Header;
+    delete Header.LocationID
 
     let Data = await SeqFunc.updateOrCreate(
       db[req.headers.compcode].IN_Location,

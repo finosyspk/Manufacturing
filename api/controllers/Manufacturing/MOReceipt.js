@@ -5,7 +5,7 @@ const SeqFunc = require("../../../core/SeqFunc");
 exports.getList = async (req, res) => {
   try {
     let Columns = [
-      "TransNo","TransDate","MOTransNo","Item","UOM","Quantity"
+      "TransNo","TransDate",["MOTransNo","MO No"],"Item","UOM","Quantity"
     ];
     let MOReceipt = await SeqFunc.getAll(
       db[req.headers.compcode].MOP_Receipt,

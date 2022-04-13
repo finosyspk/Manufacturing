@@ -20,11 +20,12 @@ module.exports = function(sequelize, DataTypes) {
         key: 'HeaderNo'
       }
     },
-    BranchCode: {
+    LocationCode: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: false,
+      defaultValue: ""
     },
-    LocationID: {
+    Location: {
       type: DataTypes.STRING(255),
       allowNull: false,
       defaultValue: ""
@@ -34,12 +35,21 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: ""
     },
+    Item: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      defaultValue: ""
+    },
+    ItemTrackBy: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
     BatchNo: {
       type: DataTypes.STRING(255),
       allowNull: false,
       defaultValue: ""
     },
-    TransNature: {
+    TransType: {
       type: DataTypes.STRING(255),
       allowNull: false,
       defaultValue: "0"
@@ -69,35 +79,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 0
     },
-    Pieces: {
-      type: DataTypes.DECIMAL(20,5),
-      allowNull: false,
-      defaultValue: 0
-    },
-    ShipDate: {
-      type: DataTypes.DATEONLY,
-      allowNull: true
-    },
-    Vessel: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    Container: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    BL: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    PcsLeg: {
-      type: DataTypes.DECIMAL(19,5),
-      allowNull: true
-    },
-    PcsShldr: {
-      type: DataTypes.DECIMAL(19,5),
-      allowNull: true
-    }
   }, {
     sequelize,
     tableName: 'IN_StockAlloc',

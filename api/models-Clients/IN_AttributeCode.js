@@ -26,6 +26,10 @@ module.exports = function(sequelize, DataTypes) {
     AttCode: {
       type: DataTypes.STRING(255),
       allowNull: false
+    },
+    AttValue: {
+      type: DataTypes.STRING(255),
+      allowNull: false
     }
   }, {
     sequelize,

@@ -18,12 +18,12 @@ exports.getList = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   try {
-    let Attribute = await SeqFunc.getOne(db[req.headers.compcode].IN_AttributeHead, { where:{AttHeadID: req.query.AttHeadID} });
+    let Attribute = await SeqFunc.getOne(db[req.headers.compcode].IN_AttributeHead, { where:{AttHeadCode: req.query.AttHeadCode} });
 
     if (Attribute.success) {
       let AttributeDetail = await SeqFunc.getAll(
-        db.IN_AttributeCode,
-        { AttHeadID: req.query.AttHeadID },
+        db[req.headers.compcode].IN_AttributeCode,
+        { where: {AttHeadCode: req.query.AttHeadCode} },
         false,
         [["AttCodeID","Attribute Code"],["AttCodeDesc","Attribute Desc"]]
       );
@@ -49,16 +49,16 @@ exports.delete = async (req, res) => {
     let Attributes = await SeqFunc.getOne(
       db[req.headers.compcode].IN_AttributeHead,
       {
-        where: { AttHeadID: req.query.AttHeadID },
+        where: { AttHeadCode: req.query.AttHeadCode },
       }
     );
 
     if (Attributes.success) {
       await SeqFunc.Delete(db[req.headers.compcode].IN_AttributeCode, {
-        where: { AttHeadID: req.query.AttHeadID },
+        where: { AttHeadCode: req.query.AttHeadCode },
       });
       await SeqFunc.Delete(db[req.headers.compcode].IN_AttributeHead, {
-        where: { AttHeadID: req.query.AttHeadID },
+        where: { AttHeadCode: req.query.AttHeadCode },
       });
       ResponseLog.Delete200(req, res);
     } else {
@@ -73,21 +73,28 @@ exports.CreateOrUpdate = async (req, res) => {
   try {
     let Header = req.body.Header;
     let Detail = req.body.Detail;
+    delete Header.AttHeadID
 
-    let AttributeData = await SeqFunc.updateOrCreate(
-      db.IN_AttributeHead,
-      { where:{AttHeadID: req.query.AttHeadID} },
+    let AttData = await SeqFunc.updateOrCreate(
+      db[req.headers.compcode].IN_AttributeHead,
+      { where:{AttHeadCode: Header.AttHeadCode} },
       Header
     );
 
-    if (AttributeData.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].IN_AttributeCode, { where:{AttHeadID: req.query.AttHeadID} });
+    if (AttData.success) {
+      await SeqFunc.Delete(db[req.headers.compcode].IN_AttributeCode, { where:{AttHeadCode: Header.AttHeadCode} });
 
-      Detail.map(o => o.AttHeadID = AttributeData.Data.AttHeadID)
+      Detail.map(o => {
+        o.AttHeadID = AttData.Data.AttHeadID
+        o.AttHeadCode = AttData.Data.AttHeadCode
+        o.AttHead = AttData.Data.AttHead
+        o.IsActive = true
+        return o
+      })
 
       await SeqFunc.bulkCreate(db[req.headers.compcode].IN_AttributeCode,Detail)
 
-      if (AttributeData.created) {
+      if (AttData.created) {
         ResponseLog.Create200(req, res);
       } else {
         ResponseLog.Update200(req, res);
