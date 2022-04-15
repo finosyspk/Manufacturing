@@ -14,10 +14,6 @@ module.exports = function(sequelize, DataTypes) {
     TransNo: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      references: {
-        model: 'IN_TransferHeader',
-        key: 'TransNo'
-      }
     },
     BatchNo: {
       type: DataTypes.STRING(255),
@@ -28,31 +24,13 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATEONLY,
       allowNull: true
     },
-    Qty: {
+    Quantity: {
       type: DataTypes.DECIMAL(20,5),
-      allowNull: false,
-      defaultValue: 0
+      allowNull: false
     },
-    unitQty: {
+    BaseQuantity: {
       type: DataTypes.DECIMAL(20,5),
-      allowNull: false,
-      defaultValue: 0
-    },
-    ShipDate: {
-      type: DataTypes.DATEONLY,
-      allowNull: true
-    },
-    Vessel: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    Container: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    BL: {
-      type: DataTypes.STRING(255),
-      allowNull: true
+      allowNull: false
     }
   }, {
     sequelize,

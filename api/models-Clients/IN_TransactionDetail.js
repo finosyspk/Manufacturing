@@ -10,10 +10,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: false,
       primaryKey: true,
-      references: {
-        model: 'IN_TransactionHeader',
-        key: 'TransNo'
-      }
     },
     TLineSeq: {
       type: DataTypes.INTEGER,

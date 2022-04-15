@@ -6,13 +6,13 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       autoIncrement: true
     },
-    LocationID: {
+    LocationCode: {
       type: DataTypes.BIGINT,
       allowNull: false,
-      references: {
-        model: 'IN_Location',
-        key: 'LocationID'
-      }
+    },
+    Location: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
     },
     TransNo: {
       type: DataTypes.STRING(255),
@@ -28,21 +28,21 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    LocationIDTo: {
+    ViaLocationCode: {
       type: DataTypes.BIGINT,
       allowNull: false,
-      references: {
-        model: 'IN_Location',
-        key: 'LocationID'
-      }
     },
-    LocationIDDelivery: {
+    ViaLocation: {
       type: DataTypes.BIGINT,
       allowNull: false,
-      references: {
-        model: 'IN_Location',
-        key: 'LocationID'
-      }
+    },
+    DestinationLocationCode: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+    },
+    DestinationLocation: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
     },
     Description: {
       type: DataTypes.STRING(255),
@@ -89,6 +89,10 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     PrdID: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    Period: {
       type: DataTypes.INTEGER,
       allowNull: true
     },

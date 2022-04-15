@@ -10,75 +10,59 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: false,
       primaryKey: true,
-      references: {
-        model: 'IN_TransferHeader',
-        key: 'TransNo'
-      }
     },
     TLineSeq: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    RequisitionNo: {
+    RTransNo: {
       type: DataTypes.STRING(255),
       allowNull: false,
       defaultValue: ""
     },
-    ItemID: {
-      type: DataTypes.BIGINT,
+    RLineSeq: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: 'IN_Item',
-        key: 'ItemID'
-      }
+      defaultValue: 0
+    },
+    ItemCode: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    Item: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     ItemTrackBy: {
       type: DataTypes.STRING(255),
-      allowNull: false,
-      defaultValue: ""
+      allowNull: false
+    },
+    ItemType: {
+      type: DataTypes.STRING(255),
+      allowNull: false
     },
     UOMCode: {
       type: DataTypes.STRING(255),
-      allowNull: false,
-      defaultValue: ""
+      allowNull: false
     },
-    QtyIssued: {
-      type: DataTypes.DECIMAL(20,5),
-      allowNull: false,
-      defaultValue: 0
+    UOM: {
+      type: DataTypes.STRING(255),
+      allowNull: false
     },
-    QtyReceived: {
-      type: DataTypes.DECIMAL(20,5),
-      allowNull: false,
-      defaultValue: 0
+    UnitQuantity: {
+      type: DataTypes.DECIMAL(10,4),
+      allowNull: false
     },
-    unitQtyIssued: {
-      type: DataTypes.DECIMAL(20,5),
-      allowNull: false,
-      defaultValue: 0
+    Quantity: {
+      type: DataTypes.DECIMAL(10,4),
+      allowNull: false
     },
-    unitQtyReceived: {
-      type: DataTypes.DECIMAL(20,5),
-      allowNull: false,
-      defaultValue: 0
+    BaseQuantity: {
+      type: DataTypes.DECIMAL(10,4),
+      allowNull: false
     },
     UnitCost: {
-      type: DataTypes.DECIMAL(20,5),
-      allowNull: false,
-      defaultValue: 0
-    },
-    RequestedQty: {
-      type: DataTypes.DECIMAL(20,5),
-      allowNull: false,
-      defaultValue: 0
-    },
-    Price: {
-      type: DataTypes.DECIMAL(20,5),
-      allowNull: false,
-      defaultValue: 0
-    },
-    Amount: {
       type: DataTypes.DECIMAL(20,5),
       allowNull: false,
       defaultValue: 0
@@ -108,11 +92,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 0
     },
-    RLineSeq: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
-    }
   }, {
     sequelize,
     tableName: 'IN_TransferDetail',

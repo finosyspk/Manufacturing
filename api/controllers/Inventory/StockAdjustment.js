@@ -130,6 +130,7 @@ exports.CreateOrUpdate = async (req, res) => {
 
     let Header = req.body.Header;
     let Detail = req.body.Detail;
+    delete Header.TRHID
     Header.CreatedUser = "1";
     Header.ModifyUser = "1";
     Header.PostedUser = "1";

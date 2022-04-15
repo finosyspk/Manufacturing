@@ -10,18 +10,10 @@ module.exports = function(sequelize, DataTypes) {
     TLineSeq: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: 'IN_TransactionDetail',
-        key: 'TLineSeq'
-      }
     },
     TransNo: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      references: {
-        model: 'IN_TransactionHeader',
-        key: 'TransNo'
-      }
     },
     BatchNo: {
       type: DataTypes.STRING(255),

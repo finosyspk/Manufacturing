@@ -30,12 +30,12 @@ module.exports = function(sequelize, DataTypes) {
     },
     SrcTransNo: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
-    Description: {
-      type: DataTypes.STRING(255),
+    TransTotal: {
+      type: DataTypes.DECIMAL(20, 5),
       allowNull: false,
-      defaultValue: ""
+      defaultValue: 0
     },
     Posted: {
       type: DataTypes.BOOLEAN,
@@ -52,12 +52,12 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       defaultValue: ""
     },
-    PostedUser: {
+    ModifyUser: {
       type: DataTypes.STRING(255),
       allowNull: true,
       defaultValue: ""
     },
-    ModifyUser: {
+    PostedUser: {
       type: DataTypes.STRING(255),
       allowNull: true,
       defaultValue: ""
@@ -86,13 +86,6 @@ module.exports = function(sequelize, DataTypes) {
     indexes: [
       {
         name: "PK__IN_Transaction__9E5D30C33A977B2F",
-        unique: true,
-        fields: [
-          { name: "TransNo" },
-        ]
-      },
-      {
-        name: "UQ__IN_Transaction__9E5D30C2FCA25716",
         unique: true,
         fields: [
           { name: "TransNo" },

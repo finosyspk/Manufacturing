@@ -15,10 +15,6 @@ module.exports = function(sequelize, DataTypes) {
     HeaderNo: {
       type: DataTypes.BIGINT,
       allowNull: false,
-      references: {
-        model: 'IN_StockMaster',
-        key: 'HeaderNo'
-      }
     },
     LocationCode: {
       type: DataTypes.STRING(255),
