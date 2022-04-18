@@ -20,6 +20,23 @@ exports.getLocations = async (req, res) => {
   }
 };
 
+exports.getInvItems = async (req, res) => {
+  try {
+    let Columns = [];
+
+    Columns = ["ItemCode", "Item"];
+    let Item = await SeqFunc.getAll(db[req.headers.compcode].IN_Item, {}, true, Columns);
+
+    
+    ResponseLog.Send200(req, res, {
+      Item: Item.Data,
+    });
+  } catch (err) {
+    console.log(err);
+    ResponseLog.Error200(req, res, err.message);
+  }
+};
+
 exports.getItems = async (req, res) => {
   try {
     let Columns = [];
@@ -43,9 +60,9 @@ exports.getItemUOM = async (req, res) => {
     let Columns = [];
 
     Columns = ["UOMCode","UOM",["QTYEQV","UnitQuantity"]];
-    let UOM = await SeqFunc.getAll(db[req.headers.compcode].IN_ItemUOM, {where: { ItemCode: req.query.ItemCode, IsActive: 1 }}, true, Columns);
+    let ItemUOM = await SeqFunc.getAll(db[req.headers.compcode].IN_ItemUOM, {where: { ItemCode: req.query.ItemCode, IsActive: 1 }}, true, Columns);
     ResponseLog.Send200(req, res, {
-      UOM: UOM.Data,
+      ItemUOM: ItemUOM.Data,
     });
 
   } catch (err) {

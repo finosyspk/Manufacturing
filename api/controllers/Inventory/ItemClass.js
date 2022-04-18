@@ -23,11 +23,11 @@ exports.getOne = async (req, res) => {
     if (ItemClass.success) {
       let AttributeDetail = await SeqFunc.getAll(
         db[req.headers.compcode].IN_ItemClassAttributes,
-        { ItemClassCode: req.query.ItemClassCode },
+        { where:{ItemClassCode: req.query.ItemClassCode} },
         false,
         ["AttributeCode","AttributeType","IsVariant"]
       );
-      if (Detail.success) {
+      if (AttributeDetail.success) {
         let Data = {
           Header: ItemClass.Data,
           Detail: AttributeDetail.Data

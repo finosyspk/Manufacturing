@@ -3,7 +3,7 @@ const router = express.Router();
 const controller = require("../../controllers/Inventory/index");
 const CheckAuth = require("../../midleware/validate-auth");
 
-router.get("/", CheckAuth,(req, res) => {
+router.get("/", CheckAuth, (req, res) => {
   console.log("Form : ", req.query.FormName);
   switch (req.query.FormName) {
     case "Item":
@@ -20,6 +20,18 @@ router.get("/", CheckAuth,(req, res) => {
       break;
     case "Locations":
       controller.Locations.getList(req, res);
+      break;
+    case "Requisitions":
+      controller.Requisitions.getList(req, res);
+      break;
+    case "Transfers":
+      controller.Transfers.getList(req, res);
+      break;
+    case "Adjustments":
+      controller.Adjustments.getList(req, res);
+      break;
+    case "Receivings":
+      controller.Receivings.getList(req, res);
       break;
     default:
       break;

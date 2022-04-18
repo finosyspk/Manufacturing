@@ -20,6 +20,18 @@ router.post("/", CheckAuth, (req, res) => {
     case "Locations":
       controller.Locations.CreateOrUpdate(req, res);
       break;
+    case "Requisitions":
+      controller.Requisitions.CreateOrUpdate(req, res);
+      break;
+    case "Transfers":
+      controller.Transfers.CreateOrUpdate(req, res);
+      break;
+    case "Adjustments":
+      controller.Adjustments.CreateOrUpdate(req, res);
+      break;
+    case "Receivings":
+      controller.Receivings.CreateOrUpdate(req, res);
+      break;
     default:
       break;
   }

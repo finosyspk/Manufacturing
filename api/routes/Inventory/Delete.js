@@ -19,7 +19,19 @@ router.delete("/", CheckAuth, (req, res) => {
       break;
     case "Locations":
       controller.Locations.delete(req, res);
-        break;
+      break;
+    case "Requisitions":
+      controller.Requisitions.delete(req, res);
+      break;
+    case "Transfers":
+      controller.Transfers.delete(req, res);
+      break;
+    case "Adjustments":
+      controller.Adjustments.delete(req, res);
+      break;
+    case "Receivings":
+      controller.Receivings.delete(req, res);
+      break;
     default:
       break;
   }

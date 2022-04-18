@@ -13927,3 +13927,163 @@
  Message : {"Success":false,"Message":"No Record Found!"}
  **************************************************  
  Log Ended
+ Log Started on2022-04-15T10:09:47.567Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'MOP_BOMHeader')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-15T10:09:47.687Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_Item')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-15T10:09:58.358Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"UOM is not defined"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-15T10:10:24.881Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"UOM is not defined"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-15T10:10:46.175Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'MOP_BOMHeader')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-15T10:12:41.973Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-15T10:17:00.183Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-15T10:17:00.374Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-18T07:37:27.016Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_AttributeHead')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-18T07:37:27.094Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_UOMHeader')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-18T07:37:27.103Z
+ ************************************************** 
+
+ API : /api/v1/Financial/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'FIN_TaxSchedule')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-18T07:37:27.107Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_ItemClass')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-18T07:38:28.679Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Detail is not defined"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-18T07:38:31.197Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-18T07:38:54.735Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Detail is not defined"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-18T07:39:02.027Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Detail is not defined"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-18T08:12:55.175Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-18T10:58:13.664Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Create -- Method : POST
+ FormName : Requisitions
+ Message : {"Success":false,"Message":"Error Saving Record!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-18T11:08:13.319Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Create -- Method : POST
+ FormName : Requisitions
+ Message : {"Success":false,"Message":"Error Saving Record!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-18T11:09:10.690Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Create -- Method : POST
+ FormName : Requisitions
+ Message : {"Success":false,"Message":"Error Saving Record!"}
+ **************************************************  
+ Log Ended
