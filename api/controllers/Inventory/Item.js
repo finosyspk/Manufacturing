@@ -104,19 +104,18 @@ exports.CreateOrUpdate = async (req, res) => {
     let Attributes = req.body.Attributes;
     delete Header.ItemID
 
-
     let ItemData = await SeqFunc.updateOrCreate(
       db[req.headers.compcode].IN_Item,
-      { where: { ItemCode: req.query.ItemCode } },
+      { where: { ItemCode: Header.ItemCode } },
       Header
     );
 
     if (ItemData.success) {
       await SeqFunc.Delete(db[req.headers.compcode].IN_ItemUOM, {
-        where: { ItemID: ItemData.Data.ItemID },
+        where: { ItemCode: ItemData.Data.ItemCode },
       });
       await SeqFunc.Delete(db[req.headers.compcode].IN_ItemAttributes, {
-        where: { ItemID: ItemData.Data.ItemID },
+        where: { ItemCode: ItemData.Data.ItemCode },
       });
 
       UOM.map(o => {

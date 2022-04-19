@@ -4,6 +4,7 @@ const controller = require("../../controllers/Inventory/index");
 const CheckAuth = require("../../midleware/validate-auth");
 
 router.post("/", CheckAuth, (req, res) => {
+
   switch (req.body.FormName) {
     case "Item":
       controller.Item.CreateOrUpdate(req, res);

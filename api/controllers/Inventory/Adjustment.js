@@ -125,16 +125,16 @@ exports.delete = async (req, res) => {
 };
 
 exports.CreateOrUpdate = async (req, res) => {
+  const t = await db[req.headers.compcode].sequelize.transaction();
   try {
-    const t = await db[req.headers.compcode].sequelize.transaction();
 
     let Header = req.body.Header;
     let Detail = req.body.Detail;
     delete Header.TRHID
-    Header.CreatedUser = "1";
-    Header.ModifyUser = "1";
-    Header.PostedUser = "1";
-    Header.Posted = "1";
+    Header.CreatedUser = 1;
+    Header.ModifyUser = 1;
+    Header.PostedUser = 1;
+    // Header.Posted = 0;
 
     let ADJData = await SeqFunc.Trans_updateOrCreate(
       db[req.headers.compcode],
@@ -149,21 +149,25 @@ exports.CreateOrUpdate = async (req, res) => {
 
     if (ADJData.success) {
       let BatchArray = [];
+      let LineSeq  = 1
       Detail.map((o) => {
         o.TRID = ADJData.Data.TRID;
-        if (d.ItemTrackBy !== "None") {
-          d.Batches.map((BData) => {
+        o.TransNo = ADJData.Data.TransNo
+        o.TLineSeq = LineSeq
+        if (o.ItemTrackBy !== "None") {
+          o.Batches.map((BData) => {
             let Bquery = {
-              TransNo: Header.TransNo,
+              TransNo: ADJData.Data.TransNo,
               BatchNo: BData.BatchNo,
-              ExpiryDate: d.ItemTrackBy === "Batch" ? null : BData.ExpiryDate,
+              ExpiryDate: o.ItemTrackBy === "Batch" ? null : BData.ExpiryDate,
               Quantity: BData.Quantity,
               UnitQuantity: BData.UnitQuantity,
-              TLineSeq: d.TLineSeq,
+              TLineSeq: o.TLineSeq,
             };
             BatchArray.push(Bquery);
           });
         }
+        LineSeq++
         return o;
       });
 
@@ -182,7 +186,7 @@ exports.CreateOrUpdate = async (req, res) => {
         );
         if (ADJBatchData.success) {
           let Allocation = {};
-          if (Type !== "AdjInward") {
+          if (Header.FormType !== "AdjInward") {
             Allocation = await Alloc.Allocation(
               Detail,
               0,

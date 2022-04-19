@@ -1,6 +1,8 @@
 const db = require("../../models-Clients/index");
 const ResponseLog = require("../../../core/ResponseLog");
 const SeqFunc = require("../../../core/SeqFunc");
+const MaterialData = require("../../../core/MaterialData");
+
 
 
 exports.getLocations = async (req, res) => {
@@ -8,7 +10,7 @@ exports.getLocations = async (req, res) => {
     let Columns = [];
 
     Columns = ["LocationCode", "Location"];
-    let Location = await SeqFunc.getAll(db[req.headers.compcode].IN_Location, {where :{IsActive:true}}, true, Columns);
+    let Location = await SeqFunc.getAll(db[req.headers.compcode].IN_Location, {where :{IsActive:true, IsTransit: false}}, true, Columns);
 
     
     ResponseLog.Send200(req, res, {
@@ -20,16 +22,42 @@ exports.getLocations = async (req, res) => {
   }
 };
 
-exports.getInvItems = async (req, res) => {
+exports.getInTransitLocations = async (req, res) => {
   try {
     let Columns = [];
 
-    Columns = ["ItemCode", "Item"];
-    let Item = await SeqFunc.getAll(db[req.headers.compcode].IN_Item, {}, true, Columns);
+    Columns = ["LocationCode", "Location"];
+    let Location = await SeqFunc.getAll(db[req.headers.compcode].IN_Location, {where :{IsActive:true, IsTransit: true}}, true, Columns);
 
     
     ResponseLog.Send200(req, res, {
-      Item: Item.Data,
+      Location: Location.Data,
+    });
+  } catch (err) {
+    console.log(err);
+    ResponseLog.Error200(req, res, err.message);
+  }
+};
+
+exports.getInventoryItems = async (req, res) => {
+  try {
+    let sQuery = `SELECT ItemCode, Item, LocationCode, Location, ItemType='Inventoried Item', ItemTrackBy, Price = AVG(UnitPrice), QtyIn = SUM(Quantity), 
+                  QtyAlloc = SUM(ISNULL(A.QtyOut,0)), QtyOut = SUM(ISNULL(D.QtyOut,0)), QtyBal = SUM(Quantity) - (SUM(ISNULL(A.QtyOut,0)) + SUM(ISNULL(D.QtyOut,0)))FROM IN_StockMaster S
+                  LEFT OUTER JOIN (SELECT HeaderNo, QtyOut = SUM(QtyOut) FROM IN_StockAlloc GROUP BY HeaderNo) AS A ON S.HeaderNo = A.HeaderNo
+                  LEFT OUTER JOIN (SELECT HeaderNo, QtyOut = SUM(QtyOut) FROM IN_StockDetail GROUP BY HeaderNo) AS D ON S.HeaderNo = D.HeaderNo
+                  WHERE LocationCode = :LocationCode
+                  GROUP BY LocationCode, ItemCode, Item, Location, ItemTrackBy`;
+
+    let ItemData = await db[req.headers.compcode].sequelize.query(sQuery, {
+      replacements: { LocationCode: req.query.LocationCode},
+      type: db[req.headers.compcode].Sequelize.QueryTypes.SELECT,
+    });
+
+    let columns = ["ItemCode","Item","Location","ItemType","ItemTrackBy","Price","QtyIn","QtyBal"]
+    let Data = await MaterialData.Register(ItemData,columns);
+    
+    ResponseLog.Send200(req, res, {
+      Item: Data,
     });
   } catch (err) {
     console.log(err);
@@ -40,9 +68,10 @@ exports.getInvItems = async (req, res) => {
 exports.getItems = async (req, res) => {
   try {
     let Columns = [];
+    let params = req.query.ItemType ? { ItemType : req.query.ItemType } : {}
 
-    Columns = ["ItemCode", "Item"];
-    let Item = await SeqFunc.getAll(db[req.headers.compcode].IN_Item, {}, true, Columns);
+    Columns = ["ItemCode", "Item", "ItemType"];
+    let Item = await SeqFunc.getAll(db[req.headers.compcode].IN_Item, { where : params}, true, Columns);
 
     
     ResponseLog.Send200(req, res, {
@@ -151,21 +180,37 @@ exports.getItemClass = async (req, res) => {
   }
 };
 
-exports.getInventoryItems = async (req, res) => {
+exports.getItemClassAttributes = async (req, res) => {
   try {
+    let Columns = [];
 
-    let sqlQuery =  `SELECT LocationCode, ItemCode, Price = AVG(UnitPrice), QtyIn = SUM(QtyIn), QtyAlloc = SUM(ISNULL(A.QtyOut,0)), QtyOut = SUM(ISNULL(D.QtyOut,0)) FROM IN_StockMaster S
-                    LEFT OUTER JOIN (SELECT HeaderNo, QtyOut = SUM(QtyOut) FROM IN_StockAlloc GROUP BY HeaderNo) AS A ON S.HeaderNo = A.HeaderNo
-                    LEFT OUTER JOIN (SELECT HeaderNo, QtyOut = SUM(QtyOut) FROM IN_StockDetail GROUP BY HeaderNo) AS D ON S.HeaderNo = D.HeaderNo
-                    WHERE LocationCode = '${req.body.LocationCode}'
-                    GROUP BY LocationCode, ItemCode`;
-
-    let InvItems = await db[req.headers.compcode].sequelize.query(sqlQuery,{replacements : {LocationCode : req.query.LocationCode},type : db[req.headers.compcode].Sequelize.QueryTypes.SELECT}) 
-
-    ResponseLog.Send200(req, res, { InvItems: InvItems });
+    Columns = ["AttributeCode","AttributeType","IsVariant","AttHeadCode","AttHead"];
+    let ItemClass = await SeqFunc.getAll(db[req.headers.compcode].IN_ItemClassAttributes, {where :{ItemClassCode: req.query.ItemClassCode}}, false, Columns);
+    
+    ResponseLog.Send200(req, res, {
+      ItemClass: ItemClass.Data,
+    });
   } catch (err) {
     console.log(err);
     ResponseLog.Error200(req, res, err.message);
   }
 };
+
+// exports.getInventoryItems = async (req, res) => {
+//   try {
+
+//     let sqlQuery =  `SELECT LocationCode, ItemCode, Price = AVG(UnitPrice), QtyIn = SUM(QtyIn), QtyAlloc = SUM(ISNULL(A.QtyOut,0)), QtyOut = SUM(ISNULL(D.QtyOut,0)) FROM IN_StockMaster S
+//                     LEFT OUTER JOIN (SELECT HeaderNo, QtyOut = SUM(QtyOut) FROM IN_StockAlloc GROUP BY HeaderNo) AS A ON S.HeaderNo = A.HeaderNo
+//                     LEFT OUTER JOIN (SELECT HeaderNo, QtyOut = SUM(QtyOut) FROM IN_StockDetail GROUP BY HeaderNo) AS D ON S.HeaderNo = D.HeaderNo
+//                     WHERE LocationCode = '${req.body.LocationCode}'
+//                     GROUP BY LocationCode, ItemCode`;
+
+//     let InvItems = await db[req.headers.compcode].sequelize.query(sqlQuery,{replacements : {LocationCode : req.query.LocationCode},type : db[req.headers.compcode].Sequelize.QueryTypes.SELECT}) 
+
+//     ResponseLog.Send200(req, res, { InvItems: InvItems });
+//   } catch (err) {
+//     console.log(err);
+//     ResponseLog.Error200(req, res, err.message);
+//   }
+// };
 

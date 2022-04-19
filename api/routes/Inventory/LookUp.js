@@ -4,17 +4,22 @@ const controller = require("../../controllers/Inventory/index");
 const CheckAuth = require("../../midleware/validate-auth");
 
 router.get("/", CheckAuth, (req, res) => {
-  console.log({ FormName: req.query.FormName });
+  console.log({ FormName: req.query });
   switch (req.query.FormName) {
     case "Items":
-      console.log("There!");
       controller.LookUp.getItems(req, res);
+      break;
+    case "InventoryItems":
+      controller.LookUp.getInventoryItems(req, res);
       break;
     case "ItemUOM":
       controller.LookUp.getItemUOM(req, res);
       break;
     case "Locations":
       controller.LookUp.getLocations(req, res);
+      break;
+    case "InTransitLocations":
+      controller.LookUp.getInTransitLocations(req, res);
       break;
     case "UOMClass":
       controller.LookUp.getUOMClass(req, res);
@@ -28,9 +33,12 @@ router.get("/", CheckAuth, (req, res) => {
     case "AttributeCodes":
       controller.LookUp.getAttributeCodes(req, res);
       break;
-      case "ItemClass":
-        controller.LookUp.getItemClass(req, res);
-        break;
+    case "ItemClass":
+      controller.LookUp.getItemClass(req, res);
+      break;
+    case "ItemClassAttributes":
+      controller.LookUp.getItemClassAttributes(req, res);
+      break;
     default:
       break;
   }

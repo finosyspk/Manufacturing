@@ -157,9 +157,9 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: 0
     },
     WarrantyDueDate: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: "2021-01-02 06:51:13.382 +00:00"
+      type: DataTypes.DATEONLY,
+      allowNull: true,
+      defaultValue: '01-01-1900'
     },
     ImagePath: {
       type: DataTypes.STRING(255),

@@ -7,11 +7,11 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true
     },
     LocationCode: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
     Location: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
     TransNo: {
@@ -25,6 +25,10 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     TransType: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    FormType: {
       type: DataTypes.STRING(255),
       allowNull: false
     },

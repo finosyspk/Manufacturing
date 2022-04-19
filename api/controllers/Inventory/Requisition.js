@@ -91,8 +91,8 @@ exports.delete = async (req, res) => {
 };
 
 exports.CreateOrUpdate = async (req, res) => {
+  const t = await db[req.headers.compcode].sequelize.transaction();
   try {
-    const t = await db[req.headers.compcode].sequelize.transaction();
 
     let Header = req.body.Header;
     let Detail = req.body.Detail;
@@ -129,7 +129,7 @@ exports.CreateOrUpdate = async (req, res) => {
       );
       if (REQDetailData.success) {
         await t.commit();
-        if (REQDetailData.created) {
+        if (REQData.created) {
           ResponseLog.Create200(req, res);
         } else {
           ResponseLog.Update200(req, res);
