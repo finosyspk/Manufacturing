@@ -9,12 +9,13 @@ exports.getList = async (req, res) => {
       "TransNo",
       "TransDate",
       "TransType",
-      "Location",
+      "Source Location",
+      "Destination Location",
       ["RPosted", "Status"],
     ];
     let ADJ = await SeqFunc.getAll(
       db[req.headers.compcode].IN_TransferHeader,
-      {},
+      {where : { TransType: 'RIXFR' }},
       true,
       Columns
     );
@@ -57,8 +58,6 @@ exports.getOne = async (req, res) => {
           "UOM",
           "UnitQuantity",
           "Quantity",
-          ["UnitQuantity","CurrUnitQuantity"],
-          ["Quantity","CurrQuantity"],
           "BaseQuantity",
           "UnitCost",
           "Remarks",
@@ -76,8 +75,6 @@ exports.getOne = async (req, res) => {
           "ExpiryDate",
           "Quantity",
           "BaseQuantity",
-          ["Quantity","CurrQuantity"],
-          ["BaseQuantity","CurrBaseQuantity"],
         ]
       );
 

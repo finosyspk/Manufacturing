@@ -1,7 +1,8 @@
 const db = require("../../models-Clients/index");
 const ResponseLog = require("../../../core/ResponseLog");
 const SeqFunc = require("../../../core/SeqFunc");
-const Alloc = require("../../../core/StockAllocation");
+const Stock = require("../../../core/Stock");
+const Post = require("./PostAdjustment");
 
 exports.getList = async (req, res) => {
   try {
@@ -187,25 +188,22 @@ exports.CreateOrUpdate = async (req, res) => {
         if (ADJBatchData.success) {
           let Allocation = {};
           if (Header.FormType !== "AdjInward") {
-            Allocation = await Alloc.Allocation(
-              Detail,
-              0,
-              res,
-              Header.SubmitStatus,
-              req.headers.userid,
-              "",
-              t
-            );
+            Allocation = await Stock.Allocation.Allocation(Detail,ADJData.Data.TransNo,ADJData.Data.LocationCode ,t);
           } else {
             Allocation.Success = true;
           }
           if (Allocation.Success === true) {
             await t.commit();
-            if (ADJDetailData.created) {
-              ResponseLog.Create200(req, res);
+            if (Header.Posted) {
+              Post.postData(req.res);
             } else {
-              ResponseLog.Update200(req, res);
+              if (ADJDetailData.created) {
+                ResponseLog.Create200(req, res);
+              } else {
+                ResponseLog.Update200(req, res);
+              }
             }
+    
           } else {
             t.rollback();
             res.status(200).send({ Success: false, Message: Allocation.Message, data: Allocation.data })

@@ -39,6 +39,12 @@ router.get("/", CheckAuth, (req, res) => {
     case "ItemClassAttributes":
       controller.LookUp.getItemClassAttributes(req, res);
       break;
+    case "OpenIRs":
+      controller.LookUp.getOpenIRs(req, res);
+      break;
+    case "OpenTransfers":
+      controller.LookUp.getOpenTransfers(req, res);
+      break;
     default:
       break;
   }

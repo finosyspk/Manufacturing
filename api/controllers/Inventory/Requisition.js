@@ -1,6 +1,7 @@
 const db = require("../../models-Clients/index");
 const ResponseLog = require("../../../core/ResponseLog");
 const SeqFunc = require("../../../core/SeqFunc");
+const Post = require("./PostRequisition");
 
 exports.getList = async (req, res) => {
   try {
@@ -12,7 +13,26 @@ exports.getList = async (req, res) => {
       Columns
     );
     if (REQ.success) {
-      ResponseLog.Send200(req, res, REQ.Data);
+      let Data = REQ.Data;
+      Data.map((val) => {
+        switch (val.SubmitStatus) {
+          case "0":
+            val.Status = "Pending";
+            break;
+          case "1":
+            val.Status = "Submitted";
+            break;
+          case "2":
+            val.Status = "Closed";
+            break;
+          default:
+            val.Status = "Pending";
+            break;
+        }
+        return val;
+      });
+
+      ResponseLog.Send200(req, res, Data);
     } else {
       ResponseLog.Error200(req, res, "No Record Found!");
     }
@@ -93,14 +113,13 @@ exports.delete = async (req, res) => {
 exports.CreateOrUpdate = async (req, res) => {
   const t = await db[req.headers.compcode].sequelize.transaction();
   try {
-
     let Header = req.body.Header;
     let Detail = req.body.Detail;
     delete Header.RID;
     Header.CreatedUser = "1";
     Header.ModifyUser = "1";
-    Header.PostedUser = "1";
-    Header.Posted = "1";
+    Header.SubmitStatus = 0;
+    Header.Status = "Pending";
 
     let REQData = await SeqFunc.Trans_updateOrCreate(
       db[req.headers.compcode],
@@ -114,10 +133,11 @@ exports.CreateOrUpdate = async (req, res) => {
     );
 
     if (REQData.success) {
-      let i = 0;
+      let i = 1;
       Detail.map((o) => {
         o.TransNo = REQData.Data.TransNo;
-        o.RLineSeq = i++
+        o.RLineSeq = i;
+        i++;
         return o;
       });
 
@@ -129,10 +149,14 @@ exports.CreateOrUpdate = async (req, res) => {
       );
       if (REQDetailData.success) {
         await t.commit();
-        if (REQData.created) {
-          ResponseLog.Create200(req, res);
+        if (Header.SubmitStatus) {
+          Post.postData(req.res);
         } else {
-          ResponseLog.Update200(req, res);
+          if (REQData.created) {
+            ResponseLog.Create200(req, res);
+          } else {
+            ResponseLog.Update200(req, res);
+          }
         }
       } else {
         t.rollback();

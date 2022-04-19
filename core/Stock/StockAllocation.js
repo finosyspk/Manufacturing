@@ -3,12 +3,11 @@ const AppConfig = require('../AppConfig');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
 
-exports.Allocation = async (DetailData, t) => {
+exports.Allocation = async (DetailData,TransNo,LocationCode, t) => {
     try {
         let UPD = "EXEC [dbo].[UpdateParallelData]"
         let AllocArray = []
         let AllocTemp = [];
-        let TransNo = DetailData[0].TransNo;
         let Alloc;
         let Temp;
  
@@ -59,70 +58,70 @@ exports.Allocation = async (DetailData, t) => {
                 let QtyFul = 0
                 let QtyLine = 0
                 if (val.ItemType === 'Inventoried Item') {
-                    if (val.ItemTrackBy !== 'None') {
-                        let Batch = val.Batches
-                        if (Batch.length > 0) {
-                            Batch.map(function (val2) {
-                                QtyReq = val2.UnitQuantity;
-                                QtyFul = 0
-                                QtyLine = 0
+                    // if (val.ItemTrackBy !== 'None') {
+                    //     let Batch = val.Batches
+                    //     if (Batch.length > 0) {
+                    //         Batch.map(function (val2) {
+                    //             QtyReq = val2.UnitQuantity;
+                    //             QtyFul = 0
+                    //             QtyLine = 0
 
-                                for (let itm of StockData) {
-                                    if (val.ItemCode === itm.ItemCode && val2.BatchNo === itm.BatchNo) {
+                    //             for (let itm of StockData) {
+                    //                 if (val.ItemCode === itm.ItemCode && val2.BatchNo === itm.BatchNo) {
 
-                                        if (QtyFul >= QtyReq) {
-                                            break;
-                                        }
+                    //                     if (QtyFul >= QtyReq) {
+                    //                         break;
+                    //                     }
 
-                                        if (itm.QtyBal > (QtyReq - QtyFul)) {
-                                            QtyLine = QtyReq - QtyFul
-                                        }
-                                        else {
-                                            QtyLine = itm.QtyBal
-                                        }
+                    //                     if (itm.QtyBal > (QtyReq - QtyFul)) {
+                    //                         QtyLine = QtyReq - QtyFul
+                    //                     }
+                    //                     else {
+                    //                         QtyLine = itm.QtyBal
+                    //                     }
 
-                                        QtyFul = QtyFul + QtyLine
+                    //                     QtyFul = QtyFul + QtyLine
 
-                                        Alloc = {
-                                            RID: 0,
-                                            RecordDate: new Date(),
-                                            HeaderNo: itm.HeaderNo,
-                                            LocationCode: val.LocationCode,
-                                            ItemCode: val.ItemCode,
-                                            BatchNo: itm.BatchNo,
-                                            ExpiryDate: itm.ExpiryDate,
-                                            TransType: val.TransType,
-                                            TransNo: val.TransNo,
-                                            TransDate: val.TransDate,
-                                            QtyOut: QtyLine,
-                                            UnitCost: itm.UnitPrice,
-                                            LineNo: val.TLineSeq
-                                        }
+                    //                     Alloc = {
+                    //                         RID: 0,
+                    //                         RecordDate: new Date(),
+                    //                         HeaderNo: itm.HeaderNo,
+                    //                         LocationCode: val.LocationCode,
+                    //                         ItemCode: val.ItemCode,
+                    //                         BatchNo: itm.BatchNo,
+                    //                         ExpiryDate: itm.ExpiryDate,
+                    //                         TransType: val.TransType,
+                    //                         TransNo: val.TransNo,
+                    //                         TransDate: val.TransDate,
+                    //                         QtyOut: QtyLine,
+                    //                         UnitCost: itm.UnitPrice,
+                    //                         LineNo: val.TLineSeq
+                    //                     }
 
-                                        AllocArray.push(Alloc)
+                    //                     AllocArray.push(Alloc)
 
-                                        Temp = {
-                                            HeaderNo: itm.HeaderNo,
-                                            LocationCode: val.LocationCode,
-                                            ItemCode: val.ItemCode,
-                                            BatchNo: itm.BatchNo,
-                                            TransType: val.TransType,
-                                            TransNo: val.TransNo,
-                                            TransDate: val.TransDate,
-                                            QtyOut: val.Quantity,
-                                            Pieces: 0,
-                                            QtyPass: QtyLine,
-                                            QtyFail: 0,
-                                            LineNo: val.TLineSeq,
-                                            Status: 'Pass'
-                                        }
-                                        AllocTemp.push(Temp)
-                                    }
-                                }
-                            })
-                        }
-                    }
-                    else {
+                    //                     Temp = {
+                    //                         HeaderNo: itm.HeaderNo,
+                    //                         LocationCode: val.LocationCode,
+                    //                         ItemCode: val.ItemCode,
+                    //                         BatchNo: itm.BatchNo,
+                    //                         TransType: val.TransType,
+                    //                         TransNo: val.TransNo,
+                    //                         TransDate: val.TransDate,
+                    //                         QtyOut: val.Quantity,
+                    //                         Pieces: 0,
+                    //                         QtyPass: QtyLine,
+                    //                         QtyFail: 0,
+                    //                         LineNo: val.TLineSeq,
+                    //                         Status: 'Pass'
+                    //                     }
+                    //                     AllocTemp.push(Temp)
+                    //                 }
+                    //             }
+                    //         })
+                    //     }
+                    // }
+                    // else {
 
                         QtyReq = val.unitQty;
 
@@ -175,7 +174,7 @@ exports.Allocation = async (DetailData, t) => {
                                 AllocTemp.push(Temp)
 
                             }
-                        }
+                        // }
                     }
 
                     if (QtyFul < QtyReq) {

@@ -196,21 +196,46 @@ exports.getItemClassAttributes = async (req, res) => {
   }
 };
 
-// exports.getInventoryItems = async (req, res) => {
-//   try {
+exports.getOpenIRs = async (req, res) => {
+  try {
 
-//     let sqlQuery =  `SELECT LocationCode, ItemCode, Price = AVG(UnitPrice), QtyIn = SUM(QtyIn), QtyAlloc = SUM(ISNULL(A.QtyOut,0)), QtyOut = SUM(ISNULL(D.QtyOut,0)) FROM IN_StockMaster S
-//                     LEFT OUTER JOIN (SELECT HeaderNo, QtyOut = SUM(QtyOut) FROM IN_StockAlloc GROUP BY HeaderNo) AS A ON S.HeaderNo = A.HeaderNo
-//                     LEFT OUTER JOIN (SELECT HeaderNo, QtyOut = SUM(QtyOut) FROM IN_StockDetail GROUP BY HeaderNo) AS D ON S.HeaderNo = D.HeaderNo
-//                     WHERE LocationCode = '${req.body.LocationCode}'
-//                     GROUP BY LocationCode, ItemCode`;
+    let sqlQuery =  `SELECT H.TransNo, RLineSeq, D.ItemCode, D.Item, UOMCode, UOM, BaseQuantity, 
+                      UnitQuantity = UnitQuantity - (UsedQuantity + CanceledQuantity),
+                      Quantity,
+                      AvailableQuantity = (UnitQuantity - (UsedQuantity + CanceledQuantity) / BaseQuantity),
+                      StockQuantity = ISNULL(S.QtyBal,0)
+                      FROM IN_RequisitionMaster H
+                      INNER JOIN  IN_RequisitionDetail D ON H.TransNo = D.TransNo AND D.LineStatus = 0
+                      LEFT OUTER JOIN vw_Stock S ON S.ItemCode = D.ItemCode AND H.LocationCode = S.LocationCode
+                      WHERE H.SubmitStatus = 1 AND H.LocationCode = :LocationCode`;
 
-//     let InvItems = await db[req.headers.compcode].sequelize.query(sqlQuery,{replacements : {LocationCode : req.query.LocationCode},type : db[req.headers.compcode].Sequelize.QueryTypes.SELECT}) 
+    let OpenIRs = await db[req.headers.compcode].sequelize.query(sqlQuery,{replacements : {LocationCode : req.query.LocationCode},type : db[req.headers.compcode].Sequelize.QueryTypes.SELECT}) 
 
-//     ResponseLog.Send200(req, res, { InvItems: InvItems });
-//   } catch (err) {
-//     console.log(err);
-//     ResponseLog.Error200(req, res, err.message);
-//   }
-// };
+    ResponseLog.Send200(req, res, { OpenIRs: OpenIRs });
+  } catch (err) {
+    console.log(err);
+    ResponseLog.Error200(req, res, err.message);
+  }
+};
+
+exports.getOpenTransfers = async (req, res) => {
+  try {
+
+    let sqlQuery =  `SELECT H.TransNo, TLineSeq, D.ItemCode, D.Item, ItemTrackBy, ItemType, 
+                      UOMCode, UOM, BaseQuantity, 
+                      UnitQuantity = UnitQuantity,
+                      AvailableQuantity = Quantity,
+                      UnitCost
+                      FROM IN_TransferHeader H
+                      INNER JOIN IN_TransferDetail D ON H.TransNo = D.TransNo AND D.LineStatus = 0
+                      WHERE H.Posted = 1 AND H.DestinationLocationCode = :LocationCode  AND H.TransType = 'IXFR'`;
+
+    let OpenTransfers = await db[req.headers.compcode].sequelize.query(sqlQuery,{replacements : {LocationCode : req.query.LocationCode},type : db[req.headers.compcode].Sequelize.QueryTypes.SELECT}) 
+
+    ResponseLog.Send200(req, res, { OpenTransfers: OpenTransfers });
+  } catch (err) {
+    console.log(err);
+    ResponseLog.Error200(req, res, err.message);
+  }
+};
 

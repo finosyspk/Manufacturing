@@ -8,6 +8,10 @@ const Adjustments = require("./Adjustment");
 const Transfers = require("./Transfer");
 const Receivings = require("./Receiving");
 const LookUp = require("./LookUp");
+const PostRequisitions = require("./PostRequisition");
+const PostAdjustments = require("./PostAdjustment");
+const PostTransfers = require("./PostTransfer");
+const PostReceivings = require("./PostReceiving");
 
 module.exports = {
   UOM,
@@ -20,4 +24,8 @@ module.exports = {
   Adjustments,
   Transfers,
   Receivings,
+  PostRequisitions,
+  PostAdjustments,
+  PostTransfers,
+  PostReceivings,
 };
