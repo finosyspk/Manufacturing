@@ -26,12 +26,12 @@ module.exports = function (sequelize, DataTypes) {
       primaryKey: true
     },
     TransDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
       defaultValue: new Date()
     },
     RequiredDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
       defaultValue: new Date()
     },

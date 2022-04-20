@@ -78,7 +78,7 @@ exports.getOne = async (req, res) => {
         ]
       );
 
-      ADJ.Data.map((val) => {
+      Detail.Data.map((val) => {
         val.Batches = Batches.Data.filter((o) => o.TLineSeq === val.TLineSeq);
         return val;
       });
@@ -194,8 +194,9 @@ exports.CreateOrUpdate = async (req, res) => {
           }
           if (Allocation.Success === true) {
             await t.commit();
+            console.log({Posted:Header.Posted})
             if (Header.Posted) {
-              Post.postData(req.res);
+              Post.postData(req,res);
             } else {
               if (ADJDetailData.created) {
                 ResponseLog.Create200(req, res);

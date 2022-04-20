@@ -13,8 +13,8 @@ exports.getList = async (req, res) => {
       Columns
     );
     if (REQ.success) {
-      let Data = REQ.Data;
-      Data.map((val) => {
+      // let Data = ;
+      REQ.Data.rows.map((val) => {
         switch (val.SubmitStatus) {
           case "0":
             val.Status = "Pending";
@@ -32,7 +32,7 @@ exports.getList = async (req, res) => {
         return val;
       });
 
-      ResponseLog.Send200(req, res, Data);
+      ResponseLog.Send200(req, res, REQ.Data);
     } else {
       ResponseLog.Error200(req, res, "No Record Found!");
     }

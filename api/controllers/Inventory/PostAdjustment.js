@@ -8,12 +8,7 @@ exports.postData = async (req, res) => {
   try {
     let TransNo = req.body.Header.TransNo;
 
-    let REQ = await SeqFunc.getOne(
-      db[req.headers.compcode].IN_TransactionHeader,
-      {
-        where: { TransNo: TransNo },
-      }
-    );
+    let REQ = await SeqFunc.getOne( db[req.headers.compcode].IN_TransactionHeader,{ where: { TransNo: TransNo } } );
 
     if (REQ.success) {
 
