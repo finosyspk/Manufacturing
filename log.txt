@@ -14087,3 +14087,411 @@
  Message : {"Success":false,"Message":"Error Saving Record!"}
  **************************************************  
  Log Ended
+ Log Started on2022-04-20T06:09:17.394Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:09:32.410Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:09:47.432Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:10:02.448Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:11:55.942Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:13:12.060Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:13:32.371Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:14:13.126Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:14:28.226Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:14:35.727Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:15:34.069Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_Location')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:15:45.028Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_Item')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:15:56.928Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_Item')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:16:05.497Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_Location')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:16:30.828Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_Item')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:16:32.505Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_ItemClass')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:16:32.518Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_UOMDetail')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:16:32.529Z
+ ************************************************** 
+
+ API : /api/v1/Financial/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'FIN_CodeCombination')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:16:32.550Z
+ ************************************************** 
+
+ API : /api/v1/Financial/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'FIN_TaxSchedule')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:23:07.195Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_Item')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:25:20.215Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_Item')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:29:23.395Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_Item')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:30:10.710Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_Item')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:30:25.748Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_ItemClass')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:30:25.756Z
+ ************************************************** 
+
+ API : /api/v1/Financial/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'FIN_CodeCombination')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:30:25.763Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_UOMDetail')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:30:25.770Z
+ ************************************************** 
+
+ API : /api/v1/Financial/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'FIN_TaxSchedule')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:31:07.279Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_Item')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:31:09.244Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_ItemClass')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:31:09.253Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_UOMDetail')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:31:09.260Z
+ ************************************************** 
+
+ API : /api/v1/Financial/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'FIN_CodeCombination')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:31:09.267Z
+ ************************************************** 
+
+ API : /api/v1/Financial/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'FIN_TaxSchedule')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:37:16.895Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_Item')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:37:47.899Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_Item')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:38:00.598Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'MOP_BOMHeader')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:38:09.861Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'MOP_BOMHeader')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:38:21.874Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'MOP_BOMHeader')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:52:57.357Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'MOP_BOMHeader')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:53:02.223Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'MOP_BOMHeader')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:53:08.153Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'MOP_BOMHeader')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:53:08.164Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_Item')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:53:16.906Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'MOP_BOMHeader')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:55:09.940Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'MOP_BOMHeader')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:55:14.964Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_Item')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:55:14.983Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'MOP_BOMHeader')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:55:30.563Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'MOP_BOMHeader')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:55:38.023Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'MOP_BOMHeader')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:55:59.594Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'MOP_Machine')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T06:56:35.771Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'MOP_Machine')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T07:37:04.089Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'MOP_BOMHeader')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-20T07:38:19.852Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'MOP_Machine')"}
+ **************************************************  
+ Log Ended
