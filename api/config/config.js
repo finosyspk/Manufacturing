@@ -19,7 +19,7 @@ module.exports = {
     dialectOptions: {
       options: {
         requestTimeout: 300000,
-        encrypt: false,
+        encrypt: true,
         validateBulkLoadParameters: false,
       },
       timeout: 30,

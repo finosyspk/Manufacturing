@@ -85,6 +85,7 @@ exports.CreateOrUpdate = async (req, res) => {
       await SeqFunc.Delete(db[req.headers.compcode].IN_ItemClassAttributes, { where:{ItemClassCode: Header.ItemClassCode} });
 
       Detail.map(o => {
+        delete o.IAttID
         o.ItemClassID = ItemClassData.Data.ItemClassID
         o.ItemClassCode = ItemClassData.Data.ItemClassCode
         o.ItemClass = ItemClassData.Data.ItemClass
