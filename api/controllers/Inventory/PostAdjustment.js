@@ -7,13 +7,12 @@ const Stock = require("../../../core/Stock");
 exports.postData = async (req, res) => {
   try {
     let TransNo = req.body.Header.TransNo;
-
     let REQ = await SeqFunc.getOne( db[req.headers.compcode].IN_TransactionHeader,{ where: { TransNo: TransNo } } );
 
     if (REQ.success) {
 
       if (REQ.Data.FormType === 'AdjInward'){
-        await Stock.Addition.Addition(db[req.headers.compcode], TransNo, 'IN_TransactionDetail', res)
+        await Stock.Addition.Addition(db[req.headers.compcode], TransNo, REQ.Data.LocationCode, REQ.Data.Location, 'IN_TransactionDetail', res)
       }
       else {
         await Stock.Consumption.Consumption(req, TransNo, res)

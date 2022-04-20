@@ -34,6 +34,7 @@ const Inv_Get = require("../api/routes/Inventory/Get");
 const Inv_GetAll = require("../api/routes/Inventory/GetAll");
 const Inv_Delete = require("../api/routes/Inventory/Delete");
 const Inv_LookUp = require("../api/routes/Inventory/LookUp");
+const Inv_Posting = require("../api/routes/Inventory/Posting");
 
 const Pur_Testing = require("../api/routes/Purchasing/Testing");
 const Pur_Create = require("../api/routes/Purchasing/Create");
@@ -104,6 +105,7 @@ app.use("/api/v1/Inventory/Get", Inv_Get);
 app.use("/api/v1/Inventory/GetAll", Inv_GetAll);
 app.use("/api/v1/Inventory/Delete", Inv_Delete);
 app.use("/api/v1/Inventory/LookUp", Inv_LookUp);
+app.use("/api/v1/Inventory/Posting", Inv_Posting);
 
 app.use("/api/v1/Purchasing/Testing", Pur_Testing);
 app.use("/api/v1/Purchasing/Create", Pur_Create);
