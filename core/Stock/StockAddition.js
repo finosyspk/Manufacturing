@@ -1,4 +1,4 @@
-const AppConfig = require('../AppConfig');
+const AppConfig = require('./../../AppConfig');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
 

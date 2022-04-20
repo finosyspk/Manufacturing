@@ -1,5 +1,5 @@
-const db = require('../api/models-Clients/index');
-const AppConfig = require('../AppConfig');
+const db = require('./../../api/models-Clients/index');
+const AppConfig = require('./../../AppConfig');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
 

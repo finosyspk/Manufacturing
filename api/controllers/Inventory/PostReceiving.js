@@ -1,7 +1,7 @@
 const db = require("../../models-Clients/index");
 const ResponseLog = require("../../../core/ResponseLog");
 const SeqFunc = require("../../../core/SeqFunc");
-const Alloc = require("../../../core/StockAllocation");
+const Stock = require("../../../core/Stock");
 
 exports.getList = async (req, res) => {
   try {

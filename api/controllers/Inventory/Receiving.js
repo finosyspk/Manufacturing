@@ -1,7 +1,7 @@
 const db = require("../../models-Clients/index");
 const ResponseLog = require("../../../core/ResponseLog");
 const SeqFunc = require("../../../core/SeqFunc");
-const Alloc = require("../../../core/StockAllocation");
+const Stock = require("../../../core/Stock");
 
 exports.getList = async (req, res) => {
   try {
@@ -184,7 +184,7 @@ exports.CreateOrUpdate = async (req, res) => {
         if (ADJBatchData.success) {
           let Allocation = {};
           // if (Type !== "XFR") {
-            Allocation = await Alloc.Allocation(
+            Allocation = await Stock.Allocation.Allocation(
               Detail,
               0,
               res,
