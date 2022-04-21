@@ -4,7 +4,7 @@ const SeqFunc = require("../../../core/SeqFunc");
 
 exports.getList = async (req, res) => {
   try {
-    let Columns = [["AttHeadCode","Attribute Head Code"],["AttHeadDesc","Attribute Head Desc"],"IsActive"];
+    let Columns = [["AttHeadCode","Attribute Head Code"],["AttHead","Attribute Head Desc"],"IsActive"];
     let Attribute = await SeqFunc.getAll(db[req.headers.compcode].IN_AttributeHead, {}, true, Columns);
     if (Attribute.success) {
       ResponseLog.Send200(req, res, Attribute.Data);

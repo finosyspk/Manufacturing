@@ -2,9 +2,9 @@ const AppConfig = require("./../../AppConfig");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
-exports.Addition = async (db, TransNo,LocationCode, Location, model) => {
+exports.Addition = async (db, model, TransNo,LocationCode, Location) => {
   try {
-    let Data = await db[model].findAll({ where: { TransNo: TransNo } });
+    let Data = await model.findAll({ where: { TransNo: TransNo } });
 
     Data = JSON.stringify(Data)
     Data = JSON.parse(Data)
@@ -17,7 +17,7 @@ exports.Addition = async (db, TransNo,LocationCode, Location, model) => {
       d.TransType = d.FormType ? d.FormType : d.TransType 
       d.ExpiryDate = '01-01-1900'
       d.LineNo = d.TLineSeq
-      d.Quantity = d.UnitQuantity
+      d.Quantity = d.BaseQuantity
       d.UnitPrice = d.UnitCost
       d.QtySold = 0
       d.QtyAlloc = 0

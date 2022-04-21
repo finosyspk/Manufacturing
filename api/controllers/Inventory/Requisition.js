@@ -51,9 +51,10 @@ exports.getOne = async (req, res) => {
     );
 
     if (REQ.success) {
+      console.log({Data:REQ.Data})
       let Detail = await SeqFunc.getAll(
         db[req.headers.compcode].IN_RequisitionDetail,
-        { TransNo: REQ.Data.TransNo },
+        { where: {TransNo: REQ.Data.TransNo} },
         false,
         [
           "TransNo",
@@ -135,6 +136,7 @@ exports.CreateOrUpdate = async (req, res) => {
     if (REQData.success) {
       let i = 1;
       Detail.map((o) => {
+        delete o.RID
         o.TransNo = REQData.Data.TransNo;
         o.RLineSeq = i;
         i++;

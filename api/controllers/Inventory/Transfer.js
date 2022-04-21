@@ -2,6 +2,8 @@ const db = require("../../models-Clients/index");
 const ResponseLog = require("../../../core/ResponseLog");
 const SeqFunc = require("../../../core/SeqFunc");
 const Stock = require("../../../core/Stock");
+const Post = require("./PostTransfer");
+
 
 exports.getList = async (req, res) => {
   try {
@@ -35,17 +37,14 @@ exports.getList = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   try {
-    let ADJ = await SeqFunc.getOne(
-      db[req.headers.compcode].IN_TransferHeader,
-      {
-        where: { TransNo: req.query.TransNo },
-      }
-    );
+    let ADJ = await SeqFunc.getOne(db[req.headers.compcode].IN_TransferHeader, {
+      where: { TransNo: req.query.TransNo },
+    });
 
     if (ADJ.success) {
       let Detail = await SeqFunc.getAll(
-        db[req.headers.compcode].IN_TransactionDetail,
-        { TRID: ADJ.Data.TRID },
+        db[req.headers.compcode].IN_TransferDetail,
+        { TransNo: ADJ.Data.TransNo },
         false,
         [
           "TransNo",
@@ -56,18 +55,22 @@ exports.getOne = async (req, res) => {
           "UOMCode",
           "UOM",
           "UnitQuantity",
-          "Quantity",
-          ["UnitQuantity","CurrUnitQuantity"],
-          ["Quantity","CurrQuantity"],
           "BaseQuantity",
+          "Quantity",
+          [
+            db[req.headers.compcode].Sequelize.literal(
+              `dbo.GetInventoryStock(ItemCode,'${ADJ.Data.LocationCode}') + BaseQuantity`
+            ),
+            "QtyBal",
+          ],
           "UnitCost",
           "Remarks",
         ]
       );
 
       let Batches = await SeqFunc.getAll(
-        db[req.headers.compcode].IN_TransactionBatches,
-        { TRID: ADJ.Data.TRID },
+        db[req.headers.compcode].IN_TransferBatches,
+        { TransNo: ADJ.Data.TransNo },
         false,
         [
           "TransNo",
@@ -76,8 +79,8 @@ exports.getOne = async (req, res) => {
           "ExpiryDate",
           "Quantity",
           "BaseQuantity",
-          ["Quantity","CurrQuantity"],
-          ["BaseQuantity","CurrBaseQuantity"],
+          ["Quantity", "CurrQuantity"],
+          ["BaseQuantity", "CurrBaseQuantity"],
         ]
       );
 
@@ -102,22 +105,19 @@ exports.getOne = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    let ADJ = await SeqFunc.getOne(
-      db[req.headers.compcode].IN_TransferHeader,
-      {
-        where: { TransNo: req.query.TransNo, Posted: false },
-      }
-    );
+    let ADJ = await SeqFunc.getOne(db[req.headers.compcode].IN_TransferHeader, {
+      where: { TransNo: req.query.TransNo, Posted: false },
+    });
 
     if (ADJ.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].IN_TransactionBatches, {
-        where: { TRID: ADJ.Data.TRID },
+      await SeqFunc.Delete(db[req.headers.compcode].IN_TransferBatches, {
+        where: { TransNo: ADJ.Data.TransNo },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].IN_TransactionDetail, {
-        where: { TRID: ADJ.Data.TRID },
+      await SeqFunc.Delete(db[req.headers.compcode].IN_TransferDetail, {
+        where: { TransNo: ADJ.Data.TransNo },
       });
       await SeqFunc.Delete(db[req.headers.compcode].IN_TransferHeader, {
-        where: { TRID: ADJ.Data.TRID },
+        where: { TransNo: ADJ.Data.TransNo },
       });
       ResponseLog.Delete200(req, res);
     } else {
@@ -129,16 +129,15 @@ exports.delete = async (req, res) => {
 };
 
 exports.CreateOrUpdate = async (req, res) => {
+  const t = await db[req.headers.compcode].sequelize.transaction();
   try {
-    const t = await db[req.headers.compcode].sequelize.transaction();
 
     let Header = req.body.Header;
     let Detail = req.body.Detail;
     delete Header.TRHID
-    Header.CreatedUser = "1";
-    Header.ModifyUser = "1";
-    Header.PostedUser = "1";
-    Header.Posted = "1";
+    Header.CreatedUser = 1;
+    Header.ModifyUser = 1;
+    Header.PostedUser = 1;
 
     let ADJData = await SeqFunc.Trans_updateOrCreate(
       db[req.headers.compcode],
@@ -153,27 +152,31 @@ exports.CreateOrUpdate = async (req, res) => {
 
     if (ADJData.success) {
       let BatchArray = [];
+      let LineSeq  = 1
       Detail.map((o) => {
-        o.TRID = ADJData.Data.TRID;
-        if (d.ItemTrackBy !== "None") {
-          d.Batches.map((BData) => {
+        delete o.TRDID
+        o.TransNo = ADJData.Data.TransNo
+        o.TLineSeq = LineSeq
+        if (o.ItemTrackBy !== "None") {
+          o.Batches.map((BData) => {
             let Bquery = {
-              TransNo: Header.TransNo,
+              TransNo: ADJData.Data.TransNo,
               BatchNo: BData.BatchNo,
-              ExpiryDate: d.ItemTrackBy === "Batch" ? null : BData.ExpiryDate,
+              ExpiryDate: o.ItemTrackBy === "Batch" ? null : BData.ExpiryDate,
               Quantity: BData.Quantity,
               UnitQuantity: BData.UnitQuantity,
-              TLineSeq: d.TLineSeq,
+              TLineSeq: o.TLineSeq,
             };
             BatchArray.push(Bquery);
           });
         }
+        LineSeq++
         return o;
       });
 
       let ADJDetailData = await SeqFunc.Trans_bulkCreate(
         db[req.headers.compcode].IN_TransferDetail,
-        { where: { TRID: ADJData.Data.TRID }, transaction: t },
+        { where: { TransNo: ADJData.Data.TransNo }, transaction: t },
         Detail,
         t
       );
@@ -185,27 +188,29 @@ exports.CreateOrUpdate = async (req, res) => {
           t
         );
         if (ADJBatchData.success) {
+          await t.commit();
           let Allocation = {};
-          // if (Type !== "XFR") {
             Allocation = await Stock.Allocation.Allocation(
-              Detail,
-              0,
-              res,
-              Header.SubmitStatus,
-              req.headers.userid,
-              "",
-              t
-            );
-          // } else {
-          //   Allocation.Success = true;
-          // }
+              db[req.headers.compcode],
+              db[req.headers.compcode].IN_TransferDetail,
+              ADJData.Data.TransNo,
+              ADJData.Data.TransDate,
+              ADJData.Data.TransType,
+              ADJData.Data.LocationCode);
+
           if (Allocation.Success === true) {
-            await t.commit();
-            if (ADJDetailData.created) {
-              ResponseLog.Create200(req, res);
+           
+
+            if (Header.Posted) {
+              Post.postData(req,res);
             } else {
-              ResponseLog.Update200(req, res);
+              if (ADJDetailData.created) {
+                ResponseLog.Create200(req, res);
+              } else {
+                ResponseLog.Update200(req, res);
+              }
             }
+    
           } else {
             t.rollback();
             res.status(200).send({ Success: false, Message: Allocation.Message, data: Allocation.data })

@@ -4,7 +4,7 @@ const SeqFunc = require("../../../core/SeqFunc");
 
 exports.getList = async (req, res) => {
   try {
-    let Columns = ["ItemClassCode","ItemClassName","IsActive"];
+    let Columns = ["ItemClassCode","ItemClass","IsActive"];
     let ItemClass = await SeqFunc.getAll(db[req.headers.compcode].IN_ItemClass, {}, true, Columns);
     if (ItemClass.success) {
       ResponseLog.Send200(req, res, ItemClass.Data);

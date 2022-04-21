@@ -87,13 +87,18 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       defaultValue: ""
     },
-    UOM_BaseCode: {
+    UOMCode: {
       type: DataTypes.STRING(255),
       allowNull: false,
       defaultValue: ""
     },
-    UOM_Base: {
+    UOM: {
       type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: ""
+    },
+    UnitQuantity: {
+      type: DataTypes.DECIMAL(20,5),
       allowNull: true,
       defaultValue: ""
     },

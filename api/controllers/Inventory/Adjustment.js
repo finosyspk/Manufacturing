@@ -9,7 +9,7 @@ exports.getList = async (req, res) => {
     let Columns = [
       "TransNo",
       "TransDate",
-      "TransType",
+      "FormType",
       "Location",
       ["RPosted", "Status"],
     ];
@@ -44,11 +44,10 @@ exports.getOne = async (req, res) => {
     );
 
     if (ADJ.success) {
-      let Detail = await SeqFunc.getAll(
-        db[req.headers.compcode].IN_TransactionDetail,
-        { TRID: ADJ.Data.TRID },
-        false,
-        [
+
+      let Detail = await db[req.headers.compcode].IN_TransactionDetail.findAll({
+        where: {TransNo: req.query.TransNo},
+        attributes:[
           "TransNo",
           "TLineSeq",
           "ItemCode",
@@ -59,14 +58,15 @@ exports.getOne = async (req, res) => {
           "UnitQuantity",
           "Quantity",
           "BaseQuantity",
+          [db[req.headers.compcode].Sequelize.literal(`dbo.GetInventoryStock(ItemCode,'${ADJ.Data.LocationCode}') + BaseQuantity`), 'QtyBal'],
           "UnitCost",
           "Remarks",
         ]
-      );
+      })
 
       let Batches = await SeqFunc.getAll(
         db[req.headers.compcode].IN_TransactionBatches,
-        { TRID: ADJ.Data.TRID },
+        { where: {TransNo: req.query.TransNo} },
         false,
         [
           "TransNo",
@@ -75,17 +75,19 @@ exports.getOne = async (req, res) => {
           "ExpiryDate",
           "Quantity",
           "BaseQuantity",
+          ["BaseQuantity","CurrBaseQuantity"],
+          ["Quantity","CurrQuantity"],
         ]
       );
 
-      Detail.Data.map((val) => {
+      Detail.map((val) => {
         val.Batches = Batches.Data.filter((o) => o.TLineSeq === val.TLineSeq);
         return val;
       });
 
       let Data = {
         Header: ADJ.Data,
-        Detail: Detail.Data,
+        Detail: Detail,
       };
 
       ResponseLog.Send200(req, res, Data);
@@ -186,14 +188,21 @@ exports.CreateOrUpdate = async (req, res) => {
           t
         );
         if (ADJBatchData.success) {
+          await t.commit();
           let Allocation = {};
           if (Header.FormType !== "AdjInward") {
-            Allocation = await Stock.Allocation.Allocation(Detail,ADJData.Data.TransNo,ADJData.Data.LocationCode ,t);
+            Allocation = await Stock.Allocation.Allocation(
+              db[req.headers.compcode],
+              db[req.headers.compcode].IN_TransactionDetail,
+              ADJData.Data.TransNo,
+              ADJData.Data.TransDate,
+              ADJData.Data.TransType,
+              ADJData.Data.LocationCode);
           } else {
             Allocation.Success = true;
           }
           if (Allocation.Success === true) {
-            await t.commit();
+           
 
             if (Header.Posted) {
               Post.postData(req,res);

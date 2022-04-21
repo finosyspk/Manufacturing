@@ -3,8 +3,6 @@ const ResponseLog = require("../../../core/ResponseLog");
 const SeqFunc = require("../../../core/SeqFunc");
 const MaterialData = require("../../../core/MaterialData");
 
-
-
 exports.getLocations = async (req, res) => {
   try {
     let Columns = [];
@@ -41,19 +39,20 @@ exports.getInTransitLocations = async (req, res) => {
 
 exports.getInventoryItems = async (req, res) => {
   try {
-    let sQuery = `SELECT ItemCode, Item, LocationCode, Location, ItemType='Inventoried Item', ItemTrackBy, Price = AVG(UnitPrice), QtyIn = SUM(Quantity), 
+    let sQuery = `SELECT S.ItemCode, Item, UOMCode, UOM, UnitQuantity, LocationCode, Location, ItemType='Inventoried Item', ItemTrackBy, Price = AVG(UnitPrice), QtyIn = SUM(Quantity), 
                   QtyAlloc = SUM(ISNULL(A.QtyOut,0)), QtyOut = SUM(ISNULL(D.QtyOut,0)), QtyBal = SUM(Quantity) - (SUM(ISNULL(A.QtyOut,0)) + SUM(ISNULL(D.QtyOut,0)))FROM IN_StockMaster S
                   LEFT OUTER JOIN (SELECT HeaderNo, QtyOut = SUM(QtyOut) FROM IN_StockAlloc GROUP BY HeaderNo) AS A ON S.HeaderNo = A.HeaderNo
                   LEFT OUTER JOIN (SELECT HeaderNo, QtyOut = SUM(QtyOut) FROM IN_StockDetail GROUP BY HeaderNo) AS D ON S.HeaderNo = D.HeaderNo
+                  INNER JOIN (SELECT ItemCode, UOMCode, UOM, UnitQuantity FROM IN_Item) I ON I.ItemCode = S.ItemCode 
                   WHERE LocationCode = :LocationCode
-                  GROUP BY LocationCode, ItemCode, Item, Location, ItemTrackBy`;
+                  GROUP BY LocationCode, S.ItemCode, Item, UOMCode, UOM, UnitQuantity, Location, ItemTrackBy`;
 
     let ItemData = await db[req.headers.compcode].sequelize.query(sQuery, {
       replacements: { LocationCode: req.query.LocationCode},
       type: db[req.headers.compcode].Sequelize.QueryTypes.SELECT,
     });
 
-    let columns = ["ItemCode","Item","Location","ItemType","ItemTrackBy","Price","QtyIn","QtyBal"]
+    let columns = ["ItemCode","Item","Location","ItemType","ItemTrackBy","Price","QtyBal"]
     let Data = await MaterialData.Register(ItemData,columns);
     
     ResponseLog.Send200(req, res, {

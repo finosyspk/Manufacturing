@@ -6,8 +6,16 @@ const Op = Sequelize.Op
 exports.Consumption = async (req, TransNo) => {
     try {
         let Alloc = await db[req.headers.compcode].IN_StockAlloc.findAll({ where: { TransNo: TransNo }})
+
+        Alloc = JSON.stringify(Alloc)
+        Alloc = JSON.parse(Alloc)
+
+        // Alloc.map(a => {
+            
+        // })
+
         await db[req.headers.compcode].IN_StockDetail.bulkCreate(Alloc)
-        await db.IN_StockAlloc.destroy({ where: { TransNo: TransNo } })
+        await db[req.headers.compcode].IN_StockAlloc.destroy({ where: { TransNo: TransNo } })
 
         return { Success: true, Message: "Consumption Process Completed!"}
     }

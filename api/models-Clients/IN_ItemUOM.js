@@ -37,12 +37,12 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: ""
     },
-    IsActive: {
-      type: DataTypes.BOOLEAN,
+    UnitQuantity: {
+      type: DataTypes.DECIMAL(20,5),
       allowNull: false
     },
-    QTYEQV: {
-      type: DataTypes.DECIMAL(20,5),
+    IsActive: {
+      type: DataTypes.BOOLEAN,
       allowNull: false
     }
   }, {

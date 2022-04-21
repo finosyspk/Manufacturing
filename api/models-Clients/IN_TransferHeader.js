@@ -7,11 +7,11 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true
     },
     LocationCode: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
     Location: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
     TransNo: {
@@ -29,19 +29,19 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     ViaLocationCode: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
     ViaLocation: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
     DestinationLocationCode: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
     DestinationLocation: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
     Description: {

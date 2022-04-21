@@ -1,29 +1,31 @@
-const db = require('./../../api/models-Clients/index');
 const AppConfig = require('./../../AppConfig');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
 
-exports.Allocation = async (DetailData,TransNo,LocationCode, t) => {
+exports.Allocation = async (db, model, TransNo, TransDate, TransType,LocationCode) => {
     try {
+
+        let DetailData = await model.findAll({where : { TransNo : TransNo}})
+
         let UPD = "EXEC [dbo].[UpdateParallelData]"
         let AllocArray = []
         let AllocTemp = [];
         let Alloc;
         let Temp;
  
-        await db.IN_StockAlloc.destroy({ where: { TransNo: TransNo }, transaction: t })
-        await db.AlLocationTemp.destroy({ where: { TransNo: TransNo }, transaction: t })
-        await dbcon.seqdb.query(UPD, { transaction: t })
+        await db.IN_StockAlloc.destroy({ where: { TransNo: TransNo } })
+        // await db.AlLocationTemp.destroy({ where: { TransNo: TransNo } })
+        // await db.sequelize.query(UPD)
 
         let StockData = await db.IN_StockMaster.findAll({
             where: {
                 LocationCode: LocationCode
             },
-            attributes: ['IN_StockMaster.HeaderNo', 'IN_StockMaster.LocationCode', 'IN_StockMaster.ItemCode', 'IN_StockMaster.BatchNo',
-                'QtyIn', 'UnitPrice', 'AvgCost', 'ExpiryDate',
+            attributes: ['IN_StockMaster.HeaderNo', 'IN_StockMaster.LocationCode', 'IN_StockMaster.ItemCode', 'IN_StockMaster.Location', 'IN_StockMaster.Item', 'IN_StockMaster.ItemTrackBy', 'IN_StockMaster.BatchNo',
+                'Quantity', 'UnitPrice', 'AvgCost', 'ExpiryDate',
                 [db.Sequelize.literal('SUM(ISNULL(IN_StockAllocs.QtyOut,0))'), 'QtyAlloc'],
                 [db.Sequelize.literal('SUM(ISNULL(IN_StockDetails.QtyOut,0))'), 'QtyOut'],
-                [db.Sequelize.literal('QtyIn - (SUM(ISNULL(IN_StockAllocs.QtyOut,0)) + SUM(ISNULL(IN_StockDetails.QtyOut,0)))'), 'QtyBal']
+                [db.Sequelize.literal('Quantity - (SUM(ISNULL(IN_StockAllocs.QtyOut,0)) + SUM(ISNULL(IN_StockDetails.QtyOut,0)))'), 'QtyBal']
             ],
             include: [{
                 model: db.IN_StockAlloc,
@@ -38,15 +40,14 @@ exports.Allocation = async (DetailData,TransNo,LocationCode, t) => {
                 attributes: []
             }],
             raw: true,
-            group: ['IN_StockMaster.HeaderNo', 'IN_StockMaster.LocationCode', 'IN_StockMaster.BinNo', 'IN_StockMaster.ItemCode', 'IN_StockMaster.BatchNo',
-                'QtyIn', 'UnitPrice', 'AvgCost', 'ExpiryDate'],
+            group: ['IN_StockMaster.HeaderNo', 'IN_StockMaster.LocationCode', 'IN_StockMaster.ItemCode', 'IN_StockMaster.Location', 'IN_StockMaster.Item', 'IN_StockMaster.ItemTrackBy', 'IN_StockMaster.BatchNo',
+                'Quantity', 'UnitPrice', 'AvgCost', 'ExpiryDate'],
             having: [
                 {},
                 db.Sequelize.literal(
-                    'QtyIn > (SUM(ISNULL(IN_StockAllocs.QtyOut,0)) + SUM(ISNULL(IN_StockDetails.QtyOut,0)))'
+                    'Quantity > (SUM(ISNULL(IN_StockAllocs.QtyOut,0)) + SUM(ISNULL(IN_StockDetails.QtyOut,0)))'
                 )
-            ],
-            transaction: t
+            ]
         })
 
         StockData = JSON.stringify(StockData);
@@ -123,7 +124,7 @@ exports.Allocation = async (DetailData,TransNo,LocationCode, t) => {
                     // }
                     // else {
 
-                        QtyReq = val.unitQty;
+                        QtyReq = val.BaseQuantity;
 
                         for (let itm of StockData) {
                             if (val.ItemCode === itm.ItemCode) {
@@ -144,34 +145,37 @@ exports.Allocation = async (DetailData,TransNo,LocationCode, t) => {
                                     RID: 0,
                                     RecordDate: new Date(),
                                     HeaderNo: itm.HeaderNo,
-                                    LocationCode: val.LocationCode,
-                                    ItemCode: val.ItemCode,
+                                    LocationCode: itm.LocationCode,
+                                    Location: itm.Location,
+                                    ItemCode: itm.ItemCode,
+                                    Item: itm.Item,
                                     BatchNo: '',
-                                    TransType: val.TransType,
-                                    TransNo: val.TransNo,
-                                    TransDate: val.TransDate,
+                                    TransType: TransType,
+                                    ItemTrackBy: itm.ItemTrackBy,
+                                    TransNo: TransNo,
+                                    TransDate: TransDate,
                                     QtyOut: QtyLine,
                                     UnitCost: itm.UnitPrice,
                                     LineNo: val.TLineSeq
                                 }
                                 AllocArray.push(Alloc)
 
-                                Temp = {
-                                    HeaderNo: itm.HeaderNo,
-                                    LocationCode: val.LocationCode,
-                                    ItemCode: val.ItemCode,
-                                    BatchNo: '',
-                                    TransType: val.TransType,
-                                    TransNo: val.TransNo,
-                                    TransDate: val.TransDate,
-                                    QtyOut: val.Quantity,
-                                    QtyPass: QtyLine,
-                                    QtyFail: 0,
-                                    LineNo: val.TLineSeq,
-                                    Status: 'Pass'
-                                }
+                                // Temp = {
+                                //     HeaderNo: itm.HeaderNo,
+                                //     LocationCode: val.LocationCode,
+                                //     ItemCode: val.ItemCode,
+                                //     BatchNo: '',
+                                //     TransType: val.TransType,
+                                //     TransNo: val.TransNo,
+                                //     TransDate: val.TransDate,
+                                //     QtyOut: val.Quantity,
+                                //     QtyPass: QtyLine,
+                                //     QtyFail: 0,
+                                //     LineNo: val.TLineSeq,
+                                //     Status: 'Pass'
+                                // }
 
-                                AllocTemp.push(Temp)
+                                // AllocTemp.push(Temp)
 
                             }
                         // }
@@ -201,33 +205,33 @@ exports.Allocation = async (DetailData,TransNo,LocationCode, t) => {
             })
         );
 
-        await db.AlLocationTemp.bulkCreate(AllocTemp, { transaction: t })
+        // await db.AlLocationTemp.bulkCreate(AllocTemp)
 
-        let FailData = await db.AlLocationTemp.findAll({
-            where: {
-                TransNo: TransNo
-            },
-            transaction: t
-        })
+        // let FailData = await db.AlLocationTemp.findAll({
+        //     where: {
+        //         TransNo: TransNo
+        //     },
+        //     transaction: t
+        // })
 
-        FailData = JSON.stringify(FailData);
-        FailData = JSON.parse(FailData);
+        // FailData = JSON.stringify(FailData);
+        // FailData = JSON.parse(FailData);
         let FailCount = 0
 
-        FailData.map(function (val1) {
-            if (val1.Status === 'Fail') {
-                FailCount += 1;
-            }
-        })
+        // FailData.map(function (val1) {
+        //     if (val1.Status === 'Fail') {
+        //         FailCount += 1;
+        //     }
+        // })
 
-        FailData.map(function (val) {
-            val.FailCount = FailCount
-            val.StatusCode = val.Status === 'Pass' ? 1 : 0;
-            val.LineStatus = val.Status;
-            val.TransQty = val.QtyFail;
+        // FailData.map(function (val) {
+        //     val.FailCount = FailCount
+        //     val.StatusCode = val.Status === 'Pass' ? 1 : 0;
+        //     val.LineStatus = val.Status;
+        //     val.TransQty = val.QtyFail;
 
-            return val;
-        })
+        //     return val;
+        // })
 
         if (FailCount > 0) {
             await db.IN_StockAlloc.destroy({
@@ -302,8 +306,8 @@ exports.Allocation = async (DetailData,TransNo,LocationCode, t) => {
             }
         }
         else {
-            await db.IN_StockAlloc.bulkCreate(AllocArray, { transaction: t })
-            await dbcon.seqdb.query(UPD, { transaction: t })
+            await db.IN_StockAlloc.bulkCreate(AllocArray)
+            // await db.sequelize.query(UPD)
             return { Success: true, Message: "Allocation Process Completed!", data: [] }
         }
     }
