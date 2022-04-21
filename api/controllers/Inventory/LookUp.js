@@ -220,9 +220,10 @@ exports.getOpenIRs = async (req, res) => {
 exports.getOpenTransfers = async (req, res) => {
   try {
 
-    let sqlQuery =  `SELECT H.TransNo, TLineSeq, D.ItemCode, D.Item, ItemTrackBy, ItemType, 
-                      UOMCode, UOM, BaseQuantity, 
-                      UnitQuantity = UnitQuantity,
+    let sqlQuery =  `SELECT H.TransNo, H.LocationCode, H.Location, TLineSeq, D.ItemCode, D.Item, ItemTrackBy, ItemType, 
+                      UOMCode, UOM, 
+                      UnitQuantity,
+                      BaseQuantity, 
                       AvailableQuantity = Quantity,
                       UnitCost
                       FROM IN_TransferHeader H
