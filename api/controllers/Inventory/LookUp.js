@@ -198,19 +198,23 @@ exports.getItemClassAttributes = async (req, res) => {
 exports.getOpenIRs = async (req, res) => {
   try {
 
-    let sqlQuery =  `SELECT H.TransNo, RLineSeq, D.ItemCode, D.Item, UOMCode, UOM, BaseQuantity, 
-                      UnitQuantity = UnitQuantity - (UsedQuantity + CanceledQuantity),
+    let sqlQuery =  `SELECT RTransNo=H.TransNo, RLineSeq, D.ItemCode, D.Item, UOMCode, UOM, UnitQuantity, 
+                      BaseQuantity = UnitQuantity - (UsedQuantity + CanceledQuantity),
                       Quantity,
-                      AvailableQuantity = (UnitQuantity - (UsedQuantity + CanceledQuantity) / BaseQuantity),
-                      StockQuantity = ISNULL(S.QtyBal,0)
+                      AvailableQuantity = BaseQuantity - (UsedQuantity + CanceledQuantity),
+                      StockQuantity = dbo.GetInventoryStock(D.ItemCode,'${req.query.LocationCode}')
                       FROM IN_RequisitionMaster H
                       INNER JOIN  IN_RequisitionDetail D ON H.TransNo = D.TransNo AND D.LineStatus = 0
                       LEFT OUTER JOIN vw_Stock S ON S.ItemCode = D.ItemCode AND H.LocationCode = S.LocationCode
                       WHERE H.SubmitStatus = 1 AND H.LocationCode = :LocationCode`;
 
     let OpenIRs = await db[req.headers.compcode].sequelize.query(sqlQuery,{replacements : {LocationCode : req.query.LocationCode},type : db[req.headers.compcode].Sequelize.QueryTypes.SELECT}) 
-
-    ResponseLog.Send200(req, res, { OpenIRs: OpenIRs });
+    let columns = ["RTransNo","ItemCode","Item","UOM","AvailableQuantity","StockQuantity"]
+    let Data = await MaterialData.Register(OpenIRs,columns);
+    
+    ResponseLog.Send200(req, res, {
+      OpenIRs: Data,
+    });
   } catch (err) {
     console.log(err);
     ResponseLog.Error200(req, res, err.message);

@@ -32,7 +32,7 @@ exports.getOne = async (req, res) => {
     if (MOReceipt.success) {
       let Detail = await SeqFunc.getAll(
         db[req.headers.compcode].MOP_ReceiptDetail,
-        { ReceiptID: MOReceipt.Data.ReceiptID },
+        { where:{ReceiptID: MOReceipt.Data.ReceiptID} },
         false,
         ["CItemCode","CItem","UOMCode","UOM","Quantity","StageCode","StageName"]
       );

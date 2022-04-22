@@ -42,11 +42,9 @@ exports.getOne = async (req, res) => {
     });
 
     if (ADJ.success) {
-      let Detail = await SeqFunc.getAll(
-        db[req.headers.compcode].IN_TransferDetail,
-        { TransNo: ADJ.Data.TransNo },
-        false,
-        [
+      let Detail = await db[req.headers.compcode].IN_TransferDetail.findAll(
+        { where : {TransNo: ADJ.Data.TransNo},
+          attributes:[
           "TransNo",
           "TLineSeq",
           "ItemCode",
@@ -66,11 +64,11 @@ exports.getOne = async (req, res) => {
           "UnitCost",
           "Remarks",
         ]
-      );
+      });
 
       let Batches = await SeqFunc.getAll(
         db[req.headers.compcode].IN_TransferBatches,
-        { TransNo: ADJ.Data.TransNo },
+        { where: {TransNo: ADJ.Data.TransNo} },
         false,
         [
           "TransNo",
@@ -84,14 +82,14 @@ exports.getOne = async (req, res) => {
         ]
       );
 
-      ADJ.Data.map((val) => {
+      Detail.map((val) => {
         val.Batches = Batches.Data.filter((o) => o.TLineSeq === val.TLineSeq);
         return val;
       });
 
       let Data = {
         Header: ADJ.Data,
-        Detail: Detail.Data,
+        Detail: Detail,
       };
 
       ResponseLog.Send200(req, res, Data);

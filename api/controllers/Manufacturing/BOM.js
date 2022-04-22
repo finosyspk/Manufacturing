@@ -35,12 +35,12 @@ exports.getOne = async (req, res) => {
     if (req.query?.BillStatus){
       where.BillStatus = req.query?.BillStatus
     }
-    let BOM = await SeqFunc.getOne(db[req.headers.compcode].MOP_BOMHeader, where);
+    let BOM = await SeqFunc.getOne(db[req.headers.compcode].MOP_BOMHeader, {where: where});
 
     if (BOM.success) {
       let BOMDetail = await SeqFunc.getAll(
         db[req.headers.compcode].MOP_BOMDetail,
-        { BOMID: req.query.BOMID },
+        { where:{BOMID: req.query.BOMID} },
         false,
         [
           "CItemCode",
@@ -105,6 +105,7 @@ exports.CreateOrUpdate = async (req, res) => {
   try {
     let Header = req.body.Header;
     let Detail = req.body.Detail;
+    delete Header.BOMID 
 
     let BOMData = await SeqFunc.updateOrCreate(
       db[req.headers.compcode].MOP_BOMHeader,

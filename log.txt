@@ -14495,3 +14495,475 @@
  Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'MOP_Machine')"}
  **************************************************  
  Log Ended
+ Log Started on2022-04-22T06:39:32.604Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T06:40:45.027Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T06:42:24.709Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T06:42:49.776Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T06:42:53.683Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T06:43:23.992Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T06:44:38.039Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T06:45:26.620Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T06:46:05.731Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T06:49:40.447Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T06:51:11.071Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T06:52:25.419Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T06:55:34.150Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T06:57:36.362Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T06:59:28.013Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T06:59:40.487Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T06:59:50.879Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:01:29.018Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"ADJ.Data.map is not a function"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:01:45.644Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:01:56.875Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:02:07.649Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:02:12.007Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"ADJ.Data.map is not a function"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:02:22.715Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:02:32.795Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:04:15.884Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:06:07.711Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:06:20.588Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:07:03.596Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:08:13.742Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:10:40.738Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_Item')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:14:21.261Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:20:02.913Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:20:03.963Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:21:02.363Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Create -- Method : POST
+ FormName : Item
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_Item')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:22:49.777Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOIssuance
+ Message : {"Success":false,"Message":"Error Saving Record!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:25:50.833Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:31:53.023Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_TransferHeader')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:32:42.978Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_ItemClass')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:32:43.217Z
+ ************************************************** 
+
+ API : /api/v1/Financial/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'FIN_TaxSchedule')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:32:43.224Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_UOMHeader')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:32:43.234Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_AttributeHead')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:48:25.373Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:49:12.543Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:54:44.181Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:56:07.912Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T07:59:23.069Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T08:50:10.306Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"ADJ.Data.map is not a function"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T08:50:46.902Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_TransferHeader')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T08:52:56.031Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_TransferHeader')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T09:19:17.766Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T09:22:05.312Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T09:24:17.500Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T09:30:41.149Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_Location')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T09:30:41.231Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'IN_Item')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T09:34:07.042Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T10:11:49.846Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MO
+ Message : {"Success":false,"Message":"Error Saving Record!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T10:12:21.770Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MO
+ Message : {"Success":false,"Message":"Error Saving Record!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T10:12:54.044Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MO
+ Message : {"Success":false,"Message":"Error Saving Record!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-22T10:34:58.688Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended

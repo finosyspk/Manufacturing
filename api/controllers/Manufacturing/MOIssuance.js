@@ -32,7 +32,7 @@ exports.getOne = async (req, res) => {
     if (MOIssuance.success) {
       let Detail = await SeqFunc.getAll(
         db[req.headers.compcode].MOP_IssuanceDetail,
-        { PickID: MOIssuance.Data.PickID },
+        { where: {PickID: MOIssuance.Data.PickID} },
         false,
         ["CItemCode","CItem","UOMCode","UOM","Quantity","StageCode","StageName"]
       );
@@ -111,7 +111,7 @@ exports.CreateOrUpdate = async (req, res) => {
       if (MOIssDData.success) {
         
         let MO = await db[req.headers.compcode].MOP_MOHeader.findOne({ attributes: ["MOID"], where: { TransNo: MOIssuanceData.Data.MOTransNo },transaction:t }) 
-        await db[req.headers.compcode].MOP_MODetail.update({Completed: true},{ where: { MOID: MO.MOID },transaction:t })
+        await db[req.headers.compcode].MOP_MODetail.update({Completed: true},{ where: { MOID: MO.MOID, StageCode: MOIssuanceData.Data.StageCode},transaction:t })
         let Count = await db[req.headers.compcode].MOP_MODetail.count({ where: { MOID: MO.MOID, Completed:false },transaction:t })
         await db[req.headers.compcode].MOP_MOHeader.update({MOStatus: Count === 0 ? 'Ready to Receive' : 'In Process'},{ where: { MOID: MO.MOID },transaction:t })
         t.commit();

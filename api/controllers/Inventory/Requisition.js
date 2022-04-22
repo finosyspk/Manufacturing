@@ -13,25 +13,6 @@ exports.getList = async (req, res) => {
       Columns
     );
     if (REQ.success) {
-      // let Data = ;
-      REQ.Data.rows.map((val) => {
-        switch (val.SubmitStatus) {
-          case "0":
-            val.Status = "Pending";
-            break;
-          case "1":
-            val.Status = "Submitted";
-            break;
-          case "2":
-            val.Status = "Closed";
-            break;
-          default:
-            val.Status = "Pending";
-            break;
-        }
-        return val;
-      });
-
       ResponseLog.Send200(req, res, REQ.Data);
     } else {
       ResponseLog.Error200(req, res, "No Record Found!");
@@ -119,8 +100,8 @@ exports.CreateOrUpdate = async (req, res) => {
     delete Header.RID;
     Header.CreatedUser = "1";
     Header.ModifyUser = "1";
-    Header.SubmitStatus = 0;
-    Header.Status = "Pending";
+    // Header.SubmitStatus = 0;
+    Header.Status = Header.SubmitStatus ? "Submitted" : "Pending";
 
     let REQData = await SeqFunc.Trans_updateOrCreate(
       db[req.headers.compcode],

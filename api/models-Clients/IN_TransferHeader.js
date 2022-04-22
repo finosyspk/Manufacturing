@@ -21,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
       unique: "UQ__IN_Trans__9E5D30C2FCA25716"
     },
     TransDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false
     },
     TransType: {

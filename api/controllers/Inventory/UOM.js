@@ -23,7 +23,7 @@ exports.getOne = async (req, res) => {
     if (UOM.success) {
       let UOMDetail = await SeqFunc.getAll(
         db[req.headers.compcode].IN_UOMDetail,
-        { UOMHeaderCode: req.query.UOMHeaderCode },
+        { where:{UOMHeaderCode: req.query.UOMHeaderCode} },
         false,
         ["UOMCode","UOM"]
       );

@@ -45,6 +45,7 @@ exports.getBOM = async (req, res) => {
         "UOM",
         "RoutingName",
         "RoutingCode",
+        "StockMethod"
       ],
       // where: { BillStatus: {[Op.ne] : 'Obselete'} },
     });
@@ -130,6 +131,7 @@ exports.getBOMDetail = async (req, res) => {
         "Wastage",
         "StageCode",
         "StageName",
+        "StageSeq",
         "MachineCode",
         "MachineName",
         "PowerPerUnit",
@@ -174,11 +176,9 @@ exports.getMODetail = async (req, res) => {
     });
 
     MODetail.map((val) => {
-      let Qty =
-        val.BaseQuantity * req.query.Qty +
-        (val.BaseQuantity * val.Wastage) / 100;
+      let Qty = (val.BaseQuantity + val.Wastage) * req.query.Qty;
       val.BaseQuantity = Qty;
-      val.Quantity = val.BaseQuantity / val.UnitQuantity;
+      val.Quantity = Qty;
       val.PowerCost = val.PowerPerUnit * req.query.Qty;
       val.LaborCost = val.LaborPerUnit * req.query.Qty;
       val.Output = val.OutputPerUnit * req.query.Qty;
@@ -200,9 +200,11 @@ exports.getActiveMO = async (req, res) => {
       include:[{
         model: db[req.headers.compcode].MOP_MODetail,
         attributes:["StageCode","StageName","StageSeq","MachineCode","MachineName"],
+        where:{Completed:0},
+        order:["StageSeq"],
         require: true,
       }],
-      where: { TransStatus: 1, MOStatus: "Release" },
+      where: { TransStatus: 1, MOStatus: {[Op.notIn] : ["Completed","Ready to Receive"]} },
     });
 
     let RegData = await MaterialData.Register(MO, [
