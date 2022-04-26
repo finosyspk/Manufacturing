@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('IN_ItemClass', {
+  return sequelize.define('INV_ItemClass', {
     ItemClassID: {
       autoIncrement: true,
       type: DataTypes.BIGINT,
@@ -59,12 +59,12 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'IN_ItemClass',
+    tableName: 'INV_ItemClass',
     schema: 'dbo',
     timestamps: false,
     indexes: [
       {
-        name: "PK__IN_ItemC__75576F80F9876855",
+        name: "PK__INV_ItemC__75576F80F9876855",
         unique: true,
         fields: [
           { name: "ItemClassID" },

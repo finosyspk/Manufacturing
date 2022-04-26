@@ -14,7 +14,7 @@ exports.getList = async (req, res) => {
       ["RPosted", "Status"],
     ];
     let ADJ = await SeqFunc.getAll(
-      db[req.headers.compcode].IN_TransactionHeader,
+      db[req.headers.compcode].INV_TransactionHeader,
       {},
       true,
       Columns
@@ -37,7 +37,7 @@ exports.getList = async (req, res) => {
 exports.getOne = async (req, res) => {
   try {
     let ADJ = await SeqFunc.getOne(
-      db[req.headers.compcode].IN_TransactionHeader,
+      db[req.headers.compcode].INV_TransactionHeader,
       {
         where: { TransNo: req.query.TransNo },
       }
@@ -45,7 +45,7 @@ exports.getOne = async (req, res) => {
 
     if (ADJ.success) {
 
-      let Detail = await db[req.headers.compcode].IN_TransactionDetail.findAll({
+      let Detail = await db[req.headers.compcode].INV_TransactionDetail.findAll({
         where: {TransNo: req.query.TransNo},
         attributes:[
           "TransNo",
@@ -65,7 +65,7 @@ exports.getOne = async (req, res) => {
       })
 
       let Batches = await SeqFunc.getAll(
-        db[req.headers.compcode].IN_TransactionBatches,
+        db[req.headers.compcode].INV_TransactionBatches,
         { where: {TransNo: req.query.TransNo} },
         false,
         [
@@ -102,20 +102,20 @@ exports.getOne = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     let ADJ = await SeqFunc.getOne(
-      db[req.headers.compcode].IN_TransactionHeader,
+      db[req.headers.compcode].INV_TransactionHeader,
       {
         where: { TransNo: req.query.TransNo, Posted: false },
       }
     );
 
     if (ADJ.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].IN_TransactionBatches, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_TransactionBatches, {
         where: { TRID: ADJ.Data.TRID },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].IN_TransactionDetail, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_TransactionDetail, {
         where: { TRID: ADJ.Data.TRID },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].IN_TransactionHeader, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_TransactionHeader, {
         where: { TRID: ADJ.Data.TRID },
       });
       ResponseLog.Delete200(req, res);
@@ -141,7 +141,7 @@ exports.CreateOrUpdate = async (req, res) => {
 
     let ADJData = await SeqFunc.Trans_updateOrCreate(
       db[req.headers.compcode],
-      db[req.headers.compcode].IN_TransactionHeader,
+      db[req.headers.compcode].INV_TransactionHeader,
       {
         where: { TransNo: Header.TransNo ? Header.TransNo : "" },
         transaction: t,
@@ -175,14 +175,14 @@ exports.CreateOrUpdate = async (req, res) => {
       });
 
       let ADJDetailData = await SeqFunc.Trans_bulkCreate(
-        db[req.headers.compcode].IN_TransactionDetail,
+        db[req.headers.compcode].INV_TransactionDetail,
         { where: { TRID: ADJData.Data.TRID }, transaction: t },
         Detail,
         t
       );
       if (ADJDetailData.success) {
         let ADJBatchData = await SeqFunc.Trans_bulkCreate(
-          db[req.headers.compcode].IN_TransactionBatches,
+          db[req.headers.compcode].INV_TransactionBatches,
           { where: { TransNo: ADJData.Data.TransNo }, transaction: t },
           BatchArray,
           t
@@ -193,7 +193,7 @@ exports.CreateOrUpdate = async (req, res) => {
           if (Header.FormType !== "AdjInward") {
             Allocation = await Stock.Allocation.Allocation(
               db[req.headers.compcode],
-              db[req.headers.compcode].IN_TransactionDetail,
+              db[req.headers.compcode].INV_TransactionDetail,
               ADJData.Data.TransNo,
               ADJData.Data.TransDate,
               ADJData.Data.TransType,

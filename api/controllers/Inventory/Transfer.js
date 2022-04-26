@@ -15,7 +15,7 @@ exports.getList = async (req, res) => {
       ["RPosted", "Status"],
     ];
     let ADJ = await SeqFunc.getAll(
-      db[req.headers.compcode].IN_TransferHeader,
+      db[req.headers.compcode].INV_TransferHeader,
       {},
       true,
       Columns
@@ -37,12 +37,12 @@ exports.getList = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   try {
-    let ADJ = await SeqFunc.getOne(db[req.headers.compcode].IN_TransferHeader, {
+    let ADJ = await SeqFunc.getOne(db[req.headers.compcode].INV_TransferHeader, {
       where: { TransNo: req.query.TransNo },
     });
 
     if (ADJ.success) {
-      let Detail = await db[req.headers.compcode].IN_TransferDetail.findAll(
+      let Detail = await db[req.headers.compcode].INV_TransferDetail.findAll(
         { where : {TransNo: ADJ.Data.TransNo},
           attributes:[
           "TransNo",
@@ -50,6 +50,7 @@ exports.getOne = async (req, res) => {
           "ItemCode",
           "Item",
           "ItemTrackBy",
+          "ItemType",
           "UOMCode",
           "UOM",
           "UnitQuantity",
@@ -67,7 +68,7 @@ exports.getOne = async (req, res) => {
       });
 
       let Batches = await SeqFunc.getAll(
-        db[req.headers.compcode].IN_TransferBatches,
+        db[req.headers.compcode].INV_TransferBatches,
         { where: {TransNo: ADJ.Data.TransNo} },
         false,
         [
@@ -103,18 +104,18 @@ exports.getOne = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    let ADJ = await SeqFunc.getOne(db[req.headers.compcode].IN_TransferHeader, {
+    let ADJ = await SeqFunc.getOne(db[req.headers.compcode].INV_TransferHeader, {
       where: { TransNo: req.query.TransNo, Posted: false },
     });
 
     if (ADJ.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].IN_TransferBatches, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_TransferBatches, {
         where: { TransNo: ADJ.Data.TransNo },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].IN_TransferDetail, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_TransferDetail, {
         where: { TransNo: ADJ.Data.TransNo },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].IN_TransferHeader, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_TransferHeader, {
         where: { TransNo: ADJ.Data.TransNo },
       });
       ResponseLog.Delete200(req, res);
@@ -139,7 +140,7 @@ exports.CreateOrUpdate = async (req, res) => {
 
     let ADJData = await SeqFunc.Trans_updateOrCreate(
       db[req.headers.compcode],
-      db[req.headers.compcode].IN_TransferHeader,
+      db[req.headers.compcode].INV_TransferHeader,
       {
         where: { TransNo: Header.TransNo ? Header.TransNo : "" },
         transaction: t,
@@ -156,7 +157,7 @@ exports.CreateOrUpdate = async (req, res) => {
         o.TransNo = ADJData.Data.TransNo
         o.TLineSeq = LineSeq
         if (o.ItemTrackBy !== "None") {
-          o.Batches.map((BData) => {
+          o.Batches?.map((BData) => {
             let Bquery = {
               TransNo: ADJData.Data.TransNo,
               BatchNo: BData.BatchNo,
@@ -173,14 +174,14 @@ exports.CreateOrUpdate = async (req, res) => {
       });
 
       let ADJDetailData = await SeqFunc.Trans_bulkCreate(
-        db[req.headers.compcode].IN_TransferDetail,
+        db[req.headers.compcode].INV_TransferDetail,
         { where: { TransNo: ADJData.Data.TransNo }, transaction: t },
         Detail,
         t
       );
       if (ADJDetailData.success) {
         let ADJBatchData = await SeqFunc.Trans_bulkCreate(
-          db[req.headers.compcode].IN_TransferBatches,
+          db[req.headers.compcode].INV_TransferBatches,
           { where: { TransNo: ADJData.Data.TransNo }, transaction: t },
           BatchArray,
           t
@@ -190,7 +191,7 @@ exports.CreateOrUpdate = async (req, res) => {
           let Allocation = {};
             Allocation = await Stock.Allocation.Allocation(
               db[req.headers.compcode],
-              db[req.headers.compcode].IN_TransferDetail,
+              db[req.headers.compcode].INV_TransferDetail,
               ADJData.Data.TransNo,
               ADJData.Data.TransDate,
               ADJData.Data.TransType,
@@ -226,6 +227,7 @@ exports.CreateOrUpdate = async (req, res) => {
       ResponseLog.Error200(req, res, "Error Saving Record!");
     }
   } catch (err) {
+    console.log(err)
     t.rollback();
     ResponseLog.Error200(req, res, err.message);
   }

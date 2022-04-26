@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('IN_TransactionHeader', {
+  return sequelize.define('INV_TransactionHeader', {
     TRID: {
       type: DataTypes.BIGINT,
       allowNull: false,
@@ -18,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: false,
       primaryKey: true,
-      unique: "UQ__IN_Transaction__9E5D30C2FCA25716"
+      unique: "UQ__INV_Transaction__9E5D30C2FCA25716"
     },
     TransDate: {
       type: DataTypes.DATE,
@@ -84,12 +84,12 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'IN_TransactionHeader',
+    tableName: 'INV_TransactionHeader',
     schema: 'dbo',
     timestamps: true,
     indexes: [
       {
-        name: "PK__IN_Transaction__9E5D30C33A977B2F",
+        name: "PK__INV_Transaction__9E5D30C33A977B2F",
         unique: true,
         fields: [
           { name: "TransNo" },

@@ -1,7 +1,7 @@
 const db = require("../../models-Clients/index");
 const ResponseLog = require("../../../core/ResponseLog");
 const SeqFunc = require("../../../core/SeqFunc");
-const Stock = require("../../../core/Stock");
+const Post = require("./PostReceiving");
 
 exports.getList = async (req, res) => {
   try {
@@ -14,8 +14,8 @@ exports.getList = async (req, res) => {
       ["RPosted", "Status"],
     ];
     let ADJ = await SeqFunc.getAll(
-      db[req.headers.compcode].IN_TransferHeader,
-      {where : { TransType: 'RIXFR' }},
+      db[req.headers.compcode].INV_TransferHeader,
+      { where: { TransType: "RIXFR" } },
       true,
       Columns
     );
@@ -36,17 +36,14 @@ exports.getList = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   try {
-    let ADJ = await SeqFunc.getOne(
-      db[req.headers.compcode].IN_TransferHeader,
-      {
-        where: { TransNo: req.query.TransNo },
-      }
-    );
+    let ADJ = await SeqFunc.getOne(db[req.headers.compcode].INV_TransferHeader, {
+      where: { TransNo: req.query.TransNo },
+    });
 
     if (ADJ.success) {
       let Detail = await SeqFunc.getAll(
-        db[req.headers.compcode].IN_TransactionDetail,
-        { TRID: ADJ.Data.TRID },
+        db[req.headers.compcode].INV_TransferDetail,
+        { where: { TransNo: req.query.TransNo } },
         false,
         [
           "TransNo",
@@ -64,22 +61,22 @@ exports.getOne = async (req, res) => {
         ]
       );
 
-      let Batches = await SeqFunc.getAll(
-        db[req.headers.compcode].IN_TransactionBatches,
-        { TRID: ADJ.Data.TRID },
-        false,
-        [
-          "TransNo",
-          "TLineSeq",
-          "BatchNo",
-          "ExpiryDate",
-          "Quantity",
-          "BaseQuantity",
-        ]
-      );
+      // let Batches = await SeqFunc.getAll(
+      //   db[req.headers.compcode].INV_TransferBatches,
+      //   { where: { TransNo: req.query.TransNo } },
+      //   false,
+      //   [
+      //     "TransNo",
+      //     "TLineSeq",
+      //     "BatchNo",
+      //     "ExpiryDate",
+      //     "Quantity",
+      //     "BaseQuantity",
+      //   ]
+      // );
 
-      ADJ.Data.map((val) => {
-        val.Batches = Batches.Data.filter((o) => o.TLineSeq === val.TLineSeq);
+      Detail.Data.map((val) => {
+        val.Batches = [];
         return val;
       });
 
@@ -99,21 +96,18 @@ exports.getOne = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    let ADJ = await SeqFunc.getOne(
-      db[req.headers.compcode].IN_TransferHeader,
-      {
-        where: { TransNo: req.query.TransNo, Posted: false },
-      }
-    );
+    let ADJ = await SeqFunc.getOne(db[req.headers.compcode].INV_TransferHeader, {
+      where: { TransNo: req.query.TransNo, Posted: false },
+    });
 
     if (ADJ.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].IN_TransactionBatches, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_TransferBatches, {
         where: { TRID: ADJ.Data.TRID },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].IN_TransactionDetail, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_TransferDetail, {
         where: { TRID: ADJ.Data.TRID },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].IN_TransferHeader, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_TransferHeader, {
         where: { TRID: ADJ.Data.TRID },
       });
       ResponseLog.Delete200(req, res);
@@ -126,20 +120,20 @@ exports.delete = async (req, res) => {
 };
 
 exports.CreateOrUpdate = async (req, res) => {
+  const t = await db[req.headers.compcode].sequelize.transaction();
   try {
-    const t = await db[req.headers.compcode].sequelize.transaction();
-
     let Header = req.body.Header;
     let Detail = req.body.Detail;
-    delete Header.TRHID
+    delete Header.TRHID;
     Header.CreatedUser = "1";
     Header.ModifyUser = "1";
     Header.PostedUser = "1";
-    Header.Posted = "1";
+    Header.LocationCode = Header.SourceLocationCode;
+    Header.Location = Header.SourceLocation;
 
     let ADJData = await SeqFunc.Trans_updateOrCreate(
       db[req.headers.compcode],
-      db[req.headers.compcode].IN_TransferHeader,
+      db[req.headers.compcode].INV_TransferHeader,
       {
         where: { TransNo: Header.TransNo ? Header.TransNo : "" },
         transaction: t,
@@ -152,15 +146,20 @@ exports.CreateOrUpdate = async (req, res) => {
       let BatchArray = [];
       Detail.map((o) => {
         o.TRID = ADJData.Data.TRID;
-        if (d.ItemTrackBy !== "None") {
-          d.Batches.map((BData) => {
+        o.TransNo = ADJData.Data.TransNo;
+
+        o.SrcTNo = o.TransNo;
+        o.SrcTLineSeq = o.TLineSeq;
+
+        if (o.ItemTrackBy !== "None") {
+          o.Batches?.map((BData) => {
             let Bquery = {
-              TransNo: Header.TransNo,
+              TransNo: ADJData.Data.TransNo,
               BatchNo: BData.BatchNo,
-              ExpiryDate: d.ItemTrackBy === "Batch" ? null : BData.ExpiryDate,
+              ExpiryDate: o.ItemTrackBy === "Batch" ? null : BData.ExpiryDate,
               Quantity: BData.Quantity,
               UnitQuantity: BData.UnitQuantity,
-              TLineSeq: d.TLineSeq,
+              TLineSeq: o.TLineSeq,
             };
             BatchArray.push(Bquery);
           });
@@ -169,47 +168,41 @@ exports.CreateOrUpdate = async (req, res) => {
       });
 
       let ADJDetailData = await SeqFunc.Trans_bulkCreate(
-        db[req.headers.compcode].IN_TransferDetail,
-        { where: { TRID: ADJData.Data.TRID }, transaction: t },
+        db[req.headers.compcode].INV_TransferDetail,
+        { where: { TransNo: ADJData.Data.TransNo }, transaction: t },
         Detail,
         t
       );
+
       if (ADJDetailData.success) {
-        let ADJBatchData = await SeqFunc.Trans_bulkCreate(
-          db[req.headers.compcode].IN_TransferBatches,
-          { where: { TransNo: ADJData.Data.TransNo }, transaction: t },
-          BatchArray,
-          t
-        );
-        if (ADJBatchData.success) {
-          let Allocation = {};
-          // if (Type !== "XFR") {
-            Allocation = await Stock.Allocation.Allocation(
-              Detail,
-              0,
-              res,
-              Header.SubmitStatus,
-              req.headers.userid,
-              "",
-              t
-            );
-          // } else {
-          //   Allocation.Success = true;
-          // }
-          if (Allocation.Success === true) {
-            await t.commit();
-            if (ADJDetailData.created) {
-              ResponseLog.Create200(req, res);
-            } else {
-              ResponseLog.Update200(req, res);
-            }
-          } else {
-            t.rollback();
-            res.status(200).send({ Success: false, Message: Allocation.Message, data: Allocation.data })
-          }
+        // let ADJBatchData = await SeqFunc.Trans_bulkCreate(
+        //   db[req.headers.compcode].INV_TransferBatches,
+        //   { where: { TransNo: ADJData.Data.TransNo }, transaction: t },
+        //   BatchArray,
+        //   t
+        // );
+
+        // if (ADJBatchData.success) {
+        await t.commit();
+
+        //   if (ADJDetailData.created) {
+        //     ResponseLog.Create200(req, res);
+        //   } else {
+        //     ResponseLog.Update200(req, res);
+        //   }
+        // } else {
+        //   t.rollback();
+        //   ResponseLog.Error200(req, res, "Error Saving Record!");
+        // }
+
+        if (Header.Posted) {
+          Post.postData(req, res);
         } else {
-          t.rollback();
-          ResponseLog.Error200(req, res, "Error Saving Record!");
+          if (ADJData.created) {
+            ResponseLog.Create200(req, res);
+          } else {
+            ResponseLog.Update200(req, res);
+          }
         }
       } else {
         t.rollback();
@@ -220,6 +213,7 @@ exports.CreateOrUpdate = async (req, res) => {
       ResponseLog.Error200(req, res, "Error Saving Record!");
     }
   } catch (err) {
+    console.log(err);
     t.rollback();
     ResponseLog.Error200(req, res, err.message);
   }

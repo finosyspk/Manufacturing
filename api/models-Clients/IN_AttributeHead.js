@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('IN_AttributeHead', {
+  return sequelize.define('INV_AttributeHead', {
     AttHeadID: {
       autoIncrement: true,
       type: DataTypes.BIGINT,
@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     AttHeadCode: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      unique: "IX_IN_AttributeHead"
+      unique: "IX_INV_AttributeHead"
     },
     AttHead: {
       type: DataTypes.STRING(255),
@@ -37,19 +37,19 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'IN_AttributeHead',
+    tableName: 'INV_AttributeHead',
     schema: 'dbo',
     timestamps: false,
     indexes: [
       {
-        name: "IX_IN_AttributeHead",
+        name: "IX_INV_AttributeHead",
         unique: true,
         fields: [
           { name: "AttHeadCode" },
         ]
       },
       {
-        name: "PK__IN_Attri__755F7027728014BC",
+        name: "PK__INV_Attri__755F7027728014BC",
         unique: true,
         fields: [
           { name: "AttHeadID" },

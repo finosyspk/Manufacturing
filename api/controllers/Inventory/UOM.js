@@ -4,8 +4,8 @@ const SeqFunc = require("../../../core/SeqFunc");
 
 exports.getList = async (req, res) => {
   try {
-    let Columns = ["UOMHeaderCode","UOMHeader","BaseUOM","IsActive"];
-    let UOM = await SeqFunc.getAll(db[req.headers.compcode].IN_UOMHeader, {}, true, Columns);
+    let Columns = ["UOMHeaderCode","UOMHeader","BaseUOMCode","IsActive"];
+    let UOM = await SeqFunc.getAll(db[req.headers.compcode].INV_UOMHeader, {}, true, Columns);
     if (UOM.success) {
       ResponseLog.Send200(req, res, UOM.Data);
     } else {
@@ -18,11 +18,11 @@ exports.getList = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   try {
-    let UOM = await SeqFunc.getOne(db[req.headers.compcode].IN_UOMHeader, { where:{UOMHeaderCode: req.query.UOMHeaderCode} });
+    let UOM = await SeqFunc.getOne(db[req.headers.compcode].INV_UOMHeader, { where:{UOMHeaderCode: req.query.UOMHeaderCode} });
 
     if (UOM.success) {
       let UOMDetail = await SeqFunc.getAll(
-        db[req.headers.compcode].IN_UOMDetail,
+        db[req.headers.compcode].INV_UOMDetail,
         { where:{UOMHeaderCode: req.query.UOMHeaderCode} },
         false,
         ["UOMCode","UOM"]
@@ -47,17 +47,17 @@ exports.getOne = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     let UOM = await SeqFunc.getOne(
-      db[req.headers.compcode].IN_UOMHeader,
+      db[req.headers.compcode].INV_UOMHeader,
       {
         where: { UOMHeaderCode: req.query.UOMHeaderCode },
       }
     );
 
     if (UOM.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].IN_UOMDetail, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_UOMDetail, {
         where: { UOMHeaderCode: req.query.UOMHeaderCode },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].IN_UOMHeader, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_UOMHeader, {
         where: { UOMHeaderCode: req.query.UOMHeaderCode },
       });
       ResponseLog.Delete200(req, res);
@@ -76,13 +76,13 @@ exports.CreateOrUpdate = async (req, res) => {
     delete Header.UOMHID
 
     let UOMData = await SeqFunc.updateOrCreate(
-      db[req.headers.compcode].IN_UOMHeader,
+      db[req.headers.compcode].INV_UOMHeader,
       { where:{UOMHeaderCode: Header.UOMHeaderCode} },
       Header
     );
 
     if (UOMData.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].IN_UOMDetail, { where:{UOMHeaderCode: Header.UOMHeaderCode} });
+      await SeqFunc.Delete(db[req.headers.compcode].INV_UOMDetail, { where:{UOMHeaderCode: Header.UOMHeaderCode} });
 
       Detail.map(o => {
         o.UOMHID = UOMData.Data.UOMHID
@@ -92,7 +92,7 @@ exports.CreateOrUpdate = async (req, res) => {
         return o
       })
 
-      await SeqFunc.bulkCreate(db[req.headers.compcode].IN_UOMDetail,Detail)
+      await SeqFunc.bulkCreate(db[req.headers.compcode].INV_UOMDetail,Detail)
 
       if (UOMData.created) {
         ResponseLog.Create200(req, res);

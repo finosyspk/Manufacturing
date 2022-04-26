@@ -11,6 +11,15 @@ router.get("/", CheckAuth, (req, res) => {
     case "Accounts":
       controller.LookUp.getAccounts(req, res);
       break;
+    case "PayTerms":
+      controller.LookUp.getPayTerms(req, res);
+      break;
+    case "SalesPersons":
+      controller.LookUp.getSalesPersons(req, res);
+      break;
+    case "Customers":
+      controller.LookUp.getCustomers(req, res);
+      break;
     default:
       break;
   }

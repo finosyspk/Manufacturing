@@ -12,7 +12,7 @@ exports.getList = async (req, res) => {
       "ItemTrackBy",
       "IsActive",
     ];
-    let Item = await SeqFunc.getAll(db[req.headers.compcode].IN_Item, {}, true, Columns);
+    let Item = await SeqFunc.getAll(db[req.headers.compcode].INV_Item, {}, true, Columns);
     if (Item.success) {
       ResponseLog.Send200(req, res, Item.Data);
     } else {
@@ -25,30 +25,32 @@ exports.getList = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   try {
-    let Item = await SeqFunc.getOne(db[req.headers.compcode].IN_Item, {
+    let Item = await SeqFunc.getOne(db[req.headers.compcode].INV_Item, {
       where: { ItemCode: req.query.ItemCode },
     });
 
     if (Item.success) {
       let ItemUOM = await SeqFunc.getAll(
-        db[req.headers.compcode].IN_ItemUOM,
+        db[req.headers.compcode].INV_ItemUOM,
         { where: {ItemID: Item.Data.ItemID} },
         false,
         ["UOMCode","UOM", "IsActive", "QTYEQV"]
       );
 
       let ItemLocation = await SeqFunc.getAll(
-        db[req.headers.compcode].IN_ItemLocation,
+        db[req.headers.compcode].INV_ItemLocation,
         { where: {ItemID: Item.Data.ItemID} },
         false,
         ["LocationID", "ReOrderLevel", "MinQty", "MaxQty", "SafetyStock"]
       );
       let ItemAttributes = await SeqFunc.getAll(
-        db[req.headers.compcode].IN_ItemAttributes,
+        db[req.headers.compcode].INV_ItemAttributes,
         { where: {ItemID: Item.Data.ItemID} },
         false,
-        ["AttributeCode", "AttributeValue", "AttributeType", "IsVariant"]
+        ["AttributeCode", "AttValue", "AttributeType", "IsVariant"]
       );
+
+      console.log({ItemAttributes})
 
       let Data = {
         Header: Item.Data,
@@ -69,23 +71,23 @@ exports.getOne = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     let ItemData = await SeqFunc.getOne(
-      db[req.headers.compcode].IN_Item,
+      db[req.headers.compcode].INV_Item,
       { where: { ItemCode: req.query.ItemCode } },
       Header
     );
 
     if (ItemData.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].IN_ItemUOM, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_ItemUOM, {
         where: { ItemCode: ItemData.Data.ItemCode },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].IN_ItemLocation, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_ItemLocation, {
         where: { ItemCode: ItemData.Data.ItemCode },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].IN_ItemAttributes, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_ItemAttributes, {
         where: { ItemCode: ItemData.Data.ItemCode },
       });
 
-      await SeqFunc.Delete(db[req.headers.compcode].IN_Item, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_Item, {
         where: { ItemCode: ItemData.Data.ItemCode },
       });
       ResponseLog.Delete200(req, res);
@@ -105,20 +107,21 @@ exports.CreateOrUpdate = async (req, res) => {
     delete Header.ItemID
 
     let ItemData = await SeqFunc.updateOrCreate(
-      db[req.headers.compcode].IN_Item,
+      db[req.headers.compcode].INV_Item,
       { where: { ItemCode: Header.ItemCode } },
       Header
     );
 
     if (ItemData.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].IN_ItemUOM, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_ItemUOM, {
         where: { ItemCode: ItemData.Data.ItemCode },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].IN_ItemAttributes, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_ItemAttributes, {
         where: { ItemCode: ItemData.Data.ItemCode },
       });
 
       UOM.map(o => {
+        delete o.ItemUOMID
         o.ItemID = ItemData.Data.ItemID
         o.ItemCode = ItemData.Data.ItemCode
         o.Item = ItemData.Data.Item
@@ -126,13 +129,15 @@ exports.CreateOrUpdate = async (req, res) => {
         return o
       })
       Attributes.map(o => {
+        delete o.IAttID
+        o.AttributeValue = o.AttValue
         o.ItemID = ItemData.Data.ItemID
         o.ItemCode = ItemData.Data.ItemCode
         o.Item = ItemData.Data.Item
         return o
       })
-      await SeqFunc.bulkCreate(db[req.headers.compcode].IN_ItemUOM, UOM);
-      await SeqFunc.bulkCreate(db[req.headers.compcode].IN_ItemAttributes, Attributes);
+      await SeqFunc.bulkCreate(db[req.headers.compcode].INV_ItemUOM, UOM);
+      await SeqFunc.bulkCreate(db[req.headers.compcode].INV_ItemAttributes, Attributes);
 
       if (ItemData.created) {
         ResponseLog.Create200(req, res);

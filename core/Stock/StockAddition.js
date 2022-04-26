@@ -26,7 +26,7 @@ exports.Addition = async (db, model, TransNo,LocationCode, Location) => {
     });
     console.log({Data})
 
-    await db.IN_StockMaster.bulkCreate(Data);
+    await db.INV_StockMaster.bulkCreate(Data);
 
     return { Success: true, Message: "Stock Added Successfully!" };
   } catch (ex) {

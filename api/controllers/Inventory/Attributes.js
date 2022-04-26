@@ -5,7 +5,7 @@ const SeqFunc = require("../../../core/SeqFunc");
 exports.getList = async (req, res) => {
   try {
     let Columns = [["AttHeadCode","Attribute Head Code"],["AttHead","Attribute Head Desc"],"IsActive"];
-    let Attribute = await SeqFunc.getAll(db[req.headers.compcode].IN_AttributeHead, {}, true, Columns);
+    let Attribute = await SeqFunc.getAll(db[req.headers.compcode].INV_AttributeHead, {}, true, Columns);
     if (Attribute.success) {
       ResponseLog.Send200(req, res, Attribute.Data);
     } else {
@@ -18,11 +18,11 @@ exports.getList = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   try {
-    let Attribute = await SeqFunc.getOne(db[req.headers.compcode].IN_AttributeHead, { where:{AttHeadCode: req.query.AttHeadCode} });
+    let Attribute = await SeqFunc.getOne(db[req.headers.compcode].INV_AttributeHead, { where:{AttHeadCode: req.query.AttHeadCode} });
 
     if (Attribute.success) {
       let AttributeDetail = await SeqFunc.getAll(
-        db[req.headers.compcode].IN_AttributeCode,
+        db[req.headers.compcode].INV_AttributeCode,
         { where: {AttHeadCode: req.query.AttHeadCode} },
         false,
         [["AttCodeID","Attribute Code"],["AttCodeDesc","Attribute Desc"]]
@@ -47,17 +47,17 @@ exports.getOne = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     let Attributes = await SeqFunc.getOne(
-      db[req.headers.compcode].IN_AttributeHead,
+      db[req.headers.compcode].INV_AttributeHead,
       {
         where: { AttHeadCode: req.query.AttHeadCode },
       }
     );
 
     if (Attributes.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].IN_AttributeCode, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_AttributeCode, {
         where: { AttHeadCode: req.query.AttHeadCode },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].IN_AttributeHead, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_AttributeHead, {
         where: { AttHeadCode: req.query.AttHeadCode },
       });
       ResponseLog.Delete200(req, res);
@@ -76,13 +76,13 @@ exports.CreateOrUpdate = async (req, res) => {
     delete Header.AttHeadID
 
     let AttData = await SeqFunc.updateOrCreate(
-      db[req.headers.compcode].IN_AttributeHead,
+      db[req.headers.compcode].INV_AttributeHead,
       { where:{AttHeadCode: Header.AttHeadCode} },
       Header
     );
 
     if (AttData.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].IN_AttributeCode, { where:{AttHeadCode: Header.AttHeadCode} });
+      await SeqFunc.Delete(db[req.headers.compcode].INV_AttributeCode, { where:{AttHeadCode: Header.AttHeadCode} });
 
       Detail.map(o => {
         o.AttHeadID = AttData.Data.AttHeadID
@@ -92,7 +92,7 @@ exports.CreateOrUpdate = async (req, res) => {
         return o
       })
 
-      await SeqFunc.bulkCreate(db[req.headers.compcode].IN_AttributeCode,Detail)
+      await SeqFunc.bulkCreate(db[req.headers.compcode].INV_AttributeCode,Detail)
 
       if (AttData.created) {
         ResponseLog.Create200(req, res);

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('IN_Location', {
+  return sequelize.define('INV_Location', {
     LocationID: {
       autoIncrement: true,
       type: DataTypes.BIGINT,
@@ -104,12 +104,12 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'IN_Location',
+    tableName: 'INV_Location',
     schema: 'dbo',
     timestamps: false,
     indexes: [
       {
-        name: "PK__IN_Locat__E7FEA477B1031BAA",
+        name: "PK__INV_Locat__E7FEA477B1031BAA",
         unique: true,
         fields: [
           { name: "LocationID" },

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('IN_ItemClassAttributes', {
+  return sequelize.define('INV_ItemClassAttributes', {
     IAttID: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -24,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: "",
       references: {
-        model: 'IN_AttributeHead',
+        model: 'INV_AttributeHead',
         key: 'AttHeadCode'
       }
     },
@@ -50,7 +50,7 @@ module.exports = function(sequelize, DataTypes) {
     },
   }, {
     sequelize,
-    tableName: 'IN_ItemClassAttributes',
+    tableName: 'INV_ItemClassAttributes',
     schema: 'dbo',
     timestamps: true,
     indexes: [

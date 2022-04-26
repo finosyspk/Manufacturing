@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 module.exports = function (sequelize, DataTypes) {
-  var IN_RequisitionDetail = sequelize.define(
-    "IN_RequisitionDetail",
+  var INV_RequisitionDetail = sequelize.define(
+    "INV_RequisitionDetail",
     {
       RID: {
         type: DataTypes.BIGINT,
@@ -91,13 +91,13 @@ module.exports = function (sequelize, DataTypes) {
     },
     {
       timestamps: true,
-      tableName: "IN_RequisitionDetail",
+      tableName: "INV_RequisitionDetail",
     }
   );
-  IN_RequisitionDetail.associate = function (models) {
-    IN_RequisitionDetail.belongsTo(models.IN_RequisitionMaster, {
+  INV_RequisitionDetail.associate = function (models) {
+    INV_RequisitionDetail.belongsTo(models.INV_RequisitionMaster, {
       foreignKey: "TransNo",
     });
   };
-  return IN_RequisitionDetail;
+  return INV_RequisitionDetail;
 };

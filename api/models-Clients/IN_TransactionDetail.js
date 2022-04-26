@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('IN_TransactionDetail', {
+  return sequelize.define('INV_TransactionDetail', {
     TRID: {
       type: DataTypes.BIGINT,
       allowNull: false,
@@ -67,12 +67,12 @@ module.exports = function(sequelize, DataTypes) {
     },
   }, {
     sequelize,
-    tableName: 'IN_TransactionDetail',
+    tableName: 'INV_TransactionDetail',
     schema: 'dbo',
     timestamps: true,
     indexes: [
       {
-        name: "PK_IN_TransactionDetail",
+        name: "PK_INV_TransactionDetail",
         unique: true,
         fields: [
           { name: "TransNo" },

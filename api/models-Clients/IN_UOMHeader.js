@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('IN_UOMHeader', {
+  return sequelize.define('INV_UOMHeader', {
     UOMHID: {
       type: DataTypes.BIGINT,
       allowNull: false,
@@ -16,7 +16,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: ""
     },
-    BaseUOM: {
+    BaseUOMCode: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
@@ -41,12 +41,12 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'IN_UOMHeader',
+    tableName: 'INV_UOMHeader',
     schema: 'dbo',
     timestamps: true,
     indexes: [
       {
-        name: "PK__IN_UOMHe__8DF9717368606EEC",
+        name: "PK__INV_UOMHe__8DF9717368606EEC",
         unique: true,
         fields: [
           { name: "UOMHeaderCode" },

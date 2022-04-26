@@ -8,7 +8,7 @@ exports.getLocations = async (req, res) => {
     let Columns = [];
 
     Columns = ["LocationCode", "Location"];
-    let Location = await SeqFunc.getAll(db[req.headers.compcode].IN_Location, {where :{IsActive:true, IsTransit: false}}, true, Columns);
+    let Location = await SeqFunc.getAll(db[req.headers.compcode].INV_Location, {where :{IsActive:true, IsTransit: false}}, true, Columns);
 
     
     ResponseLog.Send200(req, res, {
@@ -25,7 +25,7 @@ exports.getInTransitLocations = async (req, res) => {
     let Columns = [];
 
     Columns = ["LocationCode", "Location"];
-    let Location = await SeqFunc.getAll(db[req.headers.compcode].IN_Location, {where :{IsActive:true, IsTransit: true}}, true, Columns);
+    let Location = await SeqFunc.getAll(db[req.headers.compcode].INV_Location, {where :{IsActive:true, IsTransit: true}}, true, Columns);
 
     
     ResponseLog.Send200(req, res, {
@@ -40,10 +40,10 @@ exports.getInTransitLocations = async (req, res) => {
 exports.getInventoryItems = async (req, res) => {
   try {
     let sQuery = `SELECT S.ItemCode, Item, UOMCode, UOM, UnitQuantity, LocationCode, Location, ItemType='Inventoried Item', ItemTrackBy, Price = AVG(UnitPrice), QtyIn = SUM(Quantity), 
-                  QtyAlloc = SUM(ISNULL(A.QtyOut,0)), QtyOut = SUM(ISNULL(D.QtyOut,0)), QtyBal = SUM(Quantity) - (SUM(ISNULL(A.QtyOut,0)) + SUM(ISNULL(D.QtyOut,0)))FROM IN_StockMaster S
-                  LEFT OUTER JOIN (SELECT HeaderNo, QtyOut = SUM(QtyOut) FROM IN_StockAlloc GROUP BY HeaderNo) AS A ON S.HeaderNo = A.HeaderNo
-                  LEFT OUTER JOIN (SELECT HeaderNo, QtyOut = SUM(QtyOut) FROM IN_StockDetail GROUP BY HeaderNo) AS D ON S.HeaderNo = D.HeaderNo
-                  INNER JOIN (SELECT ItemCode, UOMCode, UOM, UnitQuantity FROM IN_Item) I ON I.ItemCode = S.ItemCode 
+                  QtyAlloc = SUM(ISNULL(A.QtyOut,0)), QtyOut = SUM(ISNULL(D.QtyOut,0)), QtyBal = SUM(Quantity) - (SUM(ISNULL(A.QtyOut,0)) + SUM(ISNULL(D.QtyOut,0)))FROM INV_StockMaster S
+                  LEFT OUTER JOIN (SELECT HeaderNo, QtyOut = SUM(QtyOut) FROM INV_StockAlloc GROUP BY HeaderNo) AS A ON S.HeaderNo = A.HeaderNo
+                  LEFT OUTER JOIN (SELECT HeaderNo, QtyOut = SUM(QtyOut) FROM INV_StockDetail GROUP BY HeaderNo) AS D ON S.HeaderNo = D.HeaderNo
+                  INNER JOIN (SELECT ItemCode, UOMCode, UOM, UnitQuantity FROM INV_Item) I ON I.ItemCode = S.ItemCode 
                   WHERE LocationCode = :LocationCode
                   GROUP BY LocationCode, S.ItemCode, Item, UOMCode, UOM, UnitQuantity, Location, ItemTrackBy`;
 
@@ -70,7 +70,7 @@ exports.getItems = async (req, res) => {
     let params = req.query.ItemType ? { ItemType : req.query.ItemType } : {}
 
     Columns = ["ItemCode", "Item", "ItemType"];
-    let Item = await SeqFunc.getAll(db[req.headers.compcode].IN_Item, { where : params}, true, Columns);
+    let Item = await SeqFunc.getAll(db[req.headers.compcode].INV_Item, { where : params}, true, Columns);
 
     
     ResponseLog.Send200(req, res, {
@@ -88,7 +88,7 @@ exports.getItemUOM = async (req, res) => {
     let Columns = [];
 
     Columns = ["UOMCode","UOM",["QTYEQV","UnitQuantity"]];
-    let ItemUOM = await SeqFunc.getAll(db[req.headers.compcode].IN_ItemUOM, {where: { ItemCode: req.query.ItemCode, IsActive: 1 }}, true, Columns);
+    let ItemUOM = await SeqFunc.getAll(db[req.headers.compcode].INV_ItemUOM, {where: { ItemCode: req.query.ItemCode, IsActive: 1 }}, true, Columns);
     ResponseLog.Send200(req, res, {
       ItemUOM: ItemUOM.Data,
     });
@@ -104,7 +104,7 @@ exports.getUOMClass = async (req, res) => {
     let Columns = [];
 
     Columns = ["UOMHeaderCode", "UOMHeader"];
-    let UOMClass = await SeqFunc.getAll(db[req.headers.compcode].IN_UOMHeader, {where :{IsActive:true}}, true, Columns);
+    let UOMClass = await SeqFunc.getAll(db[req.headers.compcode].INV_UOMHeader, {where :{IsActive:true}}, true, Columns);
     
     ResponseLog.Send200(req, res, {
       UOMClass: UOMClass.Data,
@@ -120,7 +120,7 @@ exports.getUOM = async (req, res) => {
     let Columns = [];
 
     Columns = ["UOMCode", "UOM"];
-    let UOMClass = await SeqFunc.getAll(db[req.headers.compcode].IN_UOMDetail, {where :{UOMHeaderCode: req.query.UOMHeaderCode, IsActive:true}}, true, Columns);
+    let UOMClass = await SeqFunc.getAll(db[req.headers.compcode].INV_UOMDetail, {where :{UOMHeaderCode: req.query.UOMHeaderCode, IsActive:true}}, true, Columns);
     
     ResponseLog.Send200(req, res, {
       UOMClass: UOMClass.Data,
@@ -136,7 +136,7 @@ exports.getAttributeHeads = async (req, res) => {
     let Columns = [];
 
     Columns = ["AttHeadCode", "AttHead"];
-    let AttributeHead = await SeqFunc.getAll(db[req.headers.compcode].IN_AttributeHead, {where :{IsActive:true}}, true, Columns);
+    let AttributeHead = await SeqFunc.getAll(db[req.headers.compcode].INV_AttributeHead, {where :{IsActive:true}}, true, Columns);
     
     ResponseLog.Send200(req, res, {
       AttributeHead: AttributeHead.Data,
@@ -152,7 +152,7 @@ exports.getAttributeCodes = async (req, res) => {
     let Columns = [];
 
     Columns = ["AttCode", "AttValue"];
-    let AttributeCode = await SeqFunc.getAll(db[req.headers.compcode].IN_AttributeCode, {where :{AttHeadCode: req.query.AttHeadCode}}, true, Columns);
+    let AttributeCode = await SeqFunc.getAll(db[req.headers.compcode].INV_AttributeCode, {where :{AttHeadCode: req.query.AttHeadCode}}, true, Columns);
     
     ResponseLog.Send200(req, res, {
       AttributeCode: AttributeCode.Data,
@@ -168,7 +168,7 @@ exports.getItemClass = async (req, res) => {
     let Columns = [];
 
     Columns = ["ItemClassCode", "ItemClass"];
-    let ItemClass = await SeqFunc.getAll(db[req.headers.compcode].IN_ItemClass, {where :{IsActive: 1}}, true, Columns);
+    let ItemClass = await SeqFunc.getAll(db[req.headers.compcode].INV_ItemClass, {where :{IsActive: 1}}, true, Columns);
     
     ResponseLog.Send200(req, res, {
       ItemClass: ItemClass.Data,
@@ -184,7 +184,7 @@ exports.getItemClassAttributes = async (req, res) => {
     let Columns = [];
 
     Columns = ["AttributeCode","AttributeType","IsVariant","AttHeadCode","AttHead"];
-    let ItemClass = await SeqFunc.getAll(db[req.headers.compcode].IN_ItemClassAttributes, {where :{ItemClassCode: req.query.ItemClassCode}}, false, Columns);
+    let ItemClass = await SeqFunc.getAll(db[req.headers.compcode].INV_ItemClassAttributes, {where :{ItemClassCode: req.query.ItemClassCode}}, false, Columns);
     
     ResponseLog.Send200(req, res, {
       ItemClass: ItemClass.Data,
@@ -198,13 +198,13 @@ exports.getItemClassAttributes = async (req, res) => {
 exports.getOpenIRs = async (req, res) => {
   try {
 
-    let sqlQuery =  `SELECT RTransNo=H.TransNo, RLineSeq, D.ItemCode, D.Item, UOMCode, UOM, UnitQuantity, 
+    let sqlQuery =  `SELECT RTransNo=H.TransNo, RLineSeq, D.ItemCode, D.Item, D.ItemTrackBy, D.ItemType, UOMCode, UOM, UnitQuantity, 
                       BaseQuantity = UnitQuantity - (UsedQuantity + CanceledQuantity),
                       Quantity,
                       AvailableQuantity = BaseQuantity - (UsedQuantity + CanceledQuantity),
                       StockQuantity = dbo.GetInventoryStock(D.ItemCode,'${req.query.LocationCode}')
-                      FROM IN_RequisitionMaster H
-                      INNER JOIN  IN_RequisitionDetail D ON H.TransNo = D.TransNo AND D.LineStatus = 0
+                      FROM INV_RequisitionMaster H
+                      INNER JOIN  INV_RequisitionDetail D ON H.TransNo = D.TransNo AND D.LineStatus = 0
                       LEFT OUTER JOIN vw_Stock S ON S.ItemCode = D.ItemCode AND H.LocationCode = S.LocationCode
                       WHERE H.SubmitStatus = 1 AND H.LocationCode = :LocationCode`;
 
@@ -224,14 +224,17 @@ exports.getOpenIRs = async (req, res) => {
 exports.getOpenTransfers = async (req, res) => {
   try {
 
-    let sqlQuery =  `SELECT H.TransNo, H.LocationCode, H.Location, TLineSeq, D.ItemCode, D.Item, ItemTrackBy, ItemType, 
+    let sqlQuery =  `SELECT TransNo = H.TransNo, H.LocationCode, H.Location, TLineSeq, D.ItemCode, D.Item, ItemTrackBy, ItemType, 
                       UOMCode, UOM, 
                       UnitQuantity,
                       BaseQuantity, 
+                      Quantity = Quantity,
                       AvailableQuantity = Quantity,
-                      UnitCost
-                      FROM IN_TransferHeader H
-                      INNER JOIN IN_TransferDetail D ON H.TransNo = D.TransNo AND D.LineStatus = 0
+                      UnitCost,
+                      D.RTransNo,
+                      D.RLineSeq
+                      FROM INV_TransferHeader H
+                      INNER JOIN INV_TransferDetail D ON H.TransNo = D.TransNo AND D.LineStatus = 0
                       WHERE H.Posted = 1 AND H.DestinationLocationCode = :LocationCode  AND H.TransType = 'IXFR'`;
 
     let OpenTransfers = await db[req.headers.compcode].sequelize.query(sqlQuery,{replacements : {LocationCode : req.query.LocationCode},type : db[req.headers.compcode].Sequelize.QueryTypes.SELECT}) 

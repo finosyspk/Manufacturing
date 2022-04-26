@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('IN_ItemUOM', {
+  return sequelize.define('INV_ItemUOM', {
     ItemUOMID: {
       type: DataTypes.BIGINT,
       allowNull: false,
@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true,
       references: {
-        model: 'IN_Item',
+        model: 'INV_Item',
         key: 'ItemID'
       }
     },
@@ -47,12 +47,12 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'IN_ItemUOM',
+    tableName: 'INV_ItemUOM',
     schema: 'dbo',
     timestamps: false,
     indexes: [
       {
-        name: "PK__IN_ItemU__CE59FF116BE047E7",
+        name: "PK__INV_ItemU__CE59FF116BE047E7",
         unique: true,
         fields: [
           { name: "ItemID" },

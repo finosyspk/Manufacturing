@@ -13,39 +13,39 @@ exports.Allocation = async (db, model, TransNo, TransDate, TransType,LocationCod
         let Alloc;
         let Temp;
  
-        await db.IN_StockAlloc.destroy({ where: { TransNo: TransNo } })
+        await db.INV_StockAlloc.destroy({ where: { TransNo: TransNo } })
         // await db.AlLocationTemp.destroy({ where: { TransNo: TransNo } })
         // await db.sequelize.query(UPD)
 
-        let StockData = await db.IN_StockMaster.findAll({
+        let StockData = await db.INV_StockMaster.findAll({
             where: {
                 LocationCode: LocationCode
             },
-            attributes: ['IN_StockMaster.HeaderNo', 'IN_StockMaster.LocationCode', 'IN_StockMaster.ItemCode', 'IN_StockMaster.Location', 'IN_StockMaster.Item', 'IN_StockMaster.ItemTrackBy', 'IN_StockMaster.BatchNo',
+            attributes: ['INV_StockMaster.HeaderNo', 'INV_StockMaster.LocationCode', 'INV_StockMaster.ItemCode', 'INV_StockMaster.Location', 'INV_StockMaster.Item', 'INV_StockMaster.ItemTrackBy', 'INV_StockMaster.BatchNo',
                 'Quantity', 'UnitPrice', 'AvgCost', 'ExpiryDate',
-                [db.Sequelize.literal('SUM(ISNULL(IN_StockAllocs.QtyOut,0))'), 'QtyAlloc'],
-                [db.Sequelize.literal('SUM(ISNULL(IN_StockDetails.QtyOut,0))'), 'QtyOut'],
-                [db.Sequelize.literal('Quantity - (SUM(ISNULL(IN_StockAllocs.QtyOut,0)) + SUM(ISNULL(IN_StockDetails.QtyOut,0)))'), 'QtyBal']
+                [db.Sequelize.literal('SUM(ISNULL(INV_StockAllocs.QtyOut,0))'), 'QtyAlloc'],
+                [db.Sequelize.literal('SUM(ISNULL(INV_StockDetails.QtyOut,0))'), 'QtyOut'],
+                [db.Sequelize.literal('Quantity - (SUM(ISNULL(INV_StockAllocs.QtyOut,0)) + SUM(ISNULL(INV_StockDetails.QtyOut,0)))'), 'QtyBal']
             ],
             include: [{
-                model: db.IN_StockAlloc,
+                model: db.INV_StockAlloc,
                 required: false,
                 attributes: [],
                 where: {
                     TransNo: TransNo
                 }
             }, {
-                model: db.IN_StockDetail,
+                model: db.INV_StockDetail,
                 required: false,
                 attributes: []
             }],
             raw: true,
-            group: ['IN_StockMaster.HeaderNo', 'IN_StockMaster.LocationCode', 'IN_StockMaster.ItemCode', 'IN_StockMaster.Location', 'IN_StockMaster.Item', 'IN_StockMaster.ItemTrackBy', 'IN_StockMaster.BatchNo',
+            group: ['INV_StockMaster.HeaderNo', 'INV_StockMaster.LocationCode', 'INV_StockMaster.ItemCode', 'INV_StockMaster.Location', 'INV_StockMaster.Item', 'INV_StockMaster.ItemTrackBy', 'INV_StockMaster.BatchNo',
                 'Quantity', 'UnitPrice', 'AvgCost', 'ExpiryDate'],
             having: [
                 {},
                 db.Sequelize.literal(
-                    'Quantity > (SUM(ISNULL(IN_StockAllocs.QtyOut,0)) + SUM(ISNULL(IN_StockDetails.QtyOut,0)))'
+                    'Quantity > (SUM(ISNULL(INV_StockAllocs.QtyOut,0)) + SUM(ISNULL(INV_StockDetails.QtyOut,0)))'
                 )
             ]
         })
@@ -234,7 +234,7 @@ exports.Allocation = async (db, model, TransNo, TransDate, TransType,LocationCod
         // })
 
         if (FailCount > 0) {
-            await db.IN_StockAlloc.destroy({
+            await db.INV_StockAlloc.destroy({
                 where: {
                     TransNo: TransNo
                 },
@@ -306,7 +306,7 @@ exports.Allocation = async (db, model, TransNo, TransDate, TransType,LocationCod
             }
         }
         else {
-            await db.IN_StockAlloc.bulkCreate(AllocArray)
+            await db.INV_StockAlloc.bulkCreate(AllocArray)
             // await db.sequelize.query(UPD)
             return { Success: true, Message: "Allocation Process Completed!", data: [] }
         }

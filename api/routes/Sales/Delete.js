@@ -3,23 +3,20 @@ const router = express.Router();
 const controller = require("../../controllers/Sales/index");
 const CheckAuth = require("../../midleware/validate-auth");
 
-router.delete("/", CheckAuth, (req, res) => {
+router.post("/", CheckAuth, (req, res) => {
   switch (req.body.FormName) {
-    case "Machines":
-      controller.Machines.delete(req, res);
+    case "SalesQuote":
+      controller.SalesQuote.delete(req, res);
       break;
-    case "Stages":
-      controller.Stages.delete(req, res);
+    case "SalesOrder":
+      controller.SalesOrder.delete(req, res);
       break;
-    case "Routing":
-      controller.Routing.delete(req, res);
+    case "SalesDispatch":
+      controller.SalesDispatch.delete(req, res);
       break;
-      case "Shift":
-        controller.Shift.delete(req, res);
-        break;
-      case "BOM":
-        controller.BOM.delete(req, res);
-        break;
+    case "SalesInvoice":
+      controller.SalesInvoice.delete(req, res);
+      break;
     default:
       break;
   }

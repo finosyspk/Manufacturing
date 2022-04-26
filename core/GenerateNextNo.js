@@ -2,7 +2,7 @@
 
 exports.NextNo = async function (db,FormName,t) {
     try {
-        let model = (FormName === 'MO' || FormName === 'PCK' || FormName === 'MR' ) ? 'MOP_NextNo' : 'IN_NextNo';
+        let model = (FormName === 'MO' || FormName === 'PCK' || FormName === 'MR' ) ? 'MOP_NextNo' : 'INV_NextNo';
         let NextNo
         let TransType = await db[model].findOne({ where: { TransID: FormName },transaction:t })
         

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('IN_StockDetail', {
+  return sequelize.define('INV_StockDetail', {
     DetailNo: {
       autoIncrement: true,
       type: DataTypes.BIGINT,
@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     RecordDate: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: "2021-01-02 06:51:13.441 +00:00"
+      defaultValue: new Date()
     },
     HeaderNo: {
       type: DataTypes.BIGINT,
@@ -58,7 +58,7 @@ module.exports = function(sequelize, DataTypes) {
     TransDate: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: "2021-01-02 06:51:13.441 +00:00"
+      defaultValue: new Date()
     },
     QtyOut: {
       type: DataTypes.DECIMAL(20,5),
@@ -77,12 +77,12 @@ module.exports = function(sequelize, DataTypes) {
     },
   }, {
     sequelize,
-    tableName: 'IN_StockDetail',
+    tableName: 'INV_StockDetail',
     schema: 'dbo',
     timestamps: true,
     indexes: [
       {
-        name: "PK__IN_Stock__135C19163F4DA36E",
+        name: "PK__INV_Stock__135C19163F4DA36E",
         unique: true,
         fields: [
           { name: "DetailNo" },

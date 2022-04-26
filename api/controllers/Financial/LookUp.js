@@ -39,3 +39,54 @@ exports.getAccounts = async (req, res) => {
   }
 };
 
+exports.getPayTerms = async (req, res) => {
+  try {
+    let Columns = [];
+
+    Columns = [["PayTermCode","PaymentTermsCode"], ["PayTermDesc","PaymentTerms"]];
+    let PayTerms = await SeqFunc.getAll(db[req.headers.compcode].FIN_PayTerms, {where :{IsActive:true}}, true, Columns);
+
+    
+    ResponseLog.Send200(req, res, {
+      PayTerms: PayTerms.Data,
+    });
+  } catch (err) {
+    console.log(err);
+    ResponseLog.Error200(req, res, err.message);
+  }
+};
+
+exports.getSalesPersons = async (req, res) => {
+  try {
+    let Columns = [];
+
+    Columns = [["CardCode","SalesPersonCode"], ["CardName","SalesPerson"]];
+    let SalesPersons = await SeqFunc.getAll(db[req.headers.compcode].FIN_Cards, {where :{IsActive:true}}, true, Columns);
+
+    
+    ResponseLog.Send200(req, res, {
+      SalesPersons: SalesPersons.Data,
+    });
+  } catch (err) {
+    console.log(err);
+    ResponseLog.Error200(req, res, err.message);
+  }
+};
+
+exports.getCustomers = async (req, res) => {
+  try {
+    let Columns = [];
+
+    Columns = ["CustomerCode","Customer"];
+    let Customers = await SeqFunc.getAll(db[req.headers.compcode].FIN_Customers, {where :{IsActive:true}}, true, Columns);
+
+    
+    ResponseLog.Send200(req, res, {
+      Customers: Customers.Data,
+    });
+  } catch (err) {
+    console.log(err);
+    ResponseLog.Error200(req, res, err.message);
+  }
+};
+

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('IN_TransferBatches', {
+  return sequelize.define('INV_TransferBatches', {
     TRBID: {
       autoIncrement: true,
       type: DataTypes.BIGINT,
@@ -34,12 +34,12 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'IN_TransferBatches',
+    tableName: 'INV_TransferBatches',
     schema: 'dbo',
     timestamps: true,
     indexes: [
       {
-        name: "PK__IN_Trans__CAFF4132026691CE",
+        name: "PK__INV_Trans__CAFF4132026691CE",
         unique: true,
         fields: [
           { name: "TRBID" },

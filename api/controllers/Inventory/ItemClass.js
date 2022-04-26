@@ -5,7 +5,7 @@ const SeqFunc = require("../../../core/SeqFunc");
 exports.getList = async (req, res) => {
   try {
     let Columns = ["ItemClassCode","ItemClass","IsActive"];
-    let ItemClass = await SeqFunc.getAll(db[req.headers.compcode].IN_ItemClass, {}, true, Columns);
+    let ItemClass = await SeqFunc.getAll(db[req.headers.compcode].INV_ItemClass, {}, true, Columns);
     if (ItemClass.success) {
       ResponseLog.Send200(req, res, ItemClass.Data);
     } else {
@@ -18,11 +18,11 @@ exports.getList = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   try {
-    let ItemClass = await SeqFunc.getOne(db[req.headers.compcode].IN_ItemClass, { where:{ItemClassCode: req.query.ItemClassCode} });
+    let ItemClass = await SeqFunc.getOne(db[req.headers.compcode].INV_ItemClass, { where:{ItemClassCode: req.query.ItemClassCode} });
 
     if (ItemClass.success) {
       let AttributeDetail = await SeqFunc.getAll(
-        db[req.headers.compcode].IN_ItemClassAttributes,
+        db[req.headers.compcode].INV_ItemClassAttributes,
         { where:{ItemClassCode: req.query.ItemClassCode} },
         false,
         ["AttributeCode","AttributeType","IsVariant"]
@@ -47,17 +47,17 @@ exports.getOne = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     let ItemClassData = await SeqFunc.getOne(
-      db[req.headers.compcode].IN_ItemClass,
+      db[req.headers.compcode].INV_ItemClass,
       { where: { ItemClassCode: req.query.ItemClassCode } },
       Header
     );
 
     if (ItemClassData.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].IN_ItemClassAttributes, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_ItemClassAttributes, {
         where: { ItemClassCode: ItemClassData.Data.ItemClassCode },
       });
 
-      await SeqFunc.Delete(db[req.headers.compcode].IN_ItemClass, {
+      await SeqFunc.Delete(db[req.headers.compcode].INV_ItemClass, {
         where: { ItemClassCode: ItemClassData.Data.ItemClassCode },
       });
       ResponseLog.Delete200(req, res);
@@ -76,13 +76,13 @@ exports.CreateOrUpdate = async (req, res) => {
     delete Header.ItemClassID
 
     let ItemClassData = await SeqFunc.updateOrCreate(
-      db[req.headers.compcode].IN_ItemClass,
+      db[req.headers.compcode].INV_ItemClass,
       { where:{ItemClassCode: Header.ItemClassCode} },
       Header
     );
 
     if (ItemClassData.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].IN_ItemClassAttributes, { where:{ItemClassCode: Header.ItemClassCode} });
+      await SeqFunc.Delete(db[req.headers.compcode].INV_ItemClassAttributes, { where:{ItemClassCode: Header.ItemClassCode} });
 
       Detail.map(o => {
         delete o.IAttID
@@ -92,7 +92,7 @@ exports.CreateOrUpdate = async (req, res) => {
         o.IsActive = true
       })
 
-      await SeqFunc.bulkCreate(db[req.headers.compcode].IN_ItemClassAttributes,Detail)
+      await SeqFunc.bulkCreate(db[req.headers.compcode].INV_ItemClassAttributes,Detail)
 
       if (ItemClassData.created) {
         ResponseLog.Create200(req, res);

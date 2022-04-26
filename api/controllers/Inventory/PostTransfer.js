@@ -7,24 +7,24 @@ const Stock = require("../../../core/Stock");
 exports.postData = async (req, res) => {
   try {
     let TransNo = req.body.Header.TransNo;
-    let REQ = await SeqFunc.getOne( db[req.headers.compcode].IN_TransferHeader,{ where: { TransNo: TransNo } } );
+    let REQ = await SeqFunc.getOne( db[req.headers.compcode].INV_TransferHeader,{ where: { TransNo: TransNo } } );
 
     if (REQ.success) {
 
       if (REQ.Data.TransType === 'XFR'){
         let Consumption = await Stock.Consumption.Consumption(req, TransNo, res)
         if (Consumption.Success){
-          await Stock.Addition.Addition(db[req.headers.compcode],db[req.headers.compcode].IN_TransferDetail, TransNo, REQ.Data.DestinationLocationCode, REQ.Data.DestinationLocation, res)
+          await Stock.Addition.Addition(db[req.headers.compcode],db[req.headers.compcode].INV_TransferDetail, TransNo, REQ.Data.DestinationLocationCode, REQ.Data.DestinationLocation, res)
         }
       }
       else if (REQ.Data.TransType === 'IXFR'){
         await Stock.Consumption.Consumption(req, TransNo, res)
       }
       else {
-        await Stock.Addition.Addition(db[req.headers.compcode],db[req.headers.compcode].IN_TransferDetail, TransNo, REQ.Data.DestinationLocationCode, REQ.Data.DestinationLocation, res)
+        await Stock.Addition.Addition(db[req.headers.compcode],db[req.headers.compcode].INV_TransferDetail, TransNo, REQ.Data.DestinationLocationCode, REQ.Data.DestinationLocation, res)
       }
       
-      await db[req.headers.compcode].IN_TransferHeader.update({
+      await db[req.headers.compcode].INV_TransferHeader.update({
         Posted: 1,
         PostedUser:1,
         postedAt:new Date()

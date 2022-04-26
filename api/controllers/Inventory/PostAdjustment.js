@@ -7,18 +7,18 @@ const Stock = require("../../../core/Stock");
 exports.postData = async (req, res) => {
   try {
     let TransNo = req.body.Header.TransNo;
-    let REQ = await SeqFunc.getOne( db[req.headers.compcode].IN_TransactionHeader,{ where: { TransNo: TransNo } } );
+    let REQ = await SeqFunc.getOne( db[req.headers.compcode].INV_TransactionHeader,{ where: { TransNo: TransNo } } );
 
     if (REQ.success) {
 
       if (REQ.Data.FormType === 'AdjInward'){
-        await Stock.Addition.Addition(db[req.headers.compcode],db[req.headers.compcode].IN_TransactionDetail, TransNo, REQ.Data.LocationCode, REQ.Data.Location, res)
+        await Stock.Addition.Addition(db[req.headers.compcode],db[req.headers.compcode].INV_TransactionDetail, TransNo, REQ.Data.LocationCode, REQ.Data.Location, res)
       }
       else {
-        await Stock.Allocation.Allocation(db[req.headers.compcode],db[req.headers.compcode].IN_TransactionDetail, TransNo, REQ.Data.LocationCode, REQ.Data.Location, res)
+        await Stock.Allocation.Allocation(db[req.headers.compcode],db[req.headers.compcode].INV_TransactionDetail, TransNo, REQ.Data.LocationCode, REQ.Data.Location, res)
       }
       
-      await db[req.headers.compcode].IN_TransactionHeader.update({
+      await db[req.headers.compcode].INV_TransactionHeader.update({
         Posted: 1,
         PostedUser:1,
         postedAt:new Date()

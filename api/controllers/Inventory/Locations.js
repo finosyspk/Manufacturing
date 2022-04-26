@@ -6,7 +6,7 @@ const SeqFunc = require("../../../core/SeqFunc");
 exports.getList = async (req, res) => {
     try {
       let Columns = ["LocationCode","Location","IsActive"]
-      let Location = await SeqFunc.getAll(db[req.headers.compcode].IN_Location,{},true,Columns);
+      let Location = await SeqFunc.getAll(db[req.headers.compcode].INV_Location,{},true,Columns);
     if (Location.success) {
       ResponseLog.Send200(req, res, Location.Data);
     } else {
@@ -20,7 +20,7 @@ exports.getList = async (req, res) => {
 exports.getOne = async (req, res) => {
   try {
     
-    let Location = await SeqFunc.getOne(db[req.headers.compcode].IN_Location,{where: {LocationCode:req.query.LocationCode}});
+    let Location = await SeqFunc.getOne(db[req.headers.compcode].INV_Location,{where: {LocationCode:req.query.LocationCode}});
 
     if (Location.success) {
       ResponseLog.Send200(req, res, Location.Data);
@@ -34,7 +34,7 @@ exports.getOne = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    let Location = await SeqFunc.Delete(db[req.headers.compcode].IN_Location,{ where: {LocationCode: req.query.LocationCode}});
+    let Location = await SeqFunc.Delete(db[req.headers.compcode].INV_Location,{ where: {LocationCode: req.query.LocationCode}});
 
     if (Location.success) {
       ResponseLog.Delete200(req, res);
@@ -52,7 +52,7 @@ exports.CreateOrUpdate = async (req, res) => {
     delete Header.LocationID
 
     let Data = await SeqFunc.updateOrCreate(
-      db[req.headers.compcode].IN_Location,
+      db[req.headers.compcode].INV_Location,
       { where: {LocationCode: Header.LocationCode} },
       Header
     );

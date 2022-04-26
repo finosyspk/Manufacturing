@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('IN_NextNo', {
+  return sequelize.define('INV_NextNo', {
     RID: {
       type: DataTypes.BIGINT,
       allowNull: false,
@@ -41,12 +41,12 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'IN_NextNo',
+    tableName: 'INV_NextNo',
     schema: 'dbo',
     timestamps: true,
     indexes: [
       {
-        name: "PK__IN_NextN__CAFF4132B78487C1",
+        name: "PK__INV_NextN__CAFF4132B78487C1",
         unique: true,
         fields: [
           { name: "RID" },

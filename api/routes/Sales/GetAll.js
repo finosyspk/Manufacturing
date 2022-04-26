@@ -3,23 +3,19 @@ const router = express.Router();
 const controller = require("../../controllers/Sales/index");
 const CheckAuth = require("../../midleware/validate-auth");
 
-router.get("/", CheckAuth,(req, res) => {
-  console.log("Form : ", req.body.FormName);
+router.post("/", CheckAuth, (req, res) => {
   switch (req.body.FormName) {
-    case "Machine":
-      controller.Machines.getList(req, res);
+    case "SalesQuote":
+      controller.SalesQuote.getAll(req, res);
       break;
-    case "Stages":
-      controller.Stages.getList(req, res);
+    case "SalesOrder":
+      controller.SalesOrder.getAll(req, res);
       break;
-    case "Routing":
-      controller.Routing.getList(req, res);
+    case "SalesDispatch":
+      controller.SalesDispatch.getAll(req, res);
       break;
-    case "Shift":
-      controller.Shift.getList(req, res);
-      break;
-    case "BOM":
-      controller.BOM.getList(req, res);
+    case "SalesInvoice":
+      controller.SalesInvoice.getAll(req, res);
       break;
     default:
       break;

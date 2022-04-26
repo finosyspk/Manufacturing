@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('IN_UOMDetail', {
+  return sequelize.define('INV_UOMDetail', {
     UOMDID: {
       type: DataTypes.BIGINT,
       allowNull: false,
@@ -47,12 +47,12 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'IN_UOMDetail',
+    tableName: 'INV_UOMDetail',
     schema: 'dbo',
     timestamps: true,
     indexes: [
       {
-        name: "PK__IN_UOMDe__56E8F46E757877D2",
+        name: "PK__INV_UOMDe__56E8F46E757877D2",
         unique: true,
         fields: [
           { name: "UOMCode" },

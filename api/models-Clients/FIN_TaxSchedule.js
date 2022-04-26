@@ -1,48 +1,52 @@
-/* jshint indent: 2 */
-module.exports = function (sequelize, DataTypes) {
-  var FIN_TaxSchedule = sequelize.define('FIN_TaxSchedule', {
+const Sequelize = require('sequelize');
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define('FIN_TaxSchedule', {
     RID: {
       type: DataTypes.BIGINT,
       allowNull: false,
       autoIncrement: true
     },
-    TaxScheduleCode: {
-      type: DataTypes.STRING,
+    TaxScheduleID: {
+      type: DataTypes.STRING(255),
       allowNull: false,
       primaryKey: true
     },
     TaxSchedule: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(255),
       allowNull: false
     },
     IsActive: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: 1
+      defaultValue: true
     },
     CreatedUser: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: ''
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: "(N"
     },
     ModifyUser: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: ''
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: "(N"
     },
-    UseCount:{
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      defaultValue: 0
+    UseCount: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {
+    sequelize,
+    tableName: 'FIN_TaxSchedule',
+    schema: 'dbo',
     timestamps: true,
-    tableName: 'FIN_TaxSchedule'
+    indexes: [
+      {
+        name: "PK__FIN_TaxS__6E3955339848FBFF",
+        unique: true,
+        fields: [
+          { name: "TaxScheduleID" },
+        ]
+      },
+    ]
   });
-  FIN_TaxSchedule.associate = function (models) {
-    FIN_TaxSchedule.hasMany(models.FIN_TaxScheduleDetail, {
-      foreignKey: 'TaxScheduleCode'
-    })
-  }
-  return FIN_TaxSchedule;
 };

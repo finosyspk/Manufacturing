@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  let IN_StockMaster = sequelize.define('IN_StockMaster', {
+  let INV_StockMaster = sequelize.define('INV_StockMaster', {
     HeaderNo: {
       autoIncrement: true,
       type: DataTypes.BIGINT,
@@ -99,12 +99,12 @@ module.exports = function(sequelize, DataTypes) {
 
   }, {
     sequelize,
-    tableName: 'IN_StockMaster',
+    tableName: 'INV_StockMaster',
     schema: 'dbo',
     timestamps: true,
     indexes: [
       {
-        name: "PK__IN_Stock__DC210D6C2385A8BE",
+        name: "PK__INV_Stock__DC210D6C2385A8BE",
         unique: true,
         fields: [
           { name: "HeaderNo" },
@@ -113,17 +113,17 @@ module.exports = function(sequelize, DataTypes) {
     ]
   });
 
-  IN_StockMaster.associate = function (models) {
-    IN_StockMaster.hasMany(models.IN_StockAlloc, {
+  INV_StockMaster.associate = function (models) {
+    INV_StockMaster.hasMany(models.INV_StockAlloc, {
       targetKey: "HeaderNo",
       foreignKey: "HeaderNo",
     });
-    IN_StockMaster.hasMany(models.IN_StockDetail, {
+    INV_StockMaster.hasMany(models.INV_StockDetail, {
       targetKey: "HeaderNo",
       foreignKey: "HeaderNo",
     });
   }
 
-  return IN_StockMaster;
+  return INV_StockMaster;
 };
 
