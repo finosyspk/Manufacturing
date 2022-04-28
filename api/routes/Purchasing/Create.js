@@ -5,17 +5,17 @@ const CheckAuth = require("../../midleware/validate-auth");
 
 router.post("/", CheckAuth, (req, res) => {
   switch (req.body.FormName) {
-    case "Machines":
-      controller.Machines.CreateOrUpdate(req, res);
+    case "Requisitions":
+      controller.Requisition.CreateOrUpdate(req, res);
       break;
-    case "Stages":
-      controller.Stages.CreateOrUpdate(req, res);
+    case "PurchaseOrder":
+      controller.PurchaseOrder.CreateOrUpdate(req, res);
       break;
-    case "Routing":
-      controller.Routing.CreateOrUpdate(req, res);
+    case "GoodsReceipt":
+      controller.GoodsReceipt.CreateOrUpdate(req, res);
       break;
-      case "Shift":
-        controller.Shift.CreateOrUpdate(req, res);
+      case "PurchaseInvoices":
+        controller.PurchaseInvoice.CreateOrUpdate(req, res);
         break;
       case "BOM":
         controller.BOM.CreateOrUpdate(req, res);

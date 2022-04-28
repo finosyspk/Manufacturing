@@ -87,7 +87,7 @@ exports.getItemUOM = async (req, res) => {
 
     let Columns = [];
 
-    Columns = ["UOMCode","UOM",["QTYEQV","UnitQuantity"]];
+    Columns = ["UOMCode","UOM","UnitQuantity"];
     let ItemUOM = await SeqFunc.getAll(db[req.headers.compcode].INV_ItemUOM, {where: { ItemCode: req.query.ItemCode, IsActive: 1 }}, true, Columns);
     ResponseLog.Send200(req, res, {
       ItemUOM: ItemUOM.Data,

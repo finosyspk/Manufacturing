@@ -36,11 +36,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     CurCode: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(255),
       allowNull: false
     },
     CurDesc: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(255),
       allowNull: false
     },
     ExchRate: {
@@ -75,7 +75,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     TransDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false
     },
     TransTotal: {
@@ -129,11 +129,6 @@ module.exports = function(sequelize, DataTypes) {
     Total_Cur: {
       type: DataTypes.DECIMAL(20,5),
       allowNull: false
-    },
-    Remarks: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-      defaultValue: ""
     },
     SubmitStatus: {
       type: DataTypes.BOOLEAN,

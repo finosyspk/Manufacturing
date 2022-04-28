@@ -142,6 +142,7 @@ exports.CreateOrUpdate = async (req, res) => {
     let ADJData = await SeqFunc.Trans_updateOrCreate(
       db[req.headers.compcode],
       db[req.headers.compcode].INV_TransactionHeader,
+      db[req.headers.compcode].INV_NextNo,
       {
         where: { TransNo: Header.TransNo ? Header.TransNo : "" },
         transaction: t,

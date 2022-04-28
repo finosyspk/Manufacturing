@@ -90,6 +90,7 @@ exports.CreateOrUpdate = async (req, res) => {
     let MOIssuanceData = await SeqFunc.Trans_updateOrCreate(
       db[req.headers.compcode],
       db[req.headers.compcode].MOP_Issuance,
+      db[req.headers.compcode].MOP_NextNo,
       { where: { TransNo: Header.TransNo ? Header.TransNo : '' },transaction:t },
       Header,
       t

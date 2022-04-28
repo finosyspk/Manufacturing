@@ -138,10 +138,12 @@ exports.CreateOrUpdate = async (req, res) => {
     Header.CreatedUser = 1;
     Header.ModifyUser = 1;
     Header.PostedUser = 1;
+    Header.PromiseDate = new Date();
 
     let SOData = await SeqFunc.Trans_updateOrCreate(
       db[req.headers.compcode],
       db[req.headers.compcode].SOP_OrderMaster,
+      db[req.headers.compcode].SOP_NextNo,
       {
         where: { TransNo: Header.TransNo ? Header.TransNo : "" },
         transaction: t,
@@ -152,14 +154,17 @@ exports.CreateOrUpdate = async (req, res) => {
 
     if (SOData.success) {
       let LineSeq = 1;
-
+      let TaxArray = [];
       Detail.map((o) => {
+        delete o.RID;
         o.TransNo = SOData.Data.TransNo;
-        o.QLineSeq = LineSeq;
+        o.OLineSeq = LineSeq;
         o.Taxes?.map((l) => {
+          delete l.RID;
           l.OLineSeq = o.OLineSeq;
           return l;
         });
+        TaxArray.concat(o?.Taxes)
         LineSeq++;
         return o;
       });
@@ -175,7 +180,7 @@ exports.CreateOrUpdate = async (req, res) => {
         let TaxesData = await SeqFunc.Trans_bulkCreate(
           db[req.headers.compcode].SOP_OrderTaxes,
           { where: { TransNo: SOData.Data.TransNo }, transaction: t },
-          BatchArray,
+          TaxArray,
           t
         );
         if (TaxesData.success) {
@@ -183,7 +188,7 @@ exports.CreateOrUpdate = async (req, res) => {
           if (Header.SubmitStatus) {
             Post.postData(req, res);
           } else {
-            if (DetailData.created) {
+            if (SOData.created) {
               ResponseLog.Create200(req, res);
             } else {
               ResponseLog.Update200(req, res);

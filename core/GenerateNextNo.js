@@ -1,10 +1,9 @@
 
 
-exports.NextNo = async function (db,FormName,t) {
+exports.NextNo = async function (model,FormName,t) {
     try {
-        let model = (FormName === 'MO' || FormName === 'PCK' || FormName === 'MR' ) ? 'MOP_NextNo' : 'INV_NextNo';
         let NextNo
-        let TransType = await db[model].findOne({ where: { TransID: FormName },transaction:t })
+        let TransType = await model.findOne({ where: { TransID: FormName },transaction:t })
         
         NextNo = TransType.NextNo;
         let response = NextNo.split("-");
@@ -13,7 +12,7 @@ exports.NextNo = async function (db,FormName,t) {
         );
         let NextTransNo = response[0] + "-" + newNo;
 
-        await db[model].update({NextNo: NextTransNo}, { where: { TransID: FormName },transaction:t })
+        await model.update({NextNo: NextTransNo}, { where: { TransID: FormName },transaction:t })
                 
         return NextNo;
     }

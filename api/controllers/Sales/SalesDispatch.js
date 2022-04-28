@@ -23,7 +23,7 @@ exports.getList = async (req, res) => {
     );
     if (SO.success) {
       SO.Data.rows.map((val) => {
-        val.RPosted = val.Posted ? "Submitted" : "Pending";
+        val.RPosted = val.Posted ? "Posted" : "Un-Posted";
         return val;
       });
 
@@ -58,6 +58,7 @@ exports.getOne = async (req, res) => {
           "UnitQuantity",
           "Quantity",
           "BaseQuantity",
+          [db[req.headers.compcode].Sequelize.literal(`dbo.GetInventoryStock(ItemCode,'${SO.Data.LocationCode}') + BaseQuantity`), 'QtyBal'],
           "Price",
           "Amount",
           "Remarks",
@@ -163,6 +164,7 @@ exports.CreateOrUpdate = async (req, res) => {
     let SOData = await SeqFunc.Trans_updateOrCreate(
       db[req.headers.compcode],
       db[req.headers.compcode].SOP_DispatchMaster,
+      db[req.headers.compcode].SOP_NextNo,
       {
         where: { TransNo: Header.TransNo ? Header.TransNo : "" },
         transaction: t,

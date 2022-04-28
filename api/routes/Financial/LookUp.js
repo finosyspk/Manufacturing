@@ -20,7 +20,10 @@ router.get("/", CheckAuth, (req, res) => {
     case "Customers":
       controller.LookUp.getCustomers(req, res);
       break;
-    default:
+      case "Currencies":
+        controller.LookUp.getCurrencies(req, res);
+        break;
+      default:
       break;
   }
 });

@@ -83,7 +83,7 @@ exports.getOne = async (model, where) => {
   }
 };
 
-exports.Trans_updateOrCreate = async (db,model, where, newItem,t) => {
+exports.Trans_updateOrCreate = async (db,model,model_NN, where, newItem,t) => {
   try {
     
     let foundItem = await model.findOne(where);
@@ -92,7 +92,7 @@ exports.Trans_updateOrCreate = async (db,model, where, newItem,t) => {
     
     
     if (!foundItem) {
-      let TransNo = await GetNextNo.NextNo(db,newItem.TransType, t);
+      let TransNo = await GetNextNo.NextNo(model_NN,newItem.TransType, t);
       newItem.TransNo = TransNo;
       item = await model.create(newItem,{transaction:t});
       return { Data: item, success: true, created: true };

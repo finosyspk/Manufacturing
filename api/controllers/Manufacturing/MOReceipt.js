@@ -87,6 +87,7 @@ exports.CreateOrUpdate = async (req, res) => {
     let MOReceiptData = await SeqFunc.Trans_updateOrCreate(
       db[req.headers.compcode],
       db[req.headers.compcode].MOP_Receipt,
+      db[req.headers.compcode].MOP_NextNo,
       { where: { TransNo: Header.TransNo ? Header.TransNo : '' },transaction:t },
       Header,
       t

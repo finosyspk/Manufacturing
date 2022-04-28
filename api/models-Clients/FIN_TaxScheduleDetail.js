@@ -28,6 +28,27 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: false
     },
+    TaxDetailCode: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      primaryKey: true
+    },
+    TaxType: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    AcctCode: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    AcctDesc: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    TaxRate: {
+      type: DataTypes.DECIMAL(20,5),
+      allowNull: false
+    },
     CreatedUser: {
       type: DataTypes.STRING(255),
       allowNull: true,

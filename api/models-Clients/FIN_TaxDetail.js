@@ -1,12 +1,12 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('FIN_TaxDetail', {
-    RID: {
+    TaxDetailID: {
       type: DataTypes.BIGINT,
       allowNull: false,
       autoIncrement: true
     },
-    TaxDetailID: {
+    TaxDetailCode: {
       type: DataTypes.STRING(255),
       allowNull: false,
       primaryKey: true

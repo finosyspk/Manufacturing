@@ -135,12 +135,12 @@ app.use("/api/v1/Foundation/GetAll", Fnd_GetAll);
 app.use("/api/v1/Foundation/Delete", Fnd_Delete);
 app.use("/api/v1/Foundation/LookUp", Fnd_LookUp);
 
-app.use("/api/v1/Financial/Testing", Fin_Testing);
-app.use("/api/v1/Financial/Create", Fin_Create);
-app.use("/api/v1/Financial/Get", Fin_Get);
-app.use("/api/v1/Financial/GetAll", Fin_GetAll);
-app.use("/api/v1/Financial/Delete", Fin_Delete);
-app.use("/api/v1/Financial/LookUp", Fin_LookUp);
+app.use("/api/v1/Financials/Testing", Fin_Testing);
+app.use("/api/v1/Financials/Create", Fin_Create);
+app.use("/api/v1/Financials/Get", Fin_Get);
+app.use("/api/v1/Financials/GetAll", Fin_GetAll);
+app.use("/api/v1/Financials/Delete", Fin_Delete);
+app.use("/api/v1/Financials/LookUp", Fin_LookUp);
 
 app.use("/*", (req, res) => {
   res.sendFile(path.join(__dirname + "/../build/index.html"));

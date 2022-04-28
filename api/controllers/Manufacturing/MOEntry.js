@@ -128,6 +128,7 @@ exports.CreateOrUpdate = async (req, res) => {
     let MOData = await SeqFunc.Trans_updateOrCreate(
       db[req.headers.compcode],
       db[req.headers.compcode].MOP_MOHeader,
+      db[req.headers.compcode].MOP_NextNo,
       {
         where: { TransNo: Header.TransNo ? Header.TransNo : "" },
         transaction: t,

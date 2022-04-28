@@ -7,16 +7,15 @@ exports.postData = async (req, res) => {
     let TransNo = req.body.Header.TransNo;
 
     let REQ = await SeqFunc.getOne(
-      db[req.headers.compcode].SOP_OrderMaster,
+      db[req.headers.compcode].SOP_InvoiceMaster,
       {
         where: { TransNo: TransNo },
       }
     );
 
     if (REQ.success) {
-      await db[req.headers.compcode].SOP_OrderMaster.update({
-        SubmitStatus: 1,
-        Status: 'Submitted',
+      await db[req.headers.compcode].SOP_InvoiceMaster.update({
+        Posted: 1,
         PostedUser:1,
         postedAt:new Date()
       },

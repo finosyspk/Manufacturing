@@ -33,11 +33,11 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: 0
     },
     CurCode: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(255),
       allowNull: false
     },
     CurDesc: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(255),
       allowNull: false
     },
     ExchRate: {

@@ -32,6 +32,7 @@ exports.getList = async (req, res) => {
       ResponseLog.Error200(req, res, "No Record Found!");
     }
   } catch (err) {
+    console.log(err)
     ResponseLog.Error200(req, res, err.message);
   }
 };
@@ -140,6 +141,7 @@ exports.CreateOrUpdate = async (req, res) => {
     let SQData = await SeqFunc.Trans_updateOrCreate(
       db[req.headers.compcode],
       db[req.headers.compcode].SOP_QuoteMaster,
+      db[req.headers.compcode].SOP_NextNo,
       {
         where: { TransNo: Header.TransNo ? Header.TransNo : "" },
         transaction: t,
@@ -150,14 +152,17 @@ exports.CreateOrUpdate = async (req, res) => {
 
     if (SQData.success) {
       let LineSeq = 1;
-
+      let TaxArray = [];
       Detail.map((o) => {
+        delete o.RID;
         o.TransNo = SQData.Data.TransNo;
         o.QLineSeq = LineSeq;
         o.Taxes?.map((l) => {
+          delete l.RID;
           l.QLineSeq = o.QLineSeq;
           return l;
         });
+        TaxArray.concat(o?.Taxes)
         LineSeq++;
         return o;
       });
@@ -173,7 +178,7 @@ exports.CreateOrUpdate = async (req, res) => {
         let TaxesData = await SeqFunc.Trans_bulkCreate(
           db[req.headers.compcode].SOP_QuoteTaxes,
           { where: { TransNo: SQData.Data.TransNo }, transaction: t },
-          BatchArray,
+          TaxArray,
           t
         );
         if (TaxesData.success) {
