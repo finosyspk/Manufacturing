@@ -27,9 +27,8 @@ exports.getTaxDetail = async (req, res) => {
     console.log("There!")
     let Columns = [];
 
-    Columns = ["TaxDetailCode", "TaxDetail","TaxType","TaxRate","AcctCode","Acctdesc"];
-    let TaxDetail = await SeqFunc.getAll(db[req.headers.compcode].FIN_TaxScheduleDetail, {where :{IsActive:true}}, true, Columns);
-
+    Columns = ["TaxDetailCode", "TaxDetail","TaxType","TaxRate","AcctCode","AcctDesc"];
+    let TaxDetail = await SeqFunc.getAll(db[req.headers.compcode].FIN_TaxScheduleDetail, {where :{TaxScheduleCode: req.query.TaxScheduleCode}}, true, Columns);
     
     ResponseLog.Send200(req, res, {
       TaxDetail: TaxDetail.Data,

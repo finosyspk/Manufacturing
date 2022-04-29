@@ -7,22 +7,21 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true
     },
     TaxScheduleID: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+    },
+    TaxScheduleCode: {
       type: DataTypes.STRING(255),
       allowNull: false,
       primaryKey: true,
-      references: {
-        model: 'FIN_TaxSchedule',
-        key: 'TaxScheduleID'
-      }
     },
+    TaxSchedule: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },    
     TaxDetailID: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      primaryKey: true,
-      references: {
-        model: 'FIN_TaxDetail',
-        key: 'TaxDetailID'
-      }
     },
     TaxDetail: {
       type: DataTypes.STRING(255),

@@ -15431,3 +15431,75 @@
  Message : {"Success":false,"Message":"Invalid column name 'QTYEQV'."}
  **************************************************  
  Log Ended
+ Log Started on2022-04-29T07:39:57.155Z
+ ************************************************** 
+
+ API : /api/v1/Financials/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'FIN_Customers')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-29T07:39:57.213Z
+ ************************************************** 
+
+ API : /api/v1/Financials/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'FIN_PayTerms')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-29T07:39:57.216Z
+ ************************************************** 
+
+ API : /api/v1/Financials/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'FIN_Cards')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-29T07:40:26.060Z
+ ************************************************** 
+
+ API : /api/v1/Sales/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'SOP_QuoteMaster')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-29T07:40:26.107Z
+ ************************************************** 
+
+ API : /api/v1/Financials/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'FIN_Customers')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-29T07:40:26.113Z
+ ************************************************** 
+
+ API : /api/v1/Financials/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'FIN_Cards')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-29T07:40:26.120Z
+ ************************************************** 
+
+ API : /api/v1/Financials/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'FIN_PayTerms')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-29T10:12:14.643Z
+ ************************************************** 
+
+ API : /api/v1/Sales/Create -- Method : POST
+ FormName : SalesQuote
+ Message : {"Success":false,"Message":"Error Saving Record!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-04-29T10:15:13.464Z
+ ************************************************** 
+
+ API : /api/v1/Sales/Create -- Method : POST
+ FormName : SalesQuote
+ Message : {"Success":false,"Message":"Error Saving Record!"}
+ **************************************************  
+ Log Ended

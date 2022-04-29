@@ -1,15 +1,15 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('FIN_TaxSchedule', {
-    RID: {
+    TaxScheduleID: {
       type: DataTypes.BIGINT,
+      primaryKey: true,
       allowNull: false,
       autoIncrement: true
     },
-    TaxScheduleID: {
+    TaxScheduleCode: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      primaryKey: true
     },
     TaxSchedule: {
       type: DataTypes.STRING(255),
@@ -44,7 +44,7 @@ module.exports = function(sequelize, DataTypes) {
         name: "PK__FIN_TaxS__6E3955339848FBFF",
         unique: true,
         fields: [
-          { name: "TaxScheduleID" },
+          { name: "TaxScheduleCode" },
         ]
       },
     ]

@@ -8,6 +8,9 @@ router.get("/", CheckAuth, (req, res) => {
     case "TaxSchedule":
       controller.LookUp.getTaxSchedule(req, res);
       break;
+    case "TaxDetail":
+      controller.LookUp.getTaxDetail(req, res);
+      break;
     case "Accounts":
       controller.LookUp.getAccounts(req, res);
       break;
@@ -20,10 +23,10 @@ router.get("/", CheckAuth, (req, res) => {
     case "Customers":
       controller.LookUp.getCustomers(req, res);
       break;
-      case "Currencies":
-        controller.LookUp.getCurrencies(req, res);
-        break;
-      default:
+    case "Currencies":
+      controller.LookUp.getCurrencies(req, res);
+      break;
+    default:
       break;
   }
 });
