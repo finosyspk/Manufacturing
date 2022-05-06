@@ -159,10 +159,13 @@ exports.CreateOrUpdate = async (req, res) => {
         o.QLineSeq = LineSeq;
         o.Taxes?.map((l) => {
           delete l.RID;
+          l.TransNo = SQData.Data.TransNo;
+          l.ItemCode = SQData.Data.ItemCode;
+          l.Item = SQData.Data.Item;
           l.QLineSeq = o.QLineSeq;
           return l;
         });
-        TaxArray.concat(o?.Taxes)
+        TaxArray.concat(o.Taxes)
         LineSeq++;
         return o;
       });
@@ -175,6 +178,7 @@ exports.CreateOrUpdate = async (req, res) => {
       );
 
       if (DetailData.success) {
+        console.log({TaxArray})
         let TaxesData = await SeqFunc.Trans_bulkCreate(
           db[req.headers.compcode].SOP_QuoteTaxes,
           { where: { TransNo: SQData.Data.TransNo }, transaction: t },
@@ -186,7 +190,7 @@ exports.CreateOrUpdate = async (req, res) => {
           if (Header.SubmitStatus) {
             Post.postData(req, res);
           } else {
-            if (DetailData.created) {
+            if (SQData.created) {
               ResponseLog.Create200(req, res);
             } else {
               ResponseLog.Update200(req, res);

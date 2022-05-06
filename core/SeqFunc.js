@@ -90,6 +90,7 @@ exports.Trans_updateOrCreate = async (db,model,model_NN, where, newItem,t) => {
     foundItem = JSON.stringify(foundItem);
     foundItem = JSON.parse(foundItem);
     
+    console.log({foundItem})
     
     if (!foundItem) {
       let TransNo = await GetNextNo.NextNo(model_NN,newItem.TransType, t);

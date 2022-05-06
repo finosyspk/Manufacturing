@@ -15503,3 +15503,83 @@
  Message : {"Success":false,"Message":"Error Saving Record!"}
  **************************************************  
  Log Ended
+ Log Started on2022-05-06T06:02:18.022Z
+ ************************************************** 
+
+ API : /api/v1/Sales/Create -- Method : POST
+ FormName : SalesQuote
+ Message : {"Success":false,"Message":"Error Saving Record!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-06T06:06:52.671Z
+ ************************************************** 
+
+ API : /api/v1/Sales/Create -- Method : POST
+ FormName : SalesQuote
+ Message : {"Success":false,"Message":"Error Saving Record!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-06T11:47:27.950Z
+ ************************************************** 
+
+ API : /api/v1/Sales/Delete -- Method : DELETE
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-06T11:47:56.080Z
+ ************************************************** 
+
+ API : /api/v1/Financials/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'FIN_Customers')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-06T11:47:56.133Z
+ ************************************************** 
+
+ API : /api/v1/Sales/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'SOP_QuoteMaster')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-06T11:47:56.138Z
+ ************************************************** 
+
+ API : /api/v1/Financials/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'FIN_Cards')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-06T11:47:56.140Z
+ ************************************************** 
+
+ API : /api/v1/Financials/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'FIN_PayTerms')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-06T11:48:10.508Z
+ ************************************************** 
+
+ API : /api/v1/Sales/Delete -- Method : DELETE
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-06T11:48:26.599Z
+ ************************************************** 
+
+ API : /api/v1/Sales/Delete -- Method : DELETE
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-06T11:48:38.102Z
+ ************************************************** 
+
+ API : /api/v1/Sales/Delete -- Method : DELETE
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
