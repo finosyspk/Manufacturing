@@ -141,10 +141,9 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: ""
     },
-    Remarks: {
+    Description: {
       type: DataTypes.STRING(255),
-      allowNull: false,
-      defaultValue: ""
+      allowNull: false
     },
     SubmitStatus: {
       type: DataTypes.BOOLEAN,

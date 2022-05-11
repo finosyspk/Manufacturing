@@ -130,6 +130,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DECIMAL(20,5),
       allowNull: false
     },
+    Description: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },    
     SubmitStatus: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

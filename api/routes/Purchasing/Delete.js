@@ -4,7 +4,7 @@ const controller = require("../../controllers/Purchasing/index");
 const CheckAuth = require("../../midleware/validate-auth");
 
 router.delete("/", CheckAuth, (req, res) => {
-  switch (req.body.FormName) {
+  switch (req.query.FormName) {
     case "Machines":
       controller.Machines.delete(req, res);
       break;

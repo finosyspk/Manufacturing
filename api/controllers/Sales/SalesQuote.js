@@ -59,6 +59,11 @@ exports.getOne = async (req, res) => {
           "BaseQuantity",
           "Price",
           "Amount",
+          "Amount_Cur",
+          "TaxAmount",
+          "TaxAmount_Cur",
+          "NetAmount",
+          "NetAmount_Cur",
           "Remarks",
         ],
       });
@@ -83,9 +88,12 @@ exports.getOne = async (req, res) => {
           "TaxAmount_Cur",
         ]
       );
+      Detail = JSON.stringify(Detail)
+      Detail = JSON.parse(Detail) 
 
       Detail.map((val) => {
         val.Taxes = Taxes.Data.filter((o) => o.QLineSeq === val.QLineSeq);
+        console.log(val)
         return val;
       });
 
@@ -159,13 +167,13 @@ exports.CreateOrUpdate = async (req, res) => {
         o.QLineSeq = LineSeq;
         o.Taxes?.map((l) => {
           delete l.RID;
-          l.TransNo = SQData.Data.TransNo;
-          l.ItemCode = SQData.Data.ItemCode;
-          l.Item = SQData.Data.Item;
+          l.TransNo = o.TransNo;
+          l.ItemCode = o.ItemCode;
+          l.Item = o.Item;
           l.QLineSeq = o.QLineSeq;
+          TaxArray.push(l)
           return l;
         });
-        TaxArray.concat(o.Taxes)
         LineSeq++;
         return o;
       });

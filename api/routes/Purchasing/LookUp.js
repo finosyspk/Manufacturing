@@ -4,7 +4,7 @@ const controller = require("../../controllers/Purchasing/index");
 const CheckAuth = require("../../midleware/validate-auth");
 
 router.get("/", CheckAuth, (req, res) => {
-  switch (req.body.FormName) {
+  switch (req.query.FormName) {
     case "Routing":
       controller.LookUp.getRouting(req, res);
       break;

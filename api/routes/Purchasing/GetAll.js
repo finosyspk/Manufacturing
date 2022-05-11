@@ -4,8 +4,8 @@ const controller = require("../../controllers/Purchasing/index");
 const CheckAuth = require("../../midleware/validate-auth");
 
 router.get("/", CheckAuth,(req, res) => {
-  console.log("Form : ", req.body.FormName);
-  switch (req.body.FormName) {
+  console.log("Form : ", req.query.FormName);
+  switch (req.query.FormName) {
     case "Machine":
       controller.Machines.getList(req, res);
       break;

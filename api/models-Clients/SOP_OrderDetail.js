@@ -101,6 +101,15 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DECIMAL(20,5),
       allowNull: false
     },
+    NetAmount: {
+      type: DataTypes.DECIMAL(20,5),
+      allowNull: false,
+      defaultValue: 0
+    },
+    NetAmount_Cur: {
+      type: DataTypes.DECIMAL(20,5),
+      allowNull: false
+    },
     QtyUsed: {
       type: DataTypes.DECIMAL(20,5),
       allowNull: false

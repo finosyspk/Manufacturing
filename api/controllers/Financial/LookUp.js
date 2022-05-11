@@ -10,9 +10,9 @@ exports.getTaxSchedule = async (req, res) => {
     let Columns = [];
 
     Columns = ["TaxScheduleCode", "TaxSchedule"];
-    let TaxSchedule = await SeqFunc.getAll(db[req.headers.compcode].FIN_TaxSchedule, {where :{IsActive:true}}, true, Columns);
+    let TaxSchedule = await SeqFunc.getAll(db[req.headers.compcode].FIN_TaxSchedule, { where: { IsActive: true } }, true, Columns);
 
-    
+
     ResponseLog.Send200(req, res, {
       TaxSchedule: TaxSchedule.Data,
     });
@@ -24,15 +24,30 @@ exports.getTaxSchedule = async (req, res) => {
 
 exports.getTaxDetail = async (req, res) => {
   try {
-    console.log("There!")
-    let Columns = [];
+    let Columns = [
+      "TaxScheduleID",
+      "TaxScheduleCode",
+      "TaxSchedule",
+      "TaxDetailID",
+      "TaxDetail",
+      "TaxDetailCode",
+      "TaxType",
+      "AcctCode",
+      "AcctDesc",
+      "TaxRate",
+      [db[req.headers.compcode].sequelize.literal('0'), "TaxAmount"],
+      [db[req.headers.compcode].sequelize.literal('0'), "TaxAmount_Cur"]
+    ];
 
-    Columns = ["TaxDetailCode", "TaxDetail","TaxType","TaxRate","AcctCode","AcctDesc"];
-    let TaxDetail = await SeqFunc.getAll(db[req.headers.compcode].FIN_TaxScheduleDetail, {where :{TaxScheduleCode: req.query.TaxScheduleCode}}, true, Columns);
-    
+    let Taxes = await db[req.headers.compcode].FIN_TaxScheduleDetail.findAll({ where: { TaxScheduleCode: req.query.TaxScheduleCode }, attributes: Columns });
+
+    let regColumns = ["TaxDetailCode", "TaxDetail", "TaxType", "TaxRate", "TaxAmount"];
+    let Data = await MaterialData.Register(Taxes, regColumns);
+
     ResponseLog.Send200(req, res, {
-      TaxDetail: TaxDetail.Data,
+      TaxDetail: Data,
     });
+    
   } catch (err) {
     console.log(err);
     ResponseLog.Error200(req, res, err.message);
@@ -44,9 +59,9 @@ exports.getAccounts = async (req, res) => {
     let Columns = [];
 
     Columns = ["AcctCode", "AcctDesc", "AcctType", "Category"];
-    let Accounts = await SeqFunc.getAll(db[req.headers.compcode].FIN_CodeCombination, {where :{Enabled:true}}, true, Columns);
+    let Accounts = await SeqFunc.getAll(db[req.headers.compcode].FIN_CodeCombination, { where: { Enabled: true } }, true, Columns);
 
-    
+
     ResponseLog.Send200(req, res, {
       Accounts: Accounts.Data,
     });
@@ -60,10 +75,10 @@ exports.getPayTerms = async (req, res) => {
   try {
     let Columns = [];
 
-    Columns = [["PayTermCode","PaymentTermsCode"], ["PayTermDesc","PaymentTerms"]];
-    let PayTerms = await SeqFunc.getAll(db[req.headers.compcode].FIN_PayTerms, {where :{IsActive:true}}, true, Columns);
+    Columns = [["PayTermCode", "PaymentTermsCode"], ["PayTermDesc", "PaymentTerms"]];
+    let PayTerms = await SeqFunc.getAll(db[req.headers.compcode].FIN_PayTerms, { where: { IsActive: true } }, true, Columns);
 
-    
+
     ResponseLog.Send200(req, res, {
       PayTerms: PayTerms.Data,
     });
@@ -77,10 +92,10 @@ exports.getSalesPersons = async (req, res) => {
   try {
     let Columns = [];
 
-    Columns = [["CardCode","SalesPersonCode"], ["CardName","SalesPerson"]];
-    let SalesPersons = await SeqFunc.getAll(db[req.headers.compcode].FIN_Cards, {where :{IsSalesMan:true}}, true, Columns);
+    Columns = [["CardCode", "SalesPersonCode"], ["CardName", "SalesPerson"]];
+    let SalesPersons = await SeqFunc.getAll(db[req.headers.compcode].FIN_Cards, { where: { IsSalesMan: true } }, true, Columns);
 
-    
+
     ResponseLog.Send200(req, res, {
       SalesPersons: SalesPersons.Data,
     });
@@ -94,10 +109,10 @@ exports.getCustomers = async (req, res) => {
   try {
     let Columns = [];
 
-    Columns = ["CustomerCode","Customer"];
-    let Customers = await SeqFunc.getAll(db[req.headers.compcode].FIN_Customers, {where :{IsActive:true}}, true, Columns);
+    Columns = ["CustomerCode", "Customer"];
+    let Customers = await SeqFunc.getAll(db[req.headers.compcode].FIN_Customers, { where: { IsActive: true } }, true, Columns);
 
-    
+
     ResponseLog.Send200(req, res, {
       Customers: Customers.Data,
     });
@@ -111,9 +126,9 @@ exports.getCurrencies = async (req, res) => {
   try {
     let Columns = [];
 
-    Columns = ["CurCode","CurName","CurSymbol"];
+    Columns = ["CurCode", "CurName", "CurSymbol"];
     let Currencies = await SeqFunc.getAll(db[req.headers.compcode].FIN_Currencies, {}, true, Columns);
-    
+
     ResponseLog.Send200(req, res, {
       Currencies: Currencies.Data,
     });
