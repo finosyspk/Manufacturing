@@ -4,24 +4,21 @@ const controller = require("../../controllers/Purchasing/index");
 const CheckAuth = require("../../midleware/validate-auth");
 
 router.delete("/", CheckAuth, (req, res) => {
-  switch (req.query.FormName) {
-    case "Machines":
-      controller.Machines.delete(req, res);
-      break;
-    case "Stages":
-      controller.Stages.delete(req, res);
-      break;
-    case "Routing":
-      controller.Routing.delete(req, res);
-      break;
-      case "Shift":
-        controller.Shift.delete(req, res);
+    switch (req.query.FormName) {
+      case "Requisition":
+        controller.Requisition.delete(req, res);
         break;
-      case "BOM":
-        controller.BOM.delete(req, res);
+      case "PurchaseOrder":
+        controller.PurchaseOrder.delete(req, res);
         break;
-    default:
-      break;
+      case "GoodsReceipt":
+        controller.GoodsReceipt.delete(req, res);
+        break;
+      case "PurchaseInvoice":
+        controller.PurchaseInvoice.delete(req, res);
+        break;
+      default:
+        break;
   }
 });
 

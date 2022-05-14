@@ -53,6 +53,7 @@ exports.getOne = async (req, res) => {
           "ItemCode",
           "Item",
           "ItemTrackBy",
+          "ItemType",
           "UOMCode",
           "UOM",
           "UnitQuantity",

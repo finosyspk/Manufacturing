@@ -5,6 +5,9 @@ const CheckAuth = require("../../midleware/validate-auth");
 
 router.get("/", CheckAuth, (req, res) => {
   switch (req.query.FormName) {
+    case "Jobs":
+      controller.LookUp.getJobs(req, res);
+      break;
     case "TaxSchedule":
       controller.LookUp.getTaxSchedule(req, res);
       break;

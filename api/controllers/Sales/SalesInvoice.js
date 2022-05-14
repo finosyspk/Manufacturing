@@ -53,13 +53,23 @@ exports.getOne = async (req, res) => {
           "ItemCode",
           "Item",
           "ItemTrackBy",
+          "ItemType",
           "UOMCode",
           "UOM",
+          "JobCode",
+          "Job",
           "UnitQuantity",
           "Quantity",
           "BaseQuantity",
           "Price",
           "Amount",
+          "Amount_Cur",
+          "TaxScheduleCode",
+          "TaxSchedule",
+          "TaxAmount",
+          "TaxAmount_Cur",
+          "NetAmount",
+          "NetAmount_Cur",
           "Remarks",
         ],
       });
@@ -85,29 +95,32 @@ exports.getOne = async (req, res) => {
         ]
       );
 
-      let Batches = await SeqFunc.getAll(
-        db[req.headers.compcode].SOP_InvoiceBatches,
-        { where: { TransNo: req.query.TransNo } },
-        false,
-        [
-          "TransNo",
-          "ILineSeq",
-          "ItemCode",
-          "Item",
-          "TaxScheduleID",
-          "TaxScheduleCode",
-          "TaxSchedule",
-          "TaxDetailID",
-          "TaxDetailCode",
-          "TaxDetail",
-          "TaxRate",
-          "TaxAmount",
-          "TaxAmount_Cur",
-        ]
-      );
+      // let Batches = await SeqFunc.getAll(
+      //   db[req.headers.compcode].SOP_InvoiceBatches,
+      //   { where: { TransNo: req.query.TransNo } },
+      //   false,
+      //   [
+      //     "TransNo",
+      //     "ILineSeq",
+      //     "ItemCode",
+      //     "Item",
+      //     "TaxScheduleID",
+      //     "TaxScheduleCode",
+      //     "TaxSchedule",
+      //     "TaxDetailID",
+      //     "TaxDetailCode",
+      //     "TaxDetail",
+      //     "TaxRate",
+      //     "TaxAmount",
+      //     "TaxAmount_Cur",
+      //   ]
+      // );
 
+      Detail = JSON.stringify(Detail)
+      Detail = JSON.parse(Detail) 
       Detail.map((val) => {
-        val.Taxes = Taxes.Data.filter((o) => o.QLineSeq === val.QLineSeq);
+        val.Taxes = Taxes.Data.filter((o) => o.ILineSeq === val.ILineSeq);
+        val.Batches = []
         return val;
       });
 
@@ -174,12 +187,17 @@ exports.CreateOrUpdate = async (req, res) => {
 
     if (INVData.success) {
       let LineSeq = 1;
-
+      let TaxArray = [];
       Detail.map((o) => {
         o.TransNo = INVData.Data.TransNo;
         o.ILineSeq = LineSeq;
         o.Taxes?.map((l) => {
+          delete l.RID;
+          l.TransNo = o.TransNo;
+          l.ItemCode = o.ItemCode;
+          l.Item = o.Item;
           l.ILineSeq = o.ILineSeq;
+          TaxArray.push(l)
           return l;
         });
         LineSeq++;
@@ -197,7 +215,7 @@ exports.CreateOrUpdate = async (req, res) => {
         let TaxesData = await SeqFunc.Trans_bulkCreate(
           db[req.headers.compcode].SOP_InvoiceTaxes,
           { where: { TransNo: INVData.Data.TransNo }, transaction: t },
-          BatchArray,
+          TaxArray,
           t
         );
         if (TaxesData.success) {
@@ -205,7 +223,7 @@ exports.CreateOrUpdate = async (req, res) => {
           if (Header.Posted) {
             Post.postData(req, res);
           } else {
-            if (DetailData.created) {
+            if (INVData.created) {
               ResponseLog.Create200(req, res);
             } else {
               ResponseLog.Update200(req, res);

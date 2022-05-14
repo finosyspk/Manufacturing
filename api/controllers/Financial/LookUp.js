@@ -2,7 +2,25 @@ const db = require("../../models-Clients/index");
 const ResponseLog = require("../../../core/ResponseLog");
 const SeqFunc = require("../../../core/SeqFunc");
 const MaterialData = require("../../../core/MaterialData");
+// const { Op } = require("sequelize/types");
 
+
+exports.getJobs = async (req, res) => {
+  try {
+    let Columns = [];
+
+    Columns = ["JobCode", ["JobDesc","Job"]];
+    let Job = await SeqFunc.getAll(db[req.headers.compcode].FIN_Jobs, { where: { JobHead: 1 } }, true, Columns);
+
+
+    ResponseLog.Send200(req, res, {
+      Job: Job.Data,
+    });
+  } catch (err) {
+    console.log(err);
+    ResponseLog.Error200(req, res, err.message);
+  }
+};
 
 exports.getTaxSchedule = async (req, res) => {
   try {

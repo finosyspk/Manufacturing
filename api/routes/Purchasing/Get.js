@@ -6,23 +6,20 @@ const CheckAuth = require("../../midleware/validate-auth");
 router.get("/", CheckAuth, (req, res) => {
   console.log({ FormName: req.query.FormName });
   switch (req.query.FormName) {
-    case "Machines":
-      controller.Machines.getOne(req, res);
-      break;
-    case "Stages":
-      controller.Stages.getOne(req, res);
-      break;
-    case "Routing":
-      controller.Routing.getOne(req, res);
-      break;
-    case "Shift":
-      controller.Shift.getOne(req, res);
-      break;
-    case "BOM":
-      controller.BOM.getOne(req, res);
-      break;
-    default:
-      break;
+      case "Requisition":
+        controller.Requisition.getOne(req, res);
+        break;
+      case "PurchaseOrder":
+        controller.PurchaseOrder.getOne(req, res);
+        break;
+      case "GoodsReceipt":
+        controller.GoodsReceipt.getOne(req, res);
+        break;
+      case "PurchaseInvoice":
+        controller.PurchaseInvoice.getOne(req, res);
+        break;
+      default:
+        break;
   }
 });
 
