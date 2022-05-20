@@ -46,13 +46,13 @@ exports.delete = async (req, res) => {
   }
 };
 
-exports.CreateOrUpdate = async (req, res) => {
+exports.CreateOrUpdate = async (req, res, next) => {
   try {
     let Header = req.body.Header;
 
     let Data = await SeqFunc.updateOrCreate(
       db.Company,
-      { CompID: Header.CompID ? Header.CompID : 0 },
+      { where:{ CompID: Header.CompID ? Header.CompID : 0 } },
       Header
     );
 

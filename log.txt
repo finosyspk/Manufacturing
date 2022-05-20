@@ -16047,3 +16047,835 @@
  Message : {"Success":false,"Message":"Error Saving Record!"}
  **************************************************  
  Log Ended
+ Log Started on2022-05-18T07:52:59.887Z
+ ************************************************** 
+
+ API : /api/v1/Auth/LogIn -- Method : POST
+ FormName : undefined
+ Message : {"Success":false,"Message":"Named parameter \":UserName\" has no value in the given object."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-18T10:55:13.760Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Reference to database and/or server name in 'SBS_COASTAL..INV_StockMaster' is not supported in this version of SQL Server."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-18T11:00:52.578Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Reference to database and/or server name in 'SBS_COASTAL..INV_StockMaster' is not supported in this version of SQL Server."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-18T11:02:23.960Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Reference to database and/or server name in 'SBS_COASTAL..INV_StockMaster' is not supported in this version of SQL Server."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-18T11:09:12.710Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Reference to database and/or server name in 'SBS_COASTAL..IN_StockMaster' is not supported in this version of SQL Server."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-18T11:43:18.914Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Reference to database and/or server name in 'SBS_COASTAL..INV_StockMaster' is not supported in this version of SQL Server."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T05:09:40.599Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T05:10:35.582Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'Sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T05:11:26.554Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"db[req.headers.compcode].Sequelize.query is not a function"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T05:11:51.227Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Named parameter \":LocatioCode\" has no value in the given object."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T05:12:21.879Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Reference to database and/or server name in 'SBS_COASTAL..IN_StockMaster' is not supported in this version of SQL Server."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T05:19:41.639Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Incorrect syntax near the keyword 'BY'."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T05:23:22.152Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Incorrect syntax near the keyword 'BY'."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T06:13:40.960Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T06:35:17.176Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T06:35:53.715Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Login failed for user 'sa'."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T06:37:09.043Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Login failed for user 'sa'."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T06:37:16.158Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Login failed for user 'sa'."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T06:41:08.293Z
+ ************************************************** 
+
+ API : /api/v1/Auth/Create -- Method : POST
+ FormName : Company
+ Message : {"Success":false,"Message":"next is not a function"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T06:58:26.455Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T07:00:42.202Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T07:01:07.958Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Login failed for user 'sa'."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T07:01:47.080Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T07:01:48.646Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T07:05:59.671Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T07:11:50.400Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T07:17:04.241Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T07:17:05.599Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T07:17:06.327Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T07:17:06.897Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T07:17:59.554Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T07:18:22.126Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Login failed for user 'sa'."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T07:20:53.942Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T07:22:46.549Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T07:25:12.754Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T07:26:45.432Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Login failed for user 'sa'."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T07:27:01.171Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Login failed for user 'sa'."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T08:10:08.249Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T08:16:30.021Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T08:17:44.606Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T08:18:11.122Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T08:22:06.870Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T09:34:19.016Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T09:35:02.058Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T09:36:22.134Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T09:37:15.722Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T09:39:31.174Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T09:42:21.809Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T09:44:57.028Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Login failed for user 'sa'."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T09:45:21.865Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:38:17.978Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:39:49.267Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:41:48.653Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'TEST2')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:42:52.131Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'TEST2')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:43:34.290Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'TEST2')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:43:58.364Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'Sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:44:52.094Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'Sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:45:26.931Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"rer is not defined"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:45:48.791Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'TEST2')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:46:25.878Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'TEST2')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:47:04.421Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'TEST2')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:47:50.230Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'Sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:48:20.180Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'Sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:49:06.126Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'Sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:49:30.382Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'Sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:49:41.221Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'Sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:50:39.566Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'TEST2')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:51:07.836Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'Sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:51:40.574Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'Sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:51:54.293Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:54:09.303Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'Sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:55:05.971Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'Sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:55:31.579Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'Sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:56:55.712Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Login failed for user 'sa'."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:57:50.275Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Login failed for user 'sa'."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T10:59:20.633Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Login failed for user 'sa'."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T11:00:02.763Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Login failed for user 'sa'."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T11:30:54.842Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Posting -- Method : POST
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T11:31:17.783Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Posting -- Method : POST
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T11:31:33.273Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Posting -- Method : POST
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T11:31:41.995Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/Posting -- Method : POST
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T11:33:12.093Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'INV_Item')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T11:36:33.894Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'INV_Item')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T11:43:09.932Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'SBS_INV')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T11:43:40.506Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'SBS_INV')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T11:45:02.686Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'SBS_INV')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T11:46:01.176Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'SBS_INV')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T11:46:38.317Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'SBS_INV')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T11:49:20.854Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'SBS_DEMO')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T11:50:01.711Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'SBS_INV')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T11:50:23.203Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'SBS_DEMO')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T11:52:05.757Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'SBS_DEMO')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T11:52:57.771Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'SBS_DEMO')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T11:54:23.742Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'SBS_DEMO')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T12:04:03.762Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'SBS_DEMO')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T12:08:22.775Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'DEMO')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T12:11:55.798Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'DEMO')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T12:13:33.234Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'DEMO')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T12:15:55.409Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'DEMO')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T12:27:15.472Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'DEMO')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T12:29:56.657Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'DEMO')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T12:31:45.323Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'DEMO')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T12:36:27.996Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-20T12:42:29.148Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
