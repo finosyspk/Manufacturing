@@ -14,7 +14,7 @@ exports.getList = async (req, res) => {
       ["RPosted", "Status"],
     ];
     let ADJ = await SeqFunc.getAll(
-      db[req.headers.compcode].INV_TransactionHeader,
+      req.sequelizeDB.INV_TransactionHeader,
       {},
       true,
       Columns
@@ -37,7 +37,7 @@ exports.getList = async (req, res) => {
 exports.getOne = async (req, res) => {
   try {
     let ADJ = await SeqFunc.getOne(
-      db[req.headers.compcode].INV_TransactionHeader,
+      req.sequelizeDB.INV_TransactionHeader,
       {
         where: { TransNo: req.query.TransNo },
       }
@@ -45,7 +45,7 @@ exports.getOne = async (req, res) => {
 
     if (ADJ.success) {
 
-      let Detail = await db[req.headers.compcode].INV_TransactionDetail.findAll({
+      let Detail = await req.sequelizeDB.INV_TransactionDetail.findAll({
         where: {TransNo: req.query.TransNo},
         attributes:[
           "TransNo",
@@ -58,14 +58,14 @@ exports.getOne = async (req, res) => {
           "UnitQuantity",
           "Quantity",
           "BaseQuantity",
-          [db[req.headers.compcode].Sequelize.literal(`dbo.GetInventoryStock(ItemCode,'${ADJ.Data.LocationCode}') + BaseQuantity`), 'QtyBal'],
+          [req.sequelizeDB.Sequelize.literal(`dbo.GetInventoryStock(ItemCode,'${ADJ.Data.LocationCode}') + BaseQuantity`), 'QtyBal'],
           "UnitCost",
           "Remarks",
         ]
       })
 
       let Batches = await SeqFunc.getAll(
-        db[req.headers.compcode].INV_TransactionBatches,
+        req.sequelizeDB.INV_TransactionBatches,
         { where: {TransNo: req.query.TransNo} },
         false,
         [
@@ -102,20 +102,20 @@ exports.getOne = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     let ADJ = await SeqFunc.getOne(
-      db[req.headers.compcode].INV_TransactionHeader,
+      req.sequelizeDB.INV_TransactionHeader,
       {
         where: { TransNo: req.query.TransNo, Posted: false },
       }
     );
 
     if (ADJ.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].INV_TransactionBatches, {
+      await SeqFunc.Delete(req.sequelizeDB.INV_TransactionBatches, {
         where: { TRID: ADJ.Data.TRID },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].INV_TransactionDetail, {
+      await SeqFunc.Delete(req.sequelizeDB.INV_TransactionDetail, {
         where: { TRID: ADJ.Data.TRID },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].INV_TransactionHeader, {
+      await SeqFunc.Delete(req.sequelizeDB.INV_TransactionHeader, {
         where: { TRID: ADJ.Data.TRID },
       });
       ResponseLog.Delete200(req, res);
@@ -128,7 +128,7 @@ exports.delete = async (req, res) => {
 };
 
 exports.CreateOrUpdate = async (req, res) => {
-  const t = await db[req.headers.compcode].sequelize.transaction();
+  const t = await req.sequelizeDB.sequelize.transaction();
   try {
 
     let Header = req.body.Header;
@@ -140,9 +140,9 @@ exports.CreateOrUpdate = async (req, res) => {
     // Header.Posted = 0;
 
     let ADJData = await SeqFunc.Trans_updateOrCreate(
-      db[req.headers.compcode],
-      db[req.headers.compcode].INV_TransactionHeader,
-      db[req.headers.compcode].INV_NextNo,
+      req.sequelizeDB,
+      req.sequelizeDB.INV_TransactionHeader,
+      req.sequelizeDB.INV_NextNo,
       {
         where: { TransNo: Header.TransNo ? Header.TransNo : "" },
         transaction: t,
@@ -176,14 +176,14 @@ exports.CreateOrUpdate = async (req, res) => {
       });
 
       let ADJDetailData = await SeqFunc.Trans_bulkCreate(
-        db[req.headers.compcode].INV_TransactionDetail,
+        req.sequelizeDB.INV_TransactionDetail,
         { where: { TRID: ADJData.Data.TRID }, transaction: t },
         Detail,
         t
       );
       if (ADJDetailData.success) {
         let ADJBatchData = await SeqFunc.Trans_bulkCreate(
-          db[req.headers.compcode].INV_TransactionBatches,
+          req.sequelizeDB.INV_TransactionBatches,
           { where: { TransNo: ADJData.Data.TransNo }, transaction: t },
           BatchArray,
           t
@@ -193,8 +193,8 @@ exports.CreateOrUpdate = async (req, res) => {
           let Allocation = {};
           if (Header.FormType !== "AdjInward") {
             Allocation = await Stock.Allocation.Allocation(
-              db[req.headers.compcode],
-              db[req.headers.compcode].INV_TransactionDetail,
+              req.sequelizeDB,
+              req.sequelizeDB.INV_TransactionDetail,
               ADJData.Data.TransNo,
               ADJData.Data.TransDate,
               ADJData.Data.TransType,

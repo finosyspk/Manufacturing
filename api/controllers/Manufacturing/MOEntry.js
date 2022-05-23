@@ -14,7 +14,7 @@ exports.getList = async (req, res) => {
       ["MOStatus", "Status"],
     ];
     let MO = await SeqFunc.getAll(
-      db[req.headers.compcode].MOP_MOHeader,
+      req.sequelizeDB.MOP_MOHeader,
       {},
       true,
       Columns
@@ -31,7 +31,7 @@ exports.getList = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   try {
-    let MO = await SeqFunc.getOne(db[req.headers.compcode].MOP_MOHeader, {
+    let MO = await SeqFunc.getOne(req.sequelizeDB.MOP_MOHeader, {
       where: { TransNo: req.query.TransNo },
     });
     
@@ -59,7 +59,7 @@ exports.getOne = async (req, res) => {
 
     if (MO.success) {
       let Detail = await SeqFunc.getAll(
-        db[req.headers.compcode].MOP_MODetail,
+        req.sequelizeDB.MOP_MODetail,
         { MOID: MO.Data.MOID },
         false,
         [
@@ -95,15 +95,15 @@ exports.getOne = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    let MO = await SeqFunc.getOne(db[req.headers.compcode].MOP_MOHeader, {
+    let MO = await SeqFunc.getOne(req.sequelizeDB.MOP_MOHeader, {
       where: { TransNo: req.query.TransNo, Posted: false },
     });
 
     if (MO.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].MOP_MODetail, {
+      await SeqFunc.Delete(req.sequelizeDB.MOP_MODetail, {
         where: { MOID: MO.Data.MOID },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].MOP_MOHeader, {
+      await SeqFunc.Delete(req.sequelizeDB.MOP_MOHeader, {
         where: { MOID: MO.Data.MOID },
       });
       ResponseLog.Delete200(req, res);
@@ -116,7 +116,7 @@ exports.delete = async (req, res) => {
 };
 
 exports.CreateOrUpdate = async (req, res) => {
-  const t = await db[req.headers.compcode].sequelize.transaction();
+  const t = await req.sequelizeDB.sequelize.transaction();
   try {
 
     let Header = req.body.Header;
@@ -126,9 +126,9 @@ exports.CreateOrUpdate = async (req, res) => {
     Header.TransStatus = "1";
 
     let MOData = await SeqFunc.Trans_updateOrCreate(
-      db[req.headers.compcode],
-      db[req.headers.compcode].MOP_MOHeader,
-      db[req.headers.compcode].MOP_NextNo,
+      req.sequelizeDB,
+      req.sequelizeDB.MOP_MOHeader,
+      req.sequelizeDB.MOP_NextNo,
       {
         where: { TransNo: Header.TransNo ? Header.TransNo : "" },
         transaction: t,
@@ -140,7 +140,7 @@ exports.CreateOrUpdate = async (req, res) => {
     if (MOData.success) {
       Detail.map((o) => (o.MOID = MOData.Data.MOID));
       let MODetailData = await SeqFunc.Trans_bulkCreate(
-        db[req.headers.compcode].MOP_MODetail,
+        req.sequelizeDB.MOP_MODetail,
         { where: { MOID: MOData.Data.MOID }, transaction: t },
         Detail,
         t

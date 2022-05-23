@@ -91,6 +91,7 @@ var CompInst = async (compDB) => {
     // db.Sequelize = Sequelize;
     // return db[val["CompCode"]]
     // });
+    // return db
   } catch (err) {
     console.log(err);
   }

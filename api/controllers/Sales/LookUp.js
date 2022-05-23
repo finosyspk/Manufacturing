@@ -13,7 +13,7 @@ exports.getOpenSalesQuotes = async (req, res) => {
                       INNER JOIN SOP_QuoteDetail D ON H.TransNo = D.TransNo AND D.LineStatus = 0
                       WHERE H.SubmitStatus = 1 AND H.LocationCode = :LocationCode`;
 
-    let OpenSalesQuotes = await db[req.headers.compcode].sequelize.query(sqlQuery,{replacements : {LocationCode : req.query.LocationCode},type : db[req.headers.compcode].Sequelize.QueryTypes.SELECT}) 
+    let OpenSalesQuotes = await req.sequelizeDB.sequelize.query(sqlQuery,{replacements : {LocationCode : req.query.LocationCode},type : req.sequelizeDB.Sequelize.QueryTypes.SELECT}) 
     let columns = [["QTransNo","TransNo"],"ItemCode","Item","UOM","AvailableQuantity"]
     let Data = await MaterialData.Register(OpenSalesQuotes,columns);
     
@@ -37,7 +37,7 @@ exports.getOpenSalesOrders = async (req, res) => {
                       INNER JOIN SOP_OrderDetail D ON H.TransNo = D.TransNo AND D.LineStatus = 0
                       WHERE H.SubmitStatus = 1 AND H.LocationCode = :LocationCode`;
 
-    let OpenSalesOrders = await db[req.headers.compcode].sequelize.query(sqlQuery,{replacements : {LocationCode : req.query.LocationCode},type : db[req.headers.compcode].Sequelize.QueryTypes.SELECT}) 
+    let OpenSalesOrders = await req.sequelizeDB.sequelize.query(sqlQuery,{replacements : {LocationCode : req.query.LocationCode},type : req.sequelizeDB.Sequelize.QueryTypes.SELECT}) 
     let columns = [["OTransNo","TransNo"],"ItemCode","Item","UOM","AvailableQuantity"]
     let Data = await MaterialData.Register(OpenSalesOrders,columns);
     
@@ -61,7 +61,7 @@ exports.getOpenSalesDispatches = async (req, res) => {
                       INNER JOIN SOP_DispatchDetail D ON H.TransNo = D.TransNo AND D.LineStatus = 0
                       WHERE H.Posted = 1 AND H.LocationCode = :LocationCode`;
 
-    let OpenSalesDispatches = await db[req.headers.compcode].sequelize.query(sqlQuery,{replacements : {LocationCode : req.query.LocationCode},type : db[req.headers.compcode].Sequelize.QueryTypes.SELECT}) 
+    let OpenSalesDispatches = await req.sequelizeDB.sequelize.query(sqlQuery,{replacements : {LocationCode : req.query.LocationCode},type : req.sequelizeDB.Sequelize.QueryTypes.SELECT}) 
     let columns = ["DTransNo","ItemCode","Item","UOM","AvailableQuantity"]
     let Data = await MaterialData.Register(OpenSalesDispatches,columns);
     

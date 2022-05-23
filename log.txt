@@ -16879,3 +16879,211 @@
  Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
  **************************************************  
  Log Ended
+ Log Started on2022-05-23T05:10:29.037Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T05:11:20.722Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T05:11:45.112Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'INV_Item')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T05:14:40.770Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/GetAll -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T05:22:37.725Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Company is not a function"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T05:23:51.308Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"db.CompInst is not a function"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T05:29:45.562Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'INV_Item')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T05:33:56.099Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T05:35:34.722Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'query')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T05:35:56.128Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'query')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T05:36:59.567Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T05:39:34.007Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'query')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T05:41:05.896Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'QueryTypes')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T05:42:16.225Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'QueryTypes')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T05:43:00.300Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'QueryTypes')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T05:44:21.675Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'query')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T06:25:08.782Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'query')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T06:27:47.815Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'query')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T06:28:57.274Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'query')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T06:32:37.739Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Incorrect syntax near ':'."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T06:33:00.583Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Incorrect syntax near ':'."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T06:33:51.871Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Incorrect syntax near ':'."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T06:35:40.433Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Incorrect syntax near ':'."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T06:39:03.362Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Named parameter \":UOMHeaderCode\" has no value in the given object."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T06:39:26.486Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Named parameter \":UOMHeaderCode\" has no value in the given object."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-05-23T06:39:43.030Z
+ ************************************************** 
+
+ API : /api/v1/Inventory/LookUp -- Method : GET
+ FormName : Routing
+ Message : {"Success":false,"Message":"Named parameter \":UOMHeaderCode\" has no value in the given object."}
+ **************************************************  
+ Log Ended

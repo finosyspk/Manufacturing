@@ -11,7 +11,7 @@ exports.getRouting = async (req, res) => {
 
     Columns = ["MachineCode", "MachineName"];
     let Machine = await SeqFunc.getAll(
-      db[req.headers.compcode].MOP_Machine,
+      req.sequelizeDB.MOP_Machine,
       { where: { IsActive: "1" } },
       true,
       Columns
@@ -19,7 +19,7 @@ exports.getRouting = async (req, res) => {
 
     Columns = ["StageCode", "StageName"];
     let Stages = await SeqFunc.getAll(
-      db[req.headers.compcode].MOP_Stages,
+      req.sequelizeDB.MOP_Stages,
       { where: { IsActive: "1" } },
       true,
       Columns
@@ -36,7 +36,7 @@ exports.getRouting = async (req, res) => {
 
 exports.getBOM = async (req, res) => {
   try {
-    let BOM = await db[req.headers.compcode].MOP_BOMHeader.findAll({
+    let BOM = await req.sequelizeDB.MOP_BOMHeader.findAll({
       attributes: [
         "BOMID",
         "ItemCode",
@@ -50,7 +50,7 @@ exports.getBOM = async (req, res) => {
       // where: { BillStatus: {[Op.ne] : 'Obselete'} },
     });
 
-    let Routing = await db[req.headers.compcode].MOP_RoutingHeader.findAll({
+    let Routing = await req.sequelizeDB.MOP_RoutingHeader.findAll({
       attributes: ["RoutingID", "RoutingCode", "RoutingName"],
       where: { IsActive: 1 },
     });
@@ -72,7 +72,7 @@ exports.getActiveBOM = async (req, res) => {
 
     Columns = ["BOMID", "ItemCode", "ItemName"];
     let BOM = await SeqFunc.getAll(
-      db[req.headers.compcode].MOP_BOMHeader,
+      req.sequelizeDB.MOP_BOMHeader,
       { where: { BillStatus: { [Op.ne]: "Obselete" } } },
       true,
       Columns
@@ -89,7 +89,7 @@ exports.getActiveBOM = async (req, res) => {
 
 exports.getRoutingStages = async (req, res) => {
   try {
-    let Stages = await db[req.headers.compcode].MOP_RoutingDetail.findAll({
+    let Stages = await req.sequelizeDB.MOP_RoutingDetail.findAll({
       attributes: [
         "StageCode",
         "StageName",
@@ -118,7 +118,7 @@ exports.getRoutingStages = async (req, res) => {
 
 exports.getBOMDetail = async (req, res) => {
   try {
-    let BOMDetail = await db[req.headers.compcode].MOP_BOMDetail.findAll({
+    let BOMDetail = await req.sequelizeDB.MOP_BOMDetail.findAll({
       attributes: [
         "CItemCode",
         "CItemName",
@@ -151,7 +151,7 @@ exports.getBOMDetail = async (req, res) => {
 
 exports.getMODetail = async (req, res) => {
   try {
-    let MODetail = await db[req.headers.compcode].MOP_BOMDetail.findAll({
+    let MODetail = await req.sequelizeDB.MOP_BOMDetail.findAll({
       attributes: [
         "CItemCode",
         "CItemName",
@@ -196,9 +196,9 @@ exports.getMODetail = async (req, res) => {
 
 exports.getActiveMO = async (req, res) => {
   try {
-    let MO = await db[req.headers.compcode].MOP_MOHeader.findAll({
+    let MO = await req.sequelizeDB.MOP_MOHeader.findAll({
       include:[{
-        model: db[req.headers.compcode].MOP_MODetail,
+        model: req.sequelizeDB.MOP_MODetail,
         attributes:["StageCode","StageName","StageSeq","MachineCode","MachineName"],
         where:{Completed:0},
         order:["StageSeq"],
@@ -224,7 +224,7 @@ exports.getActiveMO = async (req, res) => {
 
 exports.getMOStages = async (req, res) => {
   try {
-    let MOStages = await db[req.headers.compcode].MOP_MODetail.findAll({
+    let MOStages = await req.sequelizeDB.MOP_MODetail.findAll({
       attributes: [
         "CItemCode",
         "CItemName",
@@ -251,7 +251,7 @@ exports.getMOStages = async (req, res) => {
 
 exports.getMOReceipt = async (req, res) => {
   try {
-    let MO = await db[req.headers.compcode].MOP_MOHeader.findAll({
+    let MO = await req.sequelizeDB.MOP_MOHeader.findAll({
       where: { TransStatus: 1, MOStatus: "Ready to Receive" },
     });
 
@@ -279,7 +279,7 @@ exports.getMOReceiptDetail = async (req, res) => {
                     WHERE MH.MOTransNo = :TransNo 
                     GROUP BY CItemCode, CItemName, MD.UOMCode, MD.UOM, MD.UnitQuantity`;
 
-    let MODetail = await db[req.headers.compcode].sequelize.query(sqlQuery,{replacements : {TransNo : req.query.MOTransNo},type : db[req.headers.compcode].Sequelize.QueryTypes.SELECT}) 
+    let MODetail = await req.sequelizeDB.sequelize.query(sqlQuery,{replacements : {TransNo : req.query.MOTransNo},type : req.sequelizeDB.Sequelize.QueryTypes.SELECT}) 
 
     ResponseLog.Send200(req, res, {
       MODetail: MODetail,

@@ -10,7 +10,7 @@ exports.getJobs = async (req, res) => {
     let Columns = [];
 
     Columns = ["JobCode", ["JobDesc","Job"]];
-    let Job = await SeqFunc.getAll(db[req.headers.compcode].FIN_Jobs, { where: { JobHead: 1 } }, true, Columns);
+    let Job = await SeqFunc.getAll(req.sequelizeDB.FIN_Jobs, { where: { JobHead: 1 } }, true, Columns);
 
 
     ResponseLog.Send200(req, res, {
@@ -28,7 +28,7 @@ exports.getTaxSchedule = async (req, res) => {
     let Columns = [];
 
     Columns = ["TaxScheduleCode", "TaxSchedule"];
-    let TaxSchedule = await SeqFunc.getAll(db[req.headers.compcode].FIN_TaxSchedule, { where: { IsActive: true } }, true, Columns);
+    let TaxSchedule = await SeqFunc.getAll(req.sequelizeDB.FIN_TaxSchedule, { where: { IsActive: true } }, true, Columns);
 
 
     ResponseLog.Send200(req, res, {
@@ -53,11 +53,11 @@ exports.getTaxDetail = async (req, res) => {
       "AcctCode",
       "AcctDesc",
       "TaxRate",
-      [db[req.headers.compcode].sequelize.literal('0'), "TaxAmount"],
-      [db[req.headers.compcode].sequelize.literal('0'), "TaxAmount_Cur"]
+      [req.sequelizeDB.sequelize.literal('0'), "TaxAmount"],
+      [req.sequelizeDB.sequelize.literal('0'), "TaxAmount_Cur"]
     ];
 
-    let Taxes = await db[req.headers.compcode].FIN_TaxScheduleDetail.findAll({ where: { TaxScheduleCode: req.query.TaxScheduleCode }, attributes: Columns });
+    let Taxes = await req.sequelizeDB.FIN_TaxScheduleDetail.findAll({ where: { TaxScheduleCode: req.query.TaxScheduleCode }, attributes: Columns });
 
     let regColumns = ["TaxDetailCode", "TaxDetail", "TaxType", "TaxRate", "TaxAmount"];
     let Data = await MaterialData.Register(Taxes, regColumns);
@@ -77,7 +77,7 @@ exports.getAccounts = async (req, res) => {
     let Columns = [];
 
     Columns = ["AcctCode", "AcctDesc", "AcctType", "Category"];
-    let Accounts = await SeqFunc.getAll(db[req.headers.compcode].FIN_CodeCombination, { where: { Enabled: true } }, true, Columns);
+    let Accounts = await SeqFunc.getAll(req.sequelizeDB.FIN_CodeCombination, { where: { Enabled: true } }, true, Columns);
 
 
     ResponseLog.Send200(req, res, {
@@ -94,7 +94,7 @@ exports.getPayTerms = async (req, res) => {
     let Columns = [];
 
     Columns = [["PayTermCode", "PaymentTermsCode"], ["PayTermDesc", "PaymentTerms"]];
-    let PayTerms = await SeqFunc.getAll(db[req.headers.compcode].FIN_PayTerms, { where: { IsActive: true } }, true, Columns);
+    let PayTerms = await SeqFunc.getAll(req.sequelizeDB.FIN_PayTerms, { where: { IsActive: true } }, true, Columns);
 
 
     ResponseLog.Send200(req, res, {
@@ -111,7 +111,7 @@ exports.getSalesPersons = async (req, res) => {
     let Columns = [];
 
     Columns = [["CardCode", "SalesPersonCode"], ["CardName", "SalesPerson"]];
-    let SalesPersons = await SeqFunc.getAll(db[req.headers.compcode].FIN_Cards, { where: { IsSalesMan: true } }, true, Columns);
+    let SalesPersons = await SeqFunc.getAll(req.sequelizeDB.FIN_Cards, { where: { IsSalesMan: true } }, true, Columns);
 
 
     ResponseLog.Send200(req, res, {
@@ -128,7 +128,7 @@ exports.getCustomers = async (req, res) => {
     let Columns = [];
 
     Columns = ["CustomerCode", "Customer"];
-    let Customers = await SeqFunc.getAll(db[req.headers.compcode].FIN_Customers, { where: { IsActive: true } }, true, Columns);
+    let Customers = await SeqFunc.getAll(req.sequelizeDB.FIN_Customers, { where: { IsActive: true } }, true, Columns);
 
 
     ResponseLog.Send200(req, res, {
@@ -145,7 +145,7 @@ exports.getCurrencies = async (req, res) => {
     let Columns = [];
 
     Columns = ["CurCode", "CurName", "CurSymbol"];
-    let Currencies = await SeqFunc.getAll(db[req.headers.compcode].FIN_Currencies, {}, true, Columns);
+    let Currencies = await SeqFunc.getAll(req.sequelizeDB.FIN_Currencies, {}, true, Columns);
 
     ResponseLog.Send200(req, res, {
       Currencies: Currencies.Data,

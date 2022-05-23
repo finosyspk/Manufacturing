@@ -16,7 +16,7 @@ exports.getList = async (req, res) => {
       ["RPosted","Status"]
     ];
     let INV = await SeqFunc.getAll(
-      db[req.headers.compcode].SOP_InvoiceMaster,
+      req.sequelizeDB.SOP_InvoiceMaster,
       {},
       true,
       Columns
@@ -38,12 +38,12 @@ exports.getList = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   try {
-    let INV = await SeqFunc.getOne(db[req.headers.compcode].SOP_InvoiceMaster, {
+    let INV = await SeqFunc.getOne(req.sequelizeDB.SOP_InvoiceMaster, {
       where: { TransNo: req.query.TransNo },
     });
 
     if (INV.success) {
-      let Detail = await db[req.headers.compcode].SOP_InvoiceDetail.findAll({
+      let Detail = await req.sequelizeDB.SOP_InvoiceDetail.findAll({
         where: { TransNo: req.query.TransNo },
         attributes: [
           "TransNo",
@@ -75,7 +75,7 @@ exports.getOne = async (req, res) => {
       });
 
       let Taxes = await SeqFunc.getAll(
-        db[req.headers.compcode].SOP_InvoiceTaxes,
+        req.sequelizeDB.SOP_InvoiceTaxes,
         { where: { TransNo: req.query.TransNo } },
         false,
         [
@@ -96,7 +96,7 @@ exports.getOne = async (req, res) => {
       );
 
       // let Batches = await SeqFunc.getAll(
-      //   db[req.headers.compcode].SOP_InvoiceBatches,
+      //   req.sequelizeDB.SOP_InvoiceBatches,
       //   { where: { TransNo: req.query.TransNo } },
       //   false,
       //   [
@@ -140,18 +140,18 @@ exports.getOne = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    let INV = await SeqFunc.getOne(db[req.headers.compcode].SOP_InvoiceMaster, {
+    let INV = await SeqFunc.getOne(req.sequelizeDB.SOP_InvoiceMaster, {
       where: { TransNo: req.query.TransNo, Posted: false },
     });
 
     if (INV.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].SOP_InvoiceTaxes, {
+      await SeqFunc.Delete(req.sequelizeDB.SOP_InvoiceTaxes, {
         where: { TransNo: INV.Data.TransNo },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].SOP_InvoiceDetail, {
+      await SeqFunc.Delete(req.sequelizeDB.SOP_InvoiceDetail, {
         where: { TransNo: INV.Data.TransNo },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].SOP_InvoiceMaster, {
+      await SeqFunc.Delete(req.sequelizeDB.SOP_InvoiceMaster, {
         where: { TransNo: INV.Data.TransNo },
       });
       ResponseLog.Delete200(req, res);
@@ -164,7 +164,7 @@ exports.delete = async (req, res) => {
 };
 
 exports.CreateOrUpdate = async (req, res) => {
-  const t = await db[req.headers.compcode].sequelize.transaction();
+  const t = await req.sequelizeDB.sequelize.transaction();
   try {
     let Header = req.body.Header;
     let Detail = req.body.Detail;
@@ -174,9 +174,9 @@ exports.CreateOrUpdate = async (req, res) => {
     Header.PostedUser = 1;
 
     let INVData = await SeqFunc.Trans_updateOrCreate(
-      db[req.headers.compcode],
-      db[req.headers.compcode].SOP_InvoiceMaster,
-      db[req.headers.compcode].SOP_NextNo,
+      req.sequelizeDB,
+      req.sequelizeDB.SOP_InvoiceMaster,
+      req.sequelizeDB.SOP_NextNo,
       {
         where: { TransNo: Header.TransNo ? Header.TransNo : "" },
         transaction: t,
@@ -205,7 +205,7 @@ exports.CreateOrUpdate = async (req, res) => {
       });
 
       let DetailData = await SeqFunc.Trans_bulkCreate(
-        db[req.headers.compcode].SOP_InvoiceDetail,
+        req.sequelizeDB.SOP_InvoiceDetail,
         { where: { TransNo: INVData.Data.TransNo }, transaction: t },
         Detail,
         t
@@ -213,7 +213,7 @@ exports.CreateOrUpdate = async (req, res) => {
 
       if (DetailData.success) {
         let TaxesData = await SeqFunc.Trans_bulkCreate(
-          db[req.headers.compcode].SOP_InvoiceTaxes,
+          req.sequelizeDB.SOP_InvoiceTaxes,
           { where: { TransNo: INVData.Data.TransNo }, transaction: t },
           TaxArray,
           t

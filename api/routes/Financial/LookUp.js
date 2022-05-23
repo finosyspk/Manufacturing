@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("../../controllers/Financial/index");
+const { CreateCompanyInstance } = require("../../midleware/company-instance");
 const CheckAuth = require("../../midleware/validate-auth");
 
-router.get("/", CheckAuth, (req, res) => {
+router.get("/", CheckAuth, CreateCompanyInstance, (req, res) => {
   switch (req.query.FormName) {
     case "Jobs":
       controller.LookUp.getJobs(req, res);

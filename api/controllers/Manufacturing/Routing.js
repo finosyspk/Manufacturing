@@ -5,7 +5,7 @@ const SeqFunc = require("../../../core/SeqFunc");
 exports.getList = async (req, res) => {
   try {
     let Columns = ["RoutingCode","RoutingName","IsActive"];
-    let Routing = await SeqFunc.getAll(db[req.headers.compcode].MOP_RoutingHeader, {}, true, Columns);
+    let Routing = await SeqFunc.getAll(req.sequelizeDB.MOP_RoutingHeader, {}, true, Columns);
     if (Routing.success) {
       ResponseLog.Send200(req, res, Routing.Data);
     } else {
@@ -18,11 +18,11 @@ exports.getList = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   try {
-    let Routing = await SeqFunc.getOne(db[req.headers.compcode].MOP_RoutingHeader, { where:{RoutingCode: req.query.RoutingCode} });
+    let Routing = await SeqFunc.getOne(req.sequelizeDB.MOP_RoutingHeader, { where:{RoutingCode: req.query.RoutingCode} });
 
     if (Routing.success) {
       let RoutingDetail = await SeqFunc.getAll(
-        db[req.headers.compcode].MOP_RoutingDetail,
+        req.sequelizeDB.MOP_RoutingDetail,
         { where: {RoutingID: Routing.Data.RoutingID} },
         false,
         ["StageCode","StageName","StageCode","MachineName","StandardHours","StageSeq"]
@@ -47,15 +47,15 @@ exports.getOne = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     let Routing = await SeqFunc.getOne(
-      db[req.headers.compcode].MOP_RoutingHeader,
+      req.sequelizeDB.MOP_RoutingHeader,
       { where: { RoutingCode: req.query.RoutingCode } }
     );
 
     if (Routing.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].MOP_RoutingDetail, {
+      await SeqFunc.Delete(req.sequelizeDB.MOP_RoutingDetail, {
         where: { RoutingID: Routing.Data.RoutingID },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].MOP_RoutingHeader, {
+      await SeqFunc.Delete(req.sequelizeDB.MOP_RoutingHeader, {
         where: { RoutingID: Routing.Data.RoutingID },
       });
       ResponseLog.Delete200(req, res);
@@ -74,13 +74,13 @@ exports.CreateOrUpdate = async (req, res) => {
     delete Header.RoutingID;
 
     let RoutingData = await SeqFunc.updateOrCreate(
-      db[req.headers.compcode].MOP_RoutingHeader,
+      req.sequelizeDB.MOP_RoutingHeader,
       { where:{RoutingCode: Header.RoutingCode ? Header.RoutingCode : ''} },
       Header
     );
 
     if (RoutingData.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].MOP_RoutingDetail, { where :{RoutingID: RoutingData.Data.RoutingID} });
+      await SeqFunc.Delete(req.sequelizeDB.MOP_RoutingDetail, { where :{RoutingID: RoutingData.Data.RoutingID} });
 
       Detail.map(o => {
         delete o.RoutingLineID
@@ -90,7 +90,7 @@ exports.CreateOrUpdate = async (req, res) => {
         return o
       })
       console.log(Detail)
-      await SeqFunc.bulkCreate(db[req.headers.compcode].MOP_RoutingDetail,Detail)
+      await SeqFunc.bulkCreate(req.sequelizeDB.MOP_RoutingDetail,Detail)
 
       if (RoutingData.created) {
         ResponseLog.Create200(req, res);

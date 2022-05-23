@@ -8,7 +8,7 @@ exports.getList = async (req, res) => {
       "TransNo","TransDate",["MOTransNo","MO No"],"Item","UOM","RoutingName","StageName"
     ];
     let MOIssuance = await SeqFunc.getAll(
-      db[req.headers.compcode].MOP_Issuance,
+      req.sequelizeDB.MOP_Issuance,
       {},
       true,
       Columns
@@ -25,13 +25,13 @@ exports.getList = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   try {
-    let MOIssuance = await SeqFunc.getOne(db[req.headers.compcode].MOP_Issuance, {
+    let MOIssuance = await SeqFunc.getOne(req.sequelizeDB.MOP_Issuance, {
       where: { TransNo: req.query.TransNo },
     });
 
     if (MOIssuance.success) {
       let Detail = await SeqFunc.getAll(
-        db[req.headers.compcode].MOP_IssuanceDetail,
+        req.sequelizeDB.MOP_IssuanceDetail,
         { where: {PickID: MOIssuance.Data.PickID} },
         false,
         ["CItemCode","CItem","UOMCode","UOM","Quantity","StageCode","StageName"]
@@ -54,16 +54,16 @@ exports.getOne = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     let MOIssuance = await SeqFunc.getOne(
-      db[req.headers.compcode].MOP_Issuance,
+      req.sequelizeDB.MOP_Issuance,
       { where: { TransNo: req.query.TransNo, Posted: false } },
       Header
     );
 
     if (MOIssuance.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].MOP_IssuanceDetail, {
+      await SeqFunc.Delete(req.sequelizeDB.MOP_IssuanceDetail, {
         where: { PickID: MOIssuance.Data.PickID },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].MOP_Issuance, {
+      await SeqFunc.Delete(req.sequelizeDB.MOP_Issuance, {
         where: { PickID: MOIssuance.Data.PickID },
       });
       ResponseLog.Delete200(req, res);
@@ -76,7 +76,7 @@ exports.delete = async (req, res) => {
 };
 
 exports.CreateOrUpdate = async (req, res) => {
-  const t = await db[req.headers.compcode].sequelize.transaction();
+  const t = await req.sequelizeDB.sequelize.transaction();
   try {
 
     let Header = req.body.Header;
@@ -88,9 +88,9 @@ exports.CreateOrUpdate = async (req, res) => {
     Header.TransStatus = '1'
 
     let MOIssuanceData = await SeqFunc.Trans_updateOrCreate(
-      db[req.headers.compcode],
-      db[req.headers.compcode].MOP_Issuance,
-      db[req.headers.compcode].MOP_NextNo,
+      req.sequelizeDB,
+      req.sequelizeDB.MOP_Issuance,
+      req.sequelizeDB.MOP_NextNo,
       { where: { TransNo: Header.TransNo ? Header.TransNo : '' },transaction:t },
       Header,
       t
@@ -104,17 +104,17 @@ exports.CreateOrUpdate = async (req, res) => {
       });
 
       let MOIssDData = await SeqFunc.Trans_bulkCreate(
-        db[req.headers.compcode].MOP_IssuanceDetail,
+        req.sequelizeDB.MOP_IssuanceDetail,
         { where: { PickID: MOIssuanceData.Data.PickID },transaction:t },
         Detail,
         t
       );
       if (MOIssDData.success) {
         
-        let MO = await db[req.headers.compcode].MOP_MOHeader.findOne({ attributes: ["MOID"], where: { TransNo: MOIssuanceData.Data.MOTransNo },transaction:t }) 
-        await db[req.headers.compcode].MOP_MODetail.update({Completed: true},{ where: { MOID: MO.MOID, StageCode: MOIssuanceData.Data.StageCode},transaction:t })
-        let Count = await db[req.headers.compcode].MOP_MODetail.count({ where: { MOID: MO.MOID, Completed:false },transaction:t })
-        await db[req.headers.compcode].MOP_MOHeader.update({MOStatus: Count === 0 ? 'Ready to Receive' : 'In Process'},{ where: { MOID: MO.MOID },transaction:t })
+        let MO = await req.sequelizeDB.MOP_MOHeader.findOne({ attributes: ["MOID"], where: { TransNo: MOIssuanceData.Data.MOTransNo },transaction:t }) 
+        await req.sequelizeDB.MOP_MODetail.update({Completed: true},{ where: { MOID: MO.MOID, StageCode: MOIssuanceData.Data.StageCode},transaction:t })
+        let Count = await req.sequelizeDB.MOP_MODetail.count({ where: { MOID: MO.MOID, Completed:false },transaction:t })
+        await req.sequelizeDB.MOP_MOHeader.update({MOStatus: Count === 0 ? 'Ready to Receive' : 'In Process'},{ where: { MOID: MO.MOID },transaction:t })
         t.commit();
         if (MOIssDData.created) {
           ResponseLog.Create200(req, res);

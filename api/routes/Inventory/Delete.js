@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("../../controllers/Inventory/index");
+const { CreateCompanyInstance } = require("../../midleware/company-instance");
 const CheckAuth = require("../../midleware/validate-auth");
 
-router.delete("/", CheckAuth, (req, res) => {
+router.delete("/", CheckAuth, CreateCompanyInstance, (req, res) => {
   switch (req.query.FormName) {
     case "Item":
       controller.Item.delete(req, res);
