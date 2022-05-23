@@ -16,7 +16,7 @@ exports.getList = async (req, res) => {
       "Status",
     ];
     let SQ = await SeqFunc.getAll(
-      db[req.headers.compcode].SOP_QuoteMaster,
+      req.sequelizeDB.SOP_QuoteMaster,
       {},
       true,
       Columns
@@ -39,12 +39,12 @@ exports.getList = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   try {
-    let SQ = await SeqFunc.getOne(db[req.headers.compcode].SOP_QuoteMaster, {
+    let SQ = await SeqFunc.getOne(req.sequelizeDB.SOP_QuoteMaster, {
       where: { TransNo: req.query.TransNo },
     });
 
     if (SQ.success) {
-      let Detail = await db[req.headers.compcode].SOP_QuoteDetail.findAll({
+      let Detail = await req.sequelizeDB.SOP_QuoteDetail.findAll({
         where: { TransNo: req.query.TransNo },
         attributes: [
           "TransNo",
@@ -72,7 +72,7 @@ exports.getOne = async (req, res) => {
       });
 
       let Taxes = await SeqFunc.getAll(
-        db[req.headers.compcode].SOP_QuoteTaxes,
+        req.sequelizeDB.SOP_QuoteTaxes,
         { where: { TransNo: req.query.TransNo } },
         false,
         [
@@ -116,18 +116,18 @@ exports.getOne = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    let SQ = await SeqFunc.getOne(db[req.headers.compcode].SOP_QuoteMaster, {
+    let SQ = await SeqFunc.getOne(req.sequelizeDB.SOP_QuoteMaster, {
       where: { TransNo: req.query.TransNo, SubmitStatus: false },
     });
 
     if (SQ.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].SOP_QuoteTaxes, {
+      await SeqFunc.Delete(req.sequelizeDB.SOP_QuoteTaxes, {
         where: { TransNo: SQ.Data.TransNo },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].SOP_QuoteDetail, {
+      await SeqFunc.Delete(req.sequelizeDB.SOP_QuoteDetail, {
         where: { TransNo: SQ.Data.TransNo },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].SOP_QuoteMaster, {
+      await SeqFunc.Delete(req.sequelizeDB.SOP_QuoteMaster, {
         where: { TransNo: SQ.Data.TransNo },
       });
       ResponseLog.Delete200(req, res);
@@ -140,7 +140,7 @@ exports.delete = async (req, res) => {
 };
 
 exports.CreateOrUpdate = async (req, res) => {
-  const t = await db[req.headers.compcode].sequelize.transaction();
+  const t = await req.sequelizeDB.sequelize.transaction();
   try {
     let Header = req.body.Header;
     let Detail = req.body.Detail;
@@ -150,9 +150,9 @@ exports.CreateOrUpdate = async (req, res) => {
     Header.PostedUser = 1;
 
     let SQData = await SeqFunc.Trans_updateOrCreate(
-      db[req.headers.compcode],
-      db[req.headers.compcode].SOP_QuoteMaster,
-      db[req.headers.compcode].SOP_NextNo,
+      req.sequelizeDB,
+      req.sequelizeDB.SOP_QuoteMaster,
+      req.sequelizeDB.SOP_NextNo,
       {
         where: { TransNo: Header.TransNo ? Header.TransNo : "" },
         transaction: t,
@@ -182,7 +182,7 @@ exports.CreateOrUpdate = async (req, res) => {
       });
 
       let DetailData = await SeqFunc.Trans_bulkCreate(
-        db[req.headers.compcode].SOP_QuoteDetail,
+        req.sequelizeDB.SOP_QuoteDetail,
         { where: { TransNo: SQData.Data.TransNo }, transaction: t },
         Detail,
         t
@@ -191,7 +191,7 @@ exports.CreateOrUpdate = async (req, res) => {
       if (DetailData.success) {
         console.log({TaxArray})
         let TaxesData = await SeqFunc.Trans_bulkCreate(
-          db[req.headers.compcode].SOP_QuoteTaxes,
+          req.sequelizeDB.SOP_QuoteTaxes,
           { where: { TransNo: SQData.Data.TransNo }, transaction: t },
           TaxArray,
           t

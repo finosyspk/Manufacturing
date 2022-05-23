@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 const controller = require("../../controllers/Manufacturing/index");
 const CheckAuth = require("../../midleware/validate-auth");
+const { CreateCompanyInstance } = require("../../midleware/company-instance");
 
-router.post("/", CheckAuth, (req, res) => {
+router.post("/", CheckAuth, CreateCompanyInstance, (req, res) => {
   switch (req.body.FormName) {
     case "Machine":
       controller.Machines.CreateOrUpdate(req, res);

@@ -81,7 +81,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     ExpiredOn: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false
     },
     UsersLimit: {

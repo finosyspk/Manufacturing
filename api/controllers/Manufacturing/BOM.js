@@ -14,7 +14,7 @@ exports.getList = async (req, res) => {
       "StockMethod",
     ];
     let BOM = await SeqFunc.getAll(
-      db[req.headers.compcode].MOP_BOMHeader,
+      req.sequelizeDB.MOP_BOMHeader,
       {},
       true,
       Columns
@@ -35,11 +35,11 @@ exports.getOne = async (req, res) => {
     if (req.query?.BillStatus){
       where.BillStatus = req.query?.BillStatus
     }
-    let BOM = await SeqFunc.getOne(db[req.headers.compcode].MOP_BOMHeader, {where: where});
+    let BOM = await SeqFunc.getOne(req.sequelizeDB.MOP_BOMHeader, {where: where});
 
     if (BOM.success) {
       let BOMDetail = await SeqFunc.getAll(
-        db[req.headers.compcode].MOP_BOMDetail,
+        req.sequelizeDB.MOP_BOMDetail,
         { where:{BOMID: req.query.BOMID} },
         false,
         [
@@ -81,15 +81,15 @@ exports.getOne = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    let Routing = await SeqFunc.getOne(db[req.headers.compcode].MOP_BOMHeader, {
+    let Routing = await SeqFunc.getOne(req.sequelizeDB.MOP_BOMHeader, {
       where: { BOMID: req.query.BOMID },
     });
 
     if (Routing.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].MOP_BOMDetail, {
+      await SeqFunc.Delete(req.sequelizeDB.MOP_BOMDetail, {
         where: { BOMID: Routing.Data.BOMID },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].MOP_BOMHeader, {
+      await SeqFunc.Delete(req.sequelizeDB.MOP_BOMHeader, {
         where: { BOMID: Routing.Data.BOMID },
       });
       ResponseLog.Delete200(req, res);
@@ -108,13 +108,13 @@ exports.CreateOrUpdate = async (req, res) => {
     delete Header.BOMID 
 
     let BOMData = await SeqFunc.updateOrCreate(
-      db[req.headers.compcode].MOP_BOMHeader,
+      req.sequelizeDB.MOP_BOMHeader,
       { where: { BOMID: Header.BOMID ? Header.BOMID : 0 } },
       Header
     );
 
     if (BOMData.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].MOP_BOMDetail, {
+      await SeqFunc.Delete(req.sequelizeDB.MOP_BOMDetail, {
         where: { BOMID: BOMData.Data.BOMID },
       });
 
@@ -125,7 +125,7 @@ exports.CreateOrUpdate = async (req, res) => {
         o.RoutingName = BOMData.Data.RoutingName;
       });
       console.log({ Detail });
-      await SeqFunc.bulkCreate(db[req.headers.compcode].MOP_BOMDetail, Detail);
+      await SeqFunc.bulkCreate(req.sequelizeDB.MOP_BOMDetail, Detail);
 
       if (BOMData.created) {
         ResponseLog.Create200(req, res);

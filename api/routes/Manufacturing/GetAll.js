@@ -3,8 +3,9 @@ const router = express.Router();
 const controller = require("../../controllers/Manufacturing/index");
 const CheckAuth = require("../../midleware/validate-auth");
 const settings = require("../../../AppConfig");
+const { CreateCompanyInstance } = require("../../midleware/company-instance");
 
-router.get("/", CheckAuth, (req, res) => {
+router.get("/", CheckAuth, CreateCompanyInstance, (req, res) => {
   switch (req.query.FormName) {
     case "Machine":
       controller.Machines.getList(req, res);

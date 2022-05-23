@@ -5,7 +5,7 @@ const SeqFunc = require("../../../core/SeqFunc");
 exports.getList = async (req, res) => {
   try {
     let Columns = ["ShiftName","IsActive","StartAt","Shifts"];
-    let Shift = await SeqFunc.getAll(db[req.headers.compcode].MOP_ShiftMaster, {}, true, Columns);
+    let Shift = await SeqFunc.getAll(req.sequelizeDB.MOP_ShiftMaster, {}, true, Columns);
     if (Shift.success) {
       ResponseLog.Send200(req, res, Shift.Data);
     } else {
@@ -18,11 +18,11 @@ exports.getList = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   try {
-    let Shift = await SeqFunc.getOne(db[req.headers.compcode].MOP_ShiftMaster, { where: {ShiftHead: req.query.ShiftHead} });
+    let Shift = await SeqFunc.getOne(req.sequelizeDB.MOP_ShiftMaster, { where: {ShiftHead: req.query.ShiftHead} });
 
     if (Shift.success) {
       let ShiftDetail = await SeqFunc.getAll(
-        db[req.headers.compcode].MOP_ShiftDetail,
+        req.sequelizeDB.MOP_ShiftDetail,
         { where:{ShiftHeadID: Shift.Data.ShiftHeadID} },
         false,
         ["ShiftDName","StartAt","EndAt"]
@@ -47,15 +47,15 @@ exports.getOne = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     let Shift = await SeqFunc.getOne(
-      db[req.headers.compcode].MOP_ShiftMaster,
+      req.sequelizeDB.MOP_ShiftMaster,
       { where: { ShiftHead: req.query.ShiftHead } }
     );
 
     if (Shift.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].MOP_ShiftDetail, {
+      await SeqFunc.Delete(req.sequelizeDB.MOP_ShiftDetail, {
         where: { ShiftHeadID: Shift.Data.ShiftHeadID },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].MOP_ShiftMaster, {
+      await SeqFunc.Delete(req.sequelizeDB.MOP_ShiftMaster, {
         where: { ShiftHeadID: Shift.Data.ShiftHeadID },
       });
       ResponseLog.Delete200(req, res);
@@ -74,14 +74,14 @@ exports.CreateOrUpdate = async (req, res) => {
     delete Header.ShiftHeadID;
 
     let Shift = await SeqFunc.updateOrCreate(
-      db[req.headers.compcode].MOP_ShiftMaster,
+      req.sequelizeDB.MOP_ShiftMaster,
       { where:{ShiftHead: Header.ShiftHead ? Header.ShiftHead : ''} },
       Header
     );
 
     console.log({Shift:Shift.Data})
     if (Shift.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].MOP_ShiftDetail, { where:{ShiftHeadID: Shift.Data.ShiftHeadID} });
+      await SeqFunc.Delete(req.sequelizeDB.MOP_ShiftDetail, { where:{ShiftHeadID: Shift.Data.ShiftHeadID} });
 
       Detail.map(o => {
         o.ShiftHeadID = Shift.Data.ShiftHeadID
@@ -91,7 +91,7 @@ exports.CreateOrUpdate = async (req, res) => {
       })
 
 
-      await SeqFunc.bulkCreate(db[req.headers.compcode].MOP_ShiftDetail,Detail)
+      await SeqFunc.bulkCreate(req.sequelizeDB.MOP_ShiftDetail,Detail)
 
       if (Shift.created) {
         ResponseLog.Create200(req, res);

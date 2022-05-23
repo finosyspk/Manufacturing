@@ -7,14 +7,14 @@ exports.postData = async (req, res) => {
     let TransNo = req.body.Header.TransNo;
 
     let REQ = await SeqFunc.getOne(
-      db[req.headers.compcode].INV_RequisitionMaster,
+      req.sequelizeDB.INV_RequisitionMaster,
       {
         where: { TransNo: TransNo },
       }
     );
 
     if (REQ.success) {
-      await db[req.headers.compcode].INV_RequisitionMaster.update({
+      await req.sequelizeDB.INV_RequisitionMaster.update({
         SubmitStatus: 1,
         Status: 'Submitted',
         PostedUser:1,

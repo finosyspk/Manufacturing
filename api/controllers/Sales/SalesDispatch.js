@@ -16,7 +16,7 @@ exports.getList = async (req, res) => {
       ["RPosted","Status"]
     ];
     let SO = await SeqFunc.getAll(
-      db[req.headers.compcode].SOP_DispatchMaster,
+      req.sequelizeDB.SOP_DispatchMaster,
       {},
       true,
       Columns
@@ -38,12 +38,12 @@ exports.getList = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   try {
-    let SO = await SeqFunc.getOne(db[req.headers.compcode].SOP_DispatchMaster, {
+    let SO = await SeqFunc.getOne(req.sequelizeDB.SOP_DispatchMaster, {
       where: { TransNo: req.query.TransNo },
     });
 
     if (SO.success) {
-      let Detail = await db[req.headers.compcode].SOP_DispatchDetail.findAll({
+      let Detail = await req.sequelizeDB.SOP_DispatchDetail.findAll({
         where: { TransNo: req.query.TransNo },
         attributes: [
           "TransNo",
@@ -59,7 +59,7 @@ exports.getOne = async (req, res) => {
           "UnitQuantity",
           "Quantity",
           "BaseQuantity",
-          [db[req.headers.compcode].Sequelize.literal(`dbo.GetInventoryStock(ItemCode,'${SO.Data.LocationCode}') + BaseQuantity`), 'QtyBal'],
+          [req.sequelizeDB.Sequelize.literal(`dbo.GetInventoryStock(ItemCode,'${SO.Data.LocationCode}') + BaseQuantity`), 'QtyBal'],
           "Price",
           "Amount",
           "Remarks",
@@ -67,7 +67,7 @@ exports.getOne = async (req, res) => {
       });
 
       let Taxes = await SeqFunc.getAll(
-        db[req.headers.compcode].SOP_DispatchTaxes,
+        req.sequelizeDB.SOP_DispatchTaxes,
         { where: { TransNo: req.query.TransNo } },
         false,
         [
@@ -88,7 +88,7 @@ exports.getOne = async (req, res) => {
       );
 
       let Batches = await SeqFunc.getAll(
-        db[req.headers.compcode].SOP_DispatchBatches,
+        req.sequelizeDB.SOP_DispatchBatches,
         { where: { TransNo: req.query.TransNo } },
         false,
         [
@@ -129,18 +129,18 @@ exports.getOne = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    let SO = await SeqFunc.getOne(db[req.headers.compcode].SOP_DispatchMaster, {
+    let SO = await SeqFunc.getOne(req.sequelizeDB.SOP_DispatchMaster, {
       where: { TransNo: req.query.TransNo, Posted: false },
     });
 
     if (SO.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].SOP_DispatchTaxes, {
+      await SeqFunc.Delete(req.sequelizeDB.SOP_DispatchTaxes, {
         where: { TransNo: SO.Data.TransNo },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].SOP_DispatchDetail, {
+      await SeqFunc.Delete(req.sequelizeDB.SOP_DispatchDetail, {
         where: { TransNo: SO.Data.TransNo },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].SOP_DispatchMaster, {
+      await SeqFunc.Delete(req.sequelizeDB.SOP_DispatchMaster, {
         where: { TransNo: SO.Data.TransNo },
       });
       ResponseLog.Delete200(req, res);
@@ -153,7 +153,7 @@ exports.delete = async (req, res) => {
 };
 
 exports.CreateOrUpdate = async (req, res) => {
-  const t = await db[req.headers.compcode].sequelize.transaction();
+  const t = await req.sequelizeDB.sequelize.transaction();
   try {
     let Header = req.body.Header;
     let Detail = req.body.Detail;
@@ -163,9 +163,9 @@ exports.CreateOrUpdate = async (req, res) => {
     Header.PostedUser = 1;
 
     let SOData = await SeqFunc.Trans_updateOrCreate(
-      db[req.headers.compcode],
-      db[req.headers.compcode].SOP_DispatchMaster,
-      db[req.headers.compcode].SOP_NextNo,
+      req.sequelizeDB,
+      req.sequelizeDB.SOP_DispatchMaster,
+      req.sequelizeDB.SOP_NextNo,
       {
         where: { TransNo: Header.TransNo ? Header.TransNo : "" },
         transaction: t,
@@ -189,7 +189,7 @@ exports.CreateOrUpdate = async (req, res) => {
       });
 
       let DetailData = await SeqFunc.Trans_bulkCreate(
-        db[req.headers.compcode].SOP_DispatchDetail,
+        req.sequelizeDB.SOP_DispatchDetail,
         { where: { TransNo: SOData.Data.TransNo }, transaction: t },
         Detail,
         t
@@ -197,7 +197,7 @@ exports.CreateOrUpdate = async (req, res) => {
 
       if (DetailData.success) {
         let TaxesData = await SeqFunc.Trans_bulkCreate(
-          db[req.headers.compcode].SOP_DispatchTaxes,
+          req.sequelizeDB.SOP_DispatchTaxes,
           { where: { TransNo: SOData.Data.TransNo }, transaction: t },
           BatchArray,
           t

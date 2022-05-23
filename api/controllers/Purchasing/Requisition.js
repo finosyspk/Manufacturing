@@ -7,7 +7,7 @@ exports.getList = async (req, res) => {
   try {
     let Columns = ["TransNo", "TransDate", "TransType", "Location", "Status"];
     let REQ = await SeqFunc.getAll(
-      db[req.headers.compcode].POP_RequisitionMaster,
+      req.sequelizeDB.POP_RequisitionMaster,
       {},
       true,
       Columns
@@ -25,7 +25,7 @@ exports.getList = async (req, res) => {
 exports.getOne = async (req, res) => {
   try {
     let REQ = await SeqFunc.getOne(
-      db[req.headers.compcode].POP_RequisitionMaster,
+      req.sequelizeDB.POP_RequisitionMaster,
       {
         where: { TransNo: req.query.TransNo },
       }
@@ -34,7 +34,7 @@ exports.getOne = async (req, res) => {
     if (REQ.success) {
       console.log({Data:REQ.Data})
       let Detail = await SeqFunc.getAll(
-        db[req.headers.compcode].POP_RequisitionDetail,
+        req.sequelizeDB.POP_RequisitionDetail,
         { where: {TransNo: REQ.Data.TransNo} },
         false,
         [
@@ -70,17 +70,17 @@ exports.getOne = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     let REQ = await SeqFunc.getOne(
-      db[req.headers.compcode].POP_RequisitionMaster,
+      req.sequelizeDB.POP_RequisitionMaster,
       {
         where: { TransNo: req.query.TransNo, SubmitStatus: false },
       }
     );
 
     if (REQ.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].POP_RequisitionDetail, {
+      await SeqFunc.Delete(req.sequelizeDB.POP_RequisitionDetail, {
         where: { TransNo: REQ.Data.TransNo },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].POP_RequisitionMaster, {
+      await SeqFunc.Delete(req.sequelizeDB.POP_RequisitionMaster, {
         where: { TransNo: REQ.Data.TransNo },
       });
       ResponseLog.Delete200(req, res);
@@ -93,7 +93,7 @@ exports.delete = async (req, res) => {
 };
 
 exports.CreateOrUpdate = async (req, res) => {
-  const t = await db[req.headers.compcode].sequelize.transaction();
+  const t = await req.sequelizeDB.sequelize.transaction();
   try {
     let Header = req.body.Header;
     let Detail = req.body.Detail;
@@ -104,9 +104,9 @@ exports.CreateOrUpdate = async (req, res) => {
     Header.Status = Header.SubmitStatus ? "Submitted" : "Pending";
 
     let REQData = await SeqFunc.Trans_updateOrCreate(
-      db[req.headers.compcode],
-      db[req.headers.compcode].POP_RequisitionMaster,
-      db[req.headers.compcode].POP_NextNo,
+      req.sequelizeDB,
+      req.sequelizeDB.POP_RequisitionMaster,
+      req.sequelizeDB.POP_NextNo,
       {
         where: { TransNo: Header.TransNo ? Header.TransNo : "" },
         transaction: t,
@@ -126,7 +126,7 @@ exports.CreateOrUpdate = async (req, res) => {
       });
 
       let REQDetailData = await SeqFunc.Trans_bulkCreate(
-        db[req.headers.compcode].POP_RequisitionDetail,
+        req.sequelizeDB.POP_RequisitionDetail,
         { where: { TransNo: REQData.Data.TransNo }, transaction: t },
         Detail,
         t

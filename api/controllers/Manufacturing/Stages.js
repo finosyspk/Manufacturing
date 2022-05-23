@@ -6,7 +6,7 @@ const SeqFunc = require("../../../core/SeqFunc");
 exports.getList = async (req, res) => {
     try {
       let Columns = ["StageCode","StageName","IsActive"]
-      let data = await SeqFunc.getAll(db[req.headers.compcode].MOP_Stages,{},true,Columns);
+      let data = await SeqFunc.getAll(req.sequelizeDB.MOP_Stages,{},true,Columns);
     if (data.success) {
       ResponseLog.Send200(req, res, data.Data);
     } else {
@@ -20,7 +20,7 @@ exports.getList = async (req, res) => {
 exports.getOne = async (req, res) => {
   try {
     
-    let data = await SeqFunc.getOne(db[req.headers.compcode].MOP_Stages,{where: {StageCode:req.query.StageCode}});
+    let data = await SeqFunc.getOne(req.sequelizeDB.MOP_Stages,{where: {StageCode:req.query.StageCode}});
 
     if (data.success) {
       ResponseLog.Send200(req, res, data.Data);
@@ -35,7 +35,7 @@ exports.getOne = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    let data = await SeqFunc.Delete(db[req.headers.compcode].MOP_Stages,{where: {StageCode:req.query.StageCode}});
+    let data = await SeqFunc.Delete(req.sequelizeDB.MOP_Stages,{where: {StageCode:req.query.StageCode}});
 
     if (data.success) {
       ResponseLog.Delete200(req, res);
@@ -52,7 +52,7 @@ exports.CreateOrUpdate = async (req, res) => {
     let Header = req.body.Header;
     delete Header.StageID;
     let Data = await SeqFunc.updateOrCreate(
-      db[req.headers.compcode].MOP_Stages,
+      req.sequelizeDB.MOP_Stages,
       { where: {StageCode:Header.StageCode}},
       Header
     );

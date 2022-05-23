@@ -6,7 +6,7 @@ const SeqFunc = require("../../../core/SeqFunc");
 exports.getList = async (req, res) => {
     try {
       let Columns = ["MachineCode","MachineName","PurchaseDate","InstalledDate","IsActive","PowerPerUnit","LaborPerUnit","OutputPerUnit"]
-      let data = await SeqFunc.getAll(db[req.headers.compcode].MOP_Machine,{},true,Columns);
+      let data = await SeqFunc.getAll(req.sequelizeDB.MOP_Machine,{},true,Columns);
     if (data.success) {
       ResponseLog.Send200(req, res, data.Data);
     } else {
@@ -21,7 +21,7 @@ exports.getList = async (req, res) => {
 exports.getOne = async (req, res) => {
   try {
     
-    let data = await SeqFunc.getOne(db[req.headers.compcode].MOP_Machine,{where: {MachineCode:req.query.MachineCode}});
+    let data = await SeqFunc.getOne(req.sequelizeDB.MOP_Machine,{where: {MachineCode:req.query.MachineCode}});
 
     if (data.success) {
       ResponseLog.Send200(req, res, data.Data);
@@ -35,7 +35,7 @@ exports.getOne = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    let data = await SeqFunc.Delete(db[req.headers.compcode].MOP_Machine,{ where: {MachineCode: req.query.MachineCode}});
+    let data = await SeqFunc.Delete(req.sequelizeDB.MOP_Machine,{ where: {MachineCode: req.query.MachineCode}});
 
     if (data.success) {
       ResponseLog.Delete200(req, res);
@@ -53,7 +53,7 @@ exports.CreateOrUpdate = async (req, res) => {
     delete Header.MachineID;
 
     let Data = await SeqFunc.updateOrCreate(
-      db[req.headers.compcode].MOP_Machine,
+      req.sequelizeDB.MOP_Machine,
       { where: {MachineCode: Header.MachineCode} },
       Header
     );

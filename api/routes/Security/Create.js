@@ -3,7 +3,7 @@ const router = express.Router();
 const controller = require("../../controllers/Security/index");
 const CheckAuth = require("../../midleware/validate-auth");
 
-router.post("/", (req, res) => {
+router.post("/",  (req, res, next) => {
   switch (req.body.FormName) {
     case "Roles":
       controller.Roles.add(req, res);
@@ -12,7 +12,7 @@ router.post("/", (req, res) => {
       controller.Users.add(req, res);
       break;
     case "Company":
-      controller.Company.add(req, res);
+      controller.Company.CreateOrUpdate(req, res, next);
       break;
     default:
       break;

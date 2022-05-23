@@ -8,7 +8,7 @@ exports.getList = async (req, res) => {
       "TransNo","TransDate",["MOTransNo","MO No"],"Item","UOM","Quantity"
     ];
     let MOReceipt = await SeqFunc.getAll(
-      db[req.headers.compcode].MOP_Receipt,
+      req.sequelizeDB.MOP_Receipt,
       {},
       true,
       Columns
@@ -25,13 +25,13 @@ exports.getList = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   try {
-    let MOReceipt = await SeqFunc.getOne(db[req.headers.compcode].MOP_Receipt, {
+    let MOReceipt = await SeqFunc.getOne(req.sequelizeDB.MOP_Receipt, {
       where: { TransNo: req.query.TransNo },
     });
 
     if (MOReceipt.success) {
       let Detail = await SeqFunc.getAll(
-        db[req.headers.compcode].MOP_ReceiptDetail,
+        req.sequelizeDB.MOP_ReceiptDetail,
         { where:{ReceiptID: MOReceipt.Data.ReceiptID} },
         false,
         ["CItemCode","CItem","UOMCode","UOM","Quantity","StageCode","StageName"]
@@ -54,13 +54,13 @@ exports.getOne = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     let MOReceipt = await SeqFunc.getOne(
-      db[req.headers.compcode].MOP_Receipt,
+      req.sequelizeDB.MOP_Receipt,
       { where: { TransNo: req.query.TransNo, Posted: false } },
       Header
     );
 
     if (MOReceipt.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].MOP_Receipt, {
+      await SeqFunc.Delete(req.sequelizeDB.MOP_Receipt, {
         where: { ReceiptID: MOReceipt.Data.ReceiptID },
       });
       ResponseLog.Delete200(req, res);
@@ -73,7 +73,7 @@ exports.delete = async (req, res) => {
 };
 
 exports.CreateOrUpdate = async (req, res) => {
-  const t = await db[req.headers.compcode].sequelize.transaction();
+  const t = await req.sequelizeDB.sequelize.transaction();
   try {
 
     let Header = req.body.Header;
@@ -85,9 +85,9 @@ exports.CreateOrUpdate = async (req, res) => {
     Header.TransStatus = '1'
 
     let MOReceiptData = await SeqFunc.Trans_updateOrCreate(
-      db[req.headers.compcode],
-      db[req.headers.compcode].MOP_Receipt,
-      db[req.headers.compcode].MOP_NextNo,
+      req.sequelizeDB,
+      req.sequelizeDB.MOP_Receipt,
+      req.sequelizeDB.MOP_NextNo,
       { where: { TransNo: Header.TransNo ? Header.TransNo : '' },transaction:t },
       Header,
       t
@@ -101,13 +101,13 @@ exports.CreateOrUpdate = async (req, res) => {
       });
 
       let MORctDData = await SeqFunc.Trans_bulkCreate(
-        db[req.headers.compcode].MOP_ReceiptDetail,
+        req.sequelizeDB.MOP_ReceiptDetail,
         { where: { ReceiptID: MOReceiptData.Data.ReceiptID },transaction:t },
         Detail,
         t
       );
       if (MORctDData.success) {
-        await db[req.headers.compcode].MOP_MOHeader.update({MOStatus: 'Completed'},{ where: { TransNo: MOReceiptData.Data.MOTransNo },transaction:t })
+        await req.sequelizeDB.MOP_MOHeader.update({MOStatus: 'Completed'},{ where: { TransNo: MOReceiptData.Data.MOTransNo },transaction:t })
         t.commit();
         if (MORctDData.created) {
           ResponseLog.Create200(req, res);

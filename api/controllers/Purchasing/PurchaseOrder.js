@@ -16,7 +16,7 @@ exports.getList = async (req, res) => {
       "Status",
     ];
     let PO = await SeqFunc.getAll(
-      db[req.headers.compcode].POP_OrderMaster,
+      req.sequelizeDB.POP_OrderMaster,
       {},
       true,
       Columns
@@ -38,12 +38,12 @@ exports.getList = async (req, res) => {
 
 exports.getOne = async (req, res) => {
   try {
-    let PO = await SeqFunc.getOne(db[req.headers.compcode].POP_OrderMaster, {
+    let PO = await SeqFunc.getOne(req.sequelizeDB.POP_OrderMaster, {
       where: { TransNo: req.query.TransNo },
     });
 
     if (PO.success) {
-      let Detail = await db[req.headers.compcode].POP_OrderDetail.findAll({
+      let Detail = await req.sequelizeDB.POP_OrderDetail.findAll({
         where: { TransNo: req.query.TransNo },
         attributes: [
           "TransNo",
@@ -65,7 +65,7 @@ exports.getOne = async (req, res) => {
       });
 
       let Taxes = await SeqFunc.getAll(
-        db[req.headers.compcode].POP_OrderTaxes,
+        req.sequelizeDB.POP_OrderTaxes,
         { where: { TransNo: req.query.TransNo } },
         false,
         [
@@ -106,18 +106,18 @@ exports.getOne = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    let PO = await SeqFunc.getOne(db[req.headers.compcode].POP_OrderMaster, {
+    let PO = await SeqFunc.getOne(req.sequelizeDB.POP_OrderMaster, {
       where: { TransNo: req.query.TransNo, SubmitStatus: false },
     });
 
     if (PO.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].POP_OrderTaxes, {
+      await SeqFunc.Delete(req.sequelizeDB.POP_OrderTaxes, {
         where: { TransNo: PO.Data.TransNo },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].POP_OrderDetail, {
+      await SeqFunc.Delete(req.sequelizeDB.POP_OrderDetail, {
         where: { TransNo: PO.Data.TransNo },
       });
-      await SeqFunc.Delete(db[req.headers.compcode].POP_OrderMaster, {
+      await SeqFunc.Delete(req.sequelizeDB.POP_OrderMaster, {
         where: { TransNo: PO.Data.TransNo },
       });
       ResponseLog.Delete200(req, res);
@@ -130,7 +130,7 @@ exports.delete = async (req, res) => {
 };
 
 exports.CreateOrUpdate = async (req, res) => {
-  const t = await db[req.headers.compcode].sequelize.transaction();
+  const t = await req.sequelizeDB.sequelize.transaction();
   try {
     let Header = req.body.Header;
     let Detail = req.body.Detail;
@@ -140,9 +140,9 @@ exports.CreateOrUpdate = async (req, res) => {
     Header.PostedUser = 1;
 
     let POData = await SeqFunc.Trans_updateOrCreate(
-      db[req.headers.compcode],
-      db[req.headers.compcode].POP_OrderMaster,
-      db[req.headers.compcode].POP_NextNo,
+      req.sequelizeDB,
+      req.sequelizeDB.POP_OrderMaster,
+      req.sequelizeDB.POP_NextNo,
 
       {
         where: { TransNo: Header.TransNo ? Header.TransNo : "" },
@@ -167,7 +167,7 @@ exports.CreateOrUpdate = async (req, res) => {
       });
 
       let DetailData = await SeqFunc.Trans_bulkCreate(
-        db[req.headers.compcode].POP_OrderDetail,
+        req.sequelizeDB.POP_OrderDetail,
         { where: { TransNo: POData.Data.TransNo }, transaction: t },
         Detail,
         t
@@ -175,7 +175,7 @@ exports.CreateOrUpdate = async (req, res) => {
 
       if (DetailData.success) {
         let TaxesData = await SeqFunc.Trans_bulkCreate(
-          db[req.headers.compcode].POP_OrderTaxes,
+          req.sequelizeDB.POP_OrderTaxes,
           { where: { TransNo: POData.Data.TransNo }, transaction: t },
           TaxArray,
           t
