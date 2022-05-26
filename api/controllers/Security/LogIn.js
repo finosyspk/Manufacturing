@@ -20,13 +20,13 @@ exports.getOne = async (req, res) => {
     };
 
     const token = jwt.sign(signvalues, AppConfig.JWT_KEY, {
-      expiresIn: "365d",
+      expiresIn: "8h",
     });
 
     response = {};
 
     sqlQuery = `SELECT UserID,UserName,Designation,ContactNo=U.ContactNo,Email=U.Email,
-                CompID=U.CompID, CompName, CompCode=[DB_Name] 
+                CompID=U.CompID, CompName, CompCode=C.CompCode 
                 FROM Users U INNER JOIN Company C ON U.CompID = C.CompID
                 WHERE U.IsActive = 1 AND UserName = :UserName`;
 

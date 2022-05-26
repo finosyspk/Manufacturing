@@ -77,16 +77,30 @@ exports.getInventoryItems = async (req, res) => {
 
 exports.getItems = async (req, res) => {
   try {
-    let Columns = [];
-    let params = req.query.ItemType ? { ItemType : req.query.ItemType } : {}
+    // let Columns = [];
+    // let params = req.query.ItemType ? { ItemType : req.query.ItemType } : {}
 
-    Columns = ["ItemCode", "Item", "ItemType"];
-    let Item = await SeqFunc.getAll(req.sequelizeDB.INV_Item, { where : params}, true, Columns);
+    // Columns = ["ItemCode", "Item", "ItemType"];
+    // let Item = await SeqFunc.getAll(req.sequelizeDB.INV_Item, { where : params}, true, Columns);
 
     
-    ResponseLog.Send200(req, res, {
-      Item: Item.Data,
+    // ResponseLog.Send200(req, res, {
+    //   Item: Item.Data,
+    // });
+
+    let sQuery = `SELECT I.*, UOM_Base = U.UOM FROM SBS_COASTAL..IN_Item I INNER JOIN SBS_COASTAL..IN_UOMDetail U on I.UOM_BaseCode = U.UOMCode`;
+
+    let ItemData = await req.sequelizeDB.sequelize.query(sQuery, {
+      type: req.sequelizeDB.Sequelize.QueryTypes.SELECT,
     });
+
+    let columns = ["ItemCode", "Item", "ItemType"]
+    let Data = await MaterialData.Register(ItemData, columns);
+
+    ResponseLog.Send200(req, res, {
+      Item: Data,
+    });
+
   } catch (err) {
     console.log(err);
     ResponseLog.Error200(req, res, err.message);
@@ -96,12 +110,27 @@ exports.getItems = async (req, res) => {
 exports.getItemUOM = async (req, res) => {
   try {
 
-    let Columns = [];
+    // let Columns = [];
 
-    Columns = ["UOMCode","UOM","UnitQuantity"];
-    let ItemUOM = await SeqFunc.getAll(req.sequelizeDB.INV_ItemUOM, {where: { ItemCode: req.query.ItemCode, IsActive: 1 }}, true, Columns);
+    // Columns = ["UOMCode","UOM","UnitQuantity"];
+    // let ItemUOM = await SeqFunc.getAll(req.sequelizeDB.INV_ItemUOM, {where: { ItemCode: req.query.ItemCode, IsActive: 1 }}, true, Columns);
+    // ResponseLog.Send200(req, res, {
+    //   ItemUOM: ItemUOM.Data,
+    // });
+
+    let sQuery = `SELECT I.*, U.UOM, UnitQuantity = QTYEQV FROM SBS_DEMO..IN_ItemUOM I
+    INNER JOIN SBS_COASTAL..IN_UOMDetail U on I.UOMCode = U.UOMCode
+    WHERE ItemCode = '${req.query.ItemCode}' AND I.IsActive = 1`;
+
+    let ItemUOM = await req.sequelizeDB.sequelize.query(sQuery, {
+      type: req.sequelizeDB.Sequelize.QueryTypes.SELECT,
+    });
+
+    let columns = ["UOMCode","UOM","UnitQuantity"]
+    let Data = await MaterialData.Register(ItemUOM, columns);
+
     ResponseLog.Send200(req, res, {
-      ItemUOM: ItemUOM.Data,
+      ItemUOM: Data,
     });
 
   } catch (err) {
