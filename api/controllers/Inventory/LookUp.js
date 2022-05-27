@@ -118,7 +118,7 @@ exports.getItemUOM = async (req, res) => {
     //   ItemUOM: ItemUOM.Data,
     // });
 
-    let sQuery = `SELECT I.*, U.UOM, UnitQuantity = QTYEQV FROM SBS_DEMO..IN_ItemUOM I
+    let sQuery = `SELECT I.*, U.UOM, UnitQuantity = QTYEQV FROM SBS_COASTAL..IN_ItemUOM I
     INNER JOIN SBS_COASTAL..IN_UOMDetail U on I.UOMCode = U.UOMCode
     WHERE ItemCode = '${req.query.ItemCode}' AND I.IsActive = 1`;
 
