@@ -7,6 +7,10 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
+    TransNo: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     PickID: {
       type: DataTypes.BIGINT,
       allowNull: false,

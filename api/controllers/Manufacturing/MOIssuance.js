@@ -1,6 +1,7 @@
 const db = require("../../models-Clients/index");
 const ResponseLog = require("../../../core/ResponseLog");
 const SeqFunc = require("../../../core/SeqFunc");
+const Post = require("./PostMOIssuance");
 
 exports.getList = async (req, res) => {
   try {
@@ -99,6 +100,7 @@ exports.CreateOrUpdate = async (req, res) => {
     if (MOIssuanceData.success) {
       Detail.map((o) => {
         o.PickID = MOIssuanceData.Data.PickID
+        o.TransNo = MOIssuanceData.Data.TransNo
         delete o.PickLineID
         return o
       });
@@ -116,11 +118,14 @@ exports.CreateOrUpdate = async (req, res) => {
         let Count = await req.sequelizeDB.MOP_MODetail.count({ where: { MOID: MO.MOID, Completed:false },transaction:t })
         await req.sequelizeDB.MOP_MOHeader.update({MOStatus: Count === 0 ? 'Ready to Receive' : 'In Process'},{ where: { MOID: MO.MOID },transaction:t })
         t.commit();
-        if (MOIssDData.created) {
-          ResponseLog.Create200(req, res);
-        } else {
-          ResponseLog.Update200(req, res);
-        }
+
+        await Post.postData(MOIssuanceData.Data.TransNo, req, res);
+
+        // if (MOIssDData.created) {
+        //   ResponseLog.Create200(req, res);
+        // } else {
+        //   ResponseLog.Update200(req, res);
+        // }
       } else {
         t.rollback();
         ResponseLog.Error200(req, res, "Error Saving Record!");

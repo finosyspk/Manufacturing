@@ -88,7 +88,7 @@ exports.getItems = async (req, res) => {
     //   Item: Item.Data,
     // });
 
-    let sQuery = `SELECT I.*, UOM_Base = U.UOM FROM SBS_COASTAL..IN_Item I INNER JOIN SBS_COASTAL..IN_UOMDetail U on I.UOM_BaseCode = U.UOMCode`;
+    let sQuery = `SELECT I.ItemCode, ItemType, Item, UOMCode = UOM_BaseCode, UOM = U.UOM FROM SBS_COASTAL..IN_Item I INNER JOIN SBS_COASTAL..IN_UOMDetail U on I.UOM_BaseCode = U.UOMCode`;
 
     let ItemData = await req.sequelizeDB.sequelize.query(sQuery, {
       type: req.sequelizeDB.Sequelize.QueryTypes.SELECT,

@@ -17087,3 +17087,227 @@
  Message : {"Success":false,"Message":"Named parameter \":UOMHeaderCode\" has no value in the given object."}
  **************************************************  
  Log Ended
+ Log Started on2022-06-03T07:09:25.714Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-03T07:09:37.494Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-03T09:35:48.186Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Invalid column name 'LocationCode'."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-03T09:37:07.618Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'Sequelize')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-03T09:37:35.056Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"eq is not defined"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-03T09:37:52.966Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/LookUp -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"Invalid column name 'ItemCode'."}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-03T11:52:04.006Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOIssuance
+ Message : {"Success":false,"Message":"Error Saving Record!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-03T11:52:43.493Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOIssuance
+ Message : {"Success":false,"Message":"Error Saving Record!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-03T11:56:12.705Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOIssuance
+ Message : {"Success":false,"Message":"resp is not defined"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-03T12:02:23.513Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOIssuance
+ Message : {"Success":false,"Message":"TransNo is not defined"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-03T12:07:18.692Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOIssuance
+ Message : {"Success":false,"Message":"TransNo is not defined"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-03T13:03:42.184Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOIssuance
+ Message : {"Success":false,"Message":"resp is not defined"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-03T13:23:59.540Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOIssuance
+ Message : {"Success":false,"Message":"resp is not defined"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-03T17:00:14.834Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOIssuance
+ Message : {"Success":false,"Message":"resp is not defined"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-03T17:09:09.462Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOIssuance
+ Message : {"Success":false,"Message":"resp is not defined"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-03T17:09:55.763Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOIssuance
+ Message : {"Success":false,"Message":"resp is not defined"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-03T17:12:04.252Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOIssuance
+ Message : {"Success":false,"Message":"resp is not defined"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-03T17:16:28.411Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOIssuance
+ Message : {"Success":false,"Message":"resp is not defined"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-03T17:19:11.797Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOIssuance
+ Message : {"Success":false,"Message":"resp is not defined"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-03T17:22:35.328Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOIssuance
+ Message : {"Success":false,"Message":"resp is not defined"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-05T17:37:57.498Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOReceipt
+ Message : {"Success":false,"Message":"Error Saving Record!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-06T06:19:13.980Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOReceipt
+ Message : {"Success":false,"Message":"value.map is not a function"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-06T06:38:38.077Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOReceipt
+ Message : {"Success":false,"Message":"value.map is not a function"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-06T06:39:53.799Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOReceipt
+ Message : {"Success":false,"Message":"value.map is not a function"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-06T07:09:01.546Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOReceipt
+ Message : {"Success":false,"Message":"AppConfig is not defined"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-06T07:22:57.370Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOReceipt
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'map')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-06T07:23:35.923Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOReceipt
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'map')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-06T07:25:12.479Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Create -- Method : POST
+ FormName : MOReceipt
+ Message : {"Success":false,"Message":"notNull Violation: IN_StockMaster.Pieces cannot be null"}
+ **************************************************  
+ Log Ended

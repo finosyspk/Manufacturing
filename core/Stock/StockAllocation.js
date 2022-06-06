@@ -1,54 +1,38 @@
 const AppConfig = require('./../../AppConfig');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
+const dbsbs = require('../../api/models-sbs/index')
 
 exports.Allocation = async (db, model, TransNo, TransDate, TransType,LocationCode) => {
     try {
 
         let DetailData = await model.findAll({where : { TransNo : TransNo}})
 
+        DetailData = JSON.stringify(DetailData);
+        DetailData = JSON.parse(DetailData);
+
         let UPD = "EXEC [dbo].[UpdateParallelData]"
         let AllocArray = []
         let AllocTemp = [];
         let Alloc;
         let Temp;
- 
-        await db.INV_StockAlloc.destroy({ where: { TransNo: TransNo } })
-        // await db.AlLocationTemp.destroy({ where: { TransNo: TransNo } })
-        // await db.sequelize.query(UPD)
 
-        let StockData = await db.INV_StockMaster.findAll({
-            where: {
-                LocationCode: LocationCode
-            },
-            attributes: ['INV_StockMaster.HeaderNo', 'INV_StockMaster.LocationCode', 'INV_StockMaster.ItemCode', 'INV_StockMaster.Location', 'INV_StockMaster.Item', 'INV_StockMaster.ItemTrackBy', 'INV_StockMaster.BatchNo',
-                'Quantity', 'UnitPrice', 'AvgCost', 'ExpiryDate',
-                [db.Sequelize.literal('SUM(ISNULL(INV_StockAllocs.QtyOut,0))'), 'QtyAlloc'],
-                [db.Sequelize.literal('SUM(ISNULL(INV_StockDetails.QtyOut,0))'), 'QtyOut'],
-                [db.Sequelize.literal('Quantity - (SUM(ISNULL(INV_StockAllocs.QtyOut,0)) + SUM(ISNULL(INV_StockDetails.QtyOut,0)))'), 'QtyBal']
-            ],
-            include: [{
-                model: db.INV_StockAlloc,
-                required: false,
-                attributes: [],
-                where: {
-                    TransNo: TransNo
-                }
-            }, {
-                model: db.INV_StockDetail,
-                required: false,
-                attributes: []
-            }],
-            raw: true,
-            group: ['INV_StockMaster.HeaderNo', 'INV_StockMaster.LocationCode', 'INV_StockMaster.ItemCode', 'INV_StockMaster.Location', 'INV_StockMaster.Item', 'INV_StockMaster.ItemTrackBy', 'INV_StockMaster.BatchNo',
-                'Quantity', 'UnitPrice', 'AvgCost', 'ExpiryDate'],
-            having: [
-                {},
-                db.Sequelize.literal(
-                    'Quantity > (SUM(ISNULL(INV_StockAllocs.QtyOut,0)) + SUM(ISNULL(INV_StockDetails.QtyOut,0)))'
-                )
-            ]
-        })
+        let query = `SELECT 
+                    S.HeaderNo, S.LocationCode, S.ItemCode, L.Location, Item, ItemTrackBy, S.BatchNo,
+                    QtyIn, UnitPrice, AvgCost, ExpiryDate,
+                    SUM(ISNULL(A.QtyOut,0)) AS QtyAlloc,
+                    SUM(ISNULL(D.QtyOut,0)) AS QtyOut,
+                    QtyIn - (SUM(ISNULL(A.QtyOut,0)) + SUM(ISNULL(D.QtyOut,0))) AS QtyBal
+                    FROM SBS_COASTAL..IN_StockMaster S
+                    INNER JOIN SBS_COASTAL..IN_Item I ON I.ItemCode = S.ItemCode
+                    INNER JOIN SBS_COASTAL..IN_Location L ON L.LocationCode = S.LocationCode
+                    LEFT OUTER JOIN SBS_COASTAL..IN_StockAlloc A ON A.HeaderNo = S.HeaderNo
+                    LEFT OUTER JOIN SBS_COASTAL..IN_StockDetail D ON D.HeaderNo = S.HeaderNo
+                    WHERE S.LocationCode = '${LocationCode}'
+                    GROUP BY S.HeaderNo,S.LocationCode,S.ItemCode,L.Location,I.Item,I.ItemTrackBy,S.BatchNo,QtyIn,UnitPrice,AvgCost,ExpiryDate
+                    HAVING QtyIn > (SUM(ISNULL(A.QtyOut,0)) + SUM(ISNULL(D.QtyOut,0)))`
+        
+        let StockData = await db.sequelize.query(query, { type: db.Sequelize.QueryTypes.SELECT })
 
         StockData = JSON.stringify(StockData);
         StockData = JSON.parse(StockData);
@@ -58,7 +42,7 @@ exports.Allocation = async (db, model, TransNo, TransDate, TransType,LocationCod
                 let QtyReq = 0
                 let QtyFul = 0
                 let QtyLine = 0
-                if (val.ItemType === 'Inventoried Item') {
+//                if (val.ItemType === 'Inventoried Item') {
                     // if (val.ItemTrackBy !== 'None') {
                     //     let Batch = val.Batches
                     //     if (Batch.length > 0) {
@@ -127,7 +111,7 @@ exports.Allocation = async (db, model, TransNo, TransDate, TransType,LocationCod
                         QtyReq = val.BaseQuantity;
 
                         for (let itm of StockData) {
-                            if (val.ItemCode === itm.ItemCode) {
+                            if (val.CItemCode === itm.ItemCode) {
                                 if (QtyFul >= QtyReq) {
                                     break;
                                 }
@@ -156,27 +140,9 @@ exports.Allocation = async (db, model, TransNo, TransDate, TransType,LocationCod
                                     TransDate: TransDate,
                                     QtyOut: QtyLine,
                                     UnitCost: itm.UnitPrice,
-                                    LineNo: val.TLineSeq
+                                    LineNo: val.PickLineID
                                 }
                                 AllocArray.push(Alloc)
-
-                                // Temp = {
-                                //     HeaderNo: itm.HeaderNo,
-                                //     LocationCode: val.LocationCode,
-                                //     ItemCode: val.ItemCode,
-                                //     BatchNo: '',
-                                //     TransType: val.TransType,
-                                //     TransNo: val.TransNo,
-                                //     TransDate: val.TransDate,
-                                //     QtyOut: val.Quantity,
-                                //     QtyPass: QtyLine,
-                                //     QtyFail: 0,
-                                //     LineNo: val.TLineSeq,
-                                //     Status: 'Pass'
-                                // }
-
-                                // AllocTemp.push(Temp)
-
                             }
                         // }
                     }
@@ -200,46 +166,19 @@ exports.Allocation = async (db, model, TransNo, TransDate, TransType,LocationCod
 
                         AllocTemp.push(Temp)
                     }
-                }
-
+                // }
             })
         );
 
-        // await db.AlLocationTemp.bulkCreate(AllocTemp)
-
-        // let FailData = await db.AlLocationTemp.findAll({
-        //     where: {
-        //         TransNo: TransNo
-        //     },
-        //     transaction: t
-        // })
-
-        // FailData = JSON.stringify(FailData);
-        // FailData = JSON.parse(FailData);
         let FailCount = 0
 
-        // FailData.map(function (val1) {
-        //     if (val1.Status === 'Fail') {
-        //         FailCount += 1;
-        //     }
-        // })
-
-        // FailData.map(function (val) {
-        //     val.FailCount = FailCount
-        //     val.StatusCode = val.Status === 'Pass' ? 1 : 0;
-        //     val.LineStatus = val.Status;
-        //     val.TransQty = val.QtyFail;
-
-        //     return val;
-        // })
-
         if (FailCount > 0) {
-            await db.INV_StockAlloc.destroy({
-                where: {
-                    TransNo: TransNo
-                },
-                transaction: t
-            })
+            // await dbsbs.IN_StockDetail.destroy({
+            //     where: {
+            //         TransNo: TransNo
+            //     },
+            //     transaction: t
+            // })
             let respData = obj.filter(val => val.StatusCode === 0)
 
             if (respData.length > 0) {
@@ -306,13 +245,13 @@ exports.Allocation = async (db, model, TransNo, TransDate, TransType,LocationCod
             }
         }
         else {
-            await db.INV_StockAlloc.bulkCreate(AllocArray)
-            // await db.sequelize.query(UPD)
+            await dbsbs.IN_StockDetail.bulkCreate(AllocArray)
+            // await dbsbs.sequelize.query(UPD)
             return { Success: true, Message: "Allocation Process Completed!", data: [] }
         }
     }
     catch (ex) {
-        console.log(ex)
+        console.log(ex.message)
         return { Success: false, Message: "Allocation Process RollBacked!", data: resp }
     }
 };

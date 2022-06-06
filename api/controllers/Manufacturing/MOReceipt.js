@@ -1,6 +1,7 @@
 const db = require("../../models-Clients/index");
 const ResponseLog = require("../../../core/ResponseLog");
 const SeqFunc = require("../../../core/SeqFunc");
+const Post = require("./PostMOReceipt");
 
 exports.getList = async (req, res) => {
   try {
@@ -109,11 +110,14 @@ exports.CreateOrUpdate = async (req, res) => {
       if (MORctDData.success) {
         await req.sequelizeDB.MOP_MOHeader.update({MOStatus: 'Completed'},{ where: { TransNo: MOReceiptData.Data.MOTransNo },transaction:t })
         t.commit();
-        if (MORctDData.created) {
-          ResponseLog.Create200(req, res);
-        } else {
-          ResponseLog.Update200(req, res);
-        }
+        
+        await Post.postData(MOReceiptData.Data.TransNo, req, res);
+
+        // if (MORctDData.created) {
+        //   ResponseLog.Create200(req, res);
+        // } else {
+        //   ResponseLog.Update200(req, res);
+        // }
       } else {
         t.rollback();
         ResponseLog.Error200(req, res, "Error Saving Record!");

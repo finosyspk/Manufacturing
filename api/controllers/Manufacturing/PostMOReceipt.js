@@ -1,129 +1,67 @@
 const db = require("../../models-Clients/index");
 const ResponseLog = require("../../../core/ResponseLog");
 const SeqFunc = require("../../../core/SeqFunc");
+const Stock = require("../../../core/Stock");
+const dbsbs = require('../../models-sbs/index')
 
-exports.getList = async (req, res) => {
+
+
+
+exports.postData = async (TransNo, req, res) => {
   try {
-    let Columns = [
-      "TransNo","TransDate",["MOTransNo","MO No"],"Item","UOM","Quantity"
-    ];
-    let MOReceipt = await SeqFunc.getAll(
-      db[req.headers.compcode].MOP_Receipt,
-      {},
-      true,
-      Columns
-    );
-    if (MOReceipt.success) {
-      ResponseLog.Send200(req, res, MOReceipt.Data);
-    } else {
-      ResponseLog.Error200(req, res, "No Record Found!");
-    }
-  } catch (err) {
-    ResponseLog.Error200(req, res, err.message);
-  }
-};
+    let MOR = await SeqFunc.getOne(req.sequelizeDB.MOP_Receipt, { where: { TransNo: TransNo } });
+    let MOI = await SeqFunc.getOne(req.sequelizeDB.MOP_MOHeader, { where: { TransNo: MOR.Data.MOTransNo } });
 
-exports.getOne = async (req, res) => {
-  try {
-    let MOReceipt = await SeqFunc.getOne(db[req.headers.compcode].MOP_Receipt, {
-      where: { TransNo: req.query.TransNo },
-    });
+    let query = `SELECT CostAmount = SUM(QtyOut * UnitCost) FROM SBS_COASTAL..IN_StockDetail 
+              WHERE TransNo IN (SELECT TransNo FROM MOP_Issuance H WHERE H.MOTransNo =  '${MOR.Data.MOTransNo}')`
 
-    if (MOReceipt.success) {
-      let Detail = await SeqFunc.getAll(
-        db[req.headers.compcode].MOP_ReceiptDetail,
-        { ReceiptID: MOReceipt.Data.ReceiptID },
-        false,
-        ["CItemCode","CItem","UOMCode","UOM","Quantity","StageCode","StageName"]
-      );
+    let Amount = await req.sequelizeDB.sequelize.query(query, {type: req.sequelizeDB.Sequelize.QueryTypes.SELECT })
 
-      let Data = {
-        Header: MOReceipt.Data,
-        Detail: Detail.Data,
+    if (MOI.success) {
+
+      let query = {
+        RecordDate: new Date(),
+        BranchCode: '001',
+        LocationCode: MOI.Data.LocationCode,
+        ItemCode: MOI.Data.ItemCode,
+        BatchNo: '',
+        ExpiryDate: null,
+        BinNo: '',
+        TransNature: 'MO',
+        TransNo: MOI.Data.TransNo,
+        TransDate: MOI.Data.TransDate,
+        QtyIn: MOI.Data.Quantity,
+        Pieces: 0,
+        PcsLeg: 0,
+        PcsShldr: 0,
+        ShipDate: null,
+        Vessel: '',
+        Container: '',
+        BL: '',
+        UnitPrice: Number(Amount[0].CostAmount) / Number(MOI.Data.Quantity),
+        Status: 0,
+        LineNo: 1,
+        QtySold: 0,
+        AvgCost: 0,
+        QtyAlloc: 0,
       };
 
-      ResponseLog.Send200(req, res, Data);
+      console.log(query)
+
+      await dbsbs.IN_StockMaster.create(query);
+      await req.sequelizeDB.MOP_Receipt.update({
+        Posted: 1,
+        PostedUser: 1,
+        postedAt: new Date()
+      },
+        {
+          where: { TransNo: TransNo },
+        })
+      ResponseLog.Send200(req, res, "Record Posted Successfully");
     } else {
       ResponseLog.Error200(req, res, "No Record Found!");
     }
   } catch (err) {
-    ResponseLog.Error200(req, res, err.message);
-  }
-};
-
-exports.delete = async (req, res) => {
-  try {
-    let MOReceipt = await SeqFunc.getOne(
-      db[req.headers.compcode].MOP_Receipt,
-      { where: { TransNo: req.query.TransNo, Posted: false } },
-      Header
-    );
-
-    if (MOReceipt.success) {
-      await SeqFunc.Delete(db[req.headers.compcode].MOP_Receipt, {
-        where: { ReceiptID: MOReceipt.Data.ReceiptID },
-      });
-      ResponseLog.Delete200(req, res);
-    } else {
-      ResponseLog.Error200(req, res, "No Record Found!");
-    }
-  } catch (err) {
-    ResponseLog.Error200(req, res, err.message);
-  }
-};
-
-exports.CreateOrUpdate = async (req, res) => {
-  const t = await db[req.headers.compcode].sequelize.transaction();
-  try {
-
-    let Header = req.body.Header;
-    let Detail = req.body.Detail;
-    delete Header.ReceiptID;
-
-    Header.CreatedUser = '1'
-    Header.ModifyUser = '1'
-    Header.TransStatus = '1'
-
-    let MOReceiptData = await SeqFunc.Trans_updateOrCreate(
-      db[req.headers.compcode],
-      db[req.headers.compcode].MOP_Receipt,
-      { where: { TransNo: Header.TransNo ? Header.TransNo : '' },transaction:t },
-      Header,
-      t
-    );
-
-    if (MOReceiptData.success) {
-      Detail.map((o) => {
-        o.ReceiptID = MOReceiptData.Data.ReceiptID
-        delete o.ReceiptLineID
-        return o
-      });
-
-      let MORctDData = await SeqFunc.Trans_bulkCreate(
-        db[req.headers.compcode].MOP_ReceiptDetail,
-        { where: { ReceiptID: MOReceiptData.Data.ReceiptID },transaction:t },
-        Detail,
-        t
-      );
-      if (MORctDData.success) {
-        await db[req.headers.compcode].MOP_MOHeader.update({MOStatus: 'Completed'},{ where: { TransNo: MOReceiptData.Data.MOTransNo },transaction:t })
-        t.commit();
-        if (MORctDData.created) {
-          ResponseLog.Create200(req, res);
-        } else {
-          ResponseLog.Update200(req, res);
-        }
-      } else {
-        t.rollback();
-        ResponseLog.Error200(req, res, "Error Saving Record!");
-      }
-    } else {
-      t.rollback();
-      ResponseLog.Error200(req, res, "Error Saving Record!");
-    }
-  } catch (err) {
-    console.log(err)
-    t.rollback();
     ResponseLog.Error200(req, res, err.message);
   }
 };

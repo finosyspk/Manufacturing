@@ -9,8 +9,9 @@ ENV dbHost="finsrv.database.windows.net"
 ENV dbPort="1433"
 ENV dbUser="fnsadmin"
 ENV dbPass="kfk9072p!"
-ENV dbName="SBS_DEMO"
+ENV dbName_client="SBS_DEMO"
 ENV dbName_master="SBS_MSTR"
+ENV dbName_sbs="SBS_COASTAL"
 ENV Build="2.0.0"
 
 COPY ./package.json ./

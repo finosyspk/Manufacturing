@@ -57,7 +57,7 @@ exports.getBOM = async (req, res) => {
 
     let BOMData = await MaterialData.Register(BOM, ["ItemCode", "ItemName"]);
 
-    let RegData = await MaterialData.Register(Routing, ["RoutingCode","RoutingName"]);
+    let RegData = await MaterialData.Register(Routing, ["RoutingCode", "RoutingName"]);
 
     ResponseLog.Send200(req, res, { Routing: RegData, BOM: BOMData });
   } catch (err) {
@@ -197,14 +197,14 @@ exports.getMODetail = async (req, res) => {
 exports.getActiveMO = async (req, res) => {
   try {
     let MO = await req.sequelizeDB.MOP_MOHeader.findAll({
-      include:[{
+      include: [{
         model: req.sequelizeDB.MOP_MODetail,
-        attributes:["StageCode","StageName","StageSeq","MachineCode","MachineName"],
-        where:{Completed:0},
-        order:["StageSeq"],
+        attributes: ["StageCode", "StageName", "StageSeq", "MachineCode", "MachineName"],
+        where: { Completed: 0 },
+        order: ["StageSeq"],
         require: true,
       }],
-      where: { TransStatus: 1, MOStatus: {[Op.notIn] : ["Completed","Ready to Receive"]} },
+      where: { TransStatus: 1, LocationCode: req.query.LocationCode, MOStatus: { [Op.notIn]: ["Completed", "Ready to Receive"] } },
     });
 
     let RegData = await MaterialData.Register(MO, [
@@ -224,6 +224,10 @@ exports.getActiveMO = async (req, res) => {
 
 exports.getMOStages = async (req, res) => {
   try {
+    let MO = await req.sequelizeDB.MOP_MOHeader.findOne({
+      where: { MOID: req.query.MOID },
+      attributes: ["LocationCode"]
+    })
     let MOStages = await req.sequelizeDB.MOP_MODetail.findAll({
       attributes: [
         "CItemCode",
@@ -233,6 +237,7 @@ exports.getMOStages = async (req, res) => {
         "UnitQuantity",
         "Quantity",
         "BaseQuantity",
+        [req.sequelizeDB.Sequelize.literal(`dbo.GetInventoryStock(CItemCode,'${MO.LocationCode}')`), 'QtyBal'],
         "StageCode",
         "StageName",
         "StageSeq",
@@ -279,7 +284,7 @@ exports.getMOReceiptDetail = async (req, res) => {
                     WHERE MH.MOTransNo = :TransNo 
                     GROUP BY CItemCode, CItemName, MD.UOMCode, MD.UOM, MD.UnitQuantity`;
 
-    let MODetail = await req.sequelizeDB.sequelize.query(sqlQuery,{replacements : {TransNo : req.query.MOTransNo},type : req.sequelizeDB.Sequelize.QueryTypes.SELECT}) 
+    let MODetail = await req.sequelizeDB.sequelize.query(sqlQuery, { replacements: { TransNo: req.query.MOTransNo }, type: req.sequelizeDB.Sequelize.QueryTypes.SELECT })
 
     ResponseLog.Send200(req, res, {
       MODetail: MODetail,
