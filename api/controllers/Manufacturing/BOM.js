@@ -105,11 +105,11 @@ exports.CreateOrUpdate = async (req, res) => {
   try {
     let Header = req.body.Header;
     let Detail = req.body.Detail;
-    delete Header.BOMID 
+    // delete Header.BOMID 
 
     let BOMData = await SeqFunc.updateOrCreate(
       req.sequelizeDB.MOP_BOMHeader,
-      { where: { BOMID: Header.BOMID ? Header.BOMID : 0 } },
+      { where: { ItemCode: Header.ItemCode, UOMCode: Header.UOMCode, BillStatus: Header.BillStatus } },
       Header
     );
 

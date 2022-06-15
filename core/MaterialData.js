@@ -19,12 +19,12 @@ exports.Register = async (data, columns) => {
             headerStyle: {
               paddingTop: 1,
               paddingBottom: 1,
-              textAlign: objtext,
+              textAlign: "center",
             },
             cellStyle: {
               paddingTop: 1,
               paddingBottom: 1,
-              textAlign: objtext,
+              textAlign: "center",
             },
           };
           column.push(Item);
@@ -48,12 +48,12 @@ exports.Register = async (data, columns) => {
             headerStyle: {
               paddingTop: 1,
               paddingBottom: 1,
-              textAlign: objtext,
+              textAlign: "center",
             },
             cellStyle: {
               paddingTop: 1,
               paddingBottom: 1,
-              textAlign: objtext,
+              textAlign: "center",
             },
           };
           column.push(Item);

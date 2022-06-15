@@ -60,7 +60,7 @@ exports.getOne = async (req, res) => {
     if (MO.success) {
       let Detail = await SeqFunc.getAll(
         req.sequelizeDB.MOP_MODetail,
-        { MOID: MO.Data.MOID },
+        { where: {MOID: MO.Data.MOID} },
         false,
         [
           "CItemCode",
