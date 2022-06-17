@@ -17311,3 +17311,219 @@
  Message : {"Success":false,"Message":"notNull Violation: IN_StockMaster.Pieces cannot be null"}
  **************************************************  
  Log Ended
+ Log Started on2022-06-17T06:57:16.078Z
+ ************************************************** 
+
+ API : /api/v1/Auth/LogIn -- Method : POST
+ FormName : Login
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'substr')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T06:58:05.085Z
+ ************************************************** 
+
+ API : /api/v1/Auth/LogIn -- Method : POST
+ FormName : Login
+ Message : {"Success":false,"Message":"Cannot read properties of undefined (reading 'substr')"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T07:00:08.446Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T07:01:38.607Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T07:46:15.074Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T09:08:46.986Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T09:15:50.480Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T09:17:11.089Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T09:22:33.252Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T09:23:26.410Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T09:34:39.236Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T09:34:39.721Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T09:35:27.442Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T09:40:41.703Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T11:14:22.350Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T11:14:22.853Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T11:17:44.643Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T11:17:52.306Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T11:17:54.044Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T11:21:12.563Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T11:44:10.621Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T11:46:43.790Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T11:49:51.272Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T11:51:07.091Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T11:51:09.496Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T11:52:49.225Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended
+ Log Started on2022-06-17T11:55:12.651Z
+ ************************************************** 
+
+ API : /api/v1/Manufacturing/Get -- Method : GET
+ FormName : undefined
+ Message : {"Success":false,"Message":"No Record Found!"}
+ **************************************************  
+ Log Ended

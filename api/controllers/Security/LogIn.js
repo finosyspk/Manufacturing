@@ -25,7 +25,7 @@ exports.getOne = async (req, res) => {
 
     response = {};
 
-    sqlQuery = `SELECT UserID,UserName,Designation,ContactNo=U.ContactNo,Email=U.Email,
+    sqlQuery = `SELECT UserID, Password,UserName,Designation,ContactNo=U.ContactNo,Email=U.Email,
                 CompID=U.CompID, CompName, CompCode=C.CompCode 
                 FROM Users U INNER JOIN Company C ON U.CompID = C.CompID
                 WHERE U.IsActive = 1 AND UserName = :UserName`;
@@ -122,11 +122,14 @@ exports.getOne = async (req, res) => {
 };
 
 const authenticatePassword = (userPass, reqPass) => {
-  // const secretKey = AppConfig.SKey;
-  // const decryptedUserPass = Decrypter.decrypt(userPass, secretKey);
-  // const decryptedReqPass = Decrypter.decrypt(reqPass, secretKey);
-  // if (decryptedUserPass === decryptedReqPass) {
-  return true;
-  // }
-  return false;
+  console.log({userPass, reqPass})
+  const secretKey = AppConfig.SKey;
+  const decryptedUserPass = Decrypter.decrypt(userPass, secretKey);
+  const decryptedReqPass = Decrypter.decrypt(reqPass, secretKey);
+  if (decryptedUserPass === decryptedReqPass) {
+    return true;
+  }
+  else {
+    return false;
+  }
 };

@@ -124,7 +124,7 @@ exports.CreateOrUpdate = async (req, res) => {
         o.BOMID = BOMData.Data.BOMID;
         o.RoutingName = BOMData.Data.RoutingName;
       });
-      console.log({ Detail });
+      
       await SeqFunc.bulkCreate(req.sequelizeDB.MOP_BOMDetail, Detail);
 
       if (BOMData.created) {
