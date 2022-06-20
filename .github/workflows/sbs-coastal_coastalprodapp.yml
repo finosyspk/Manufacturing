@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'coastalprodapp'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1865099FAE3C43C29EF26F289B672990 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_13C7220E5D6445C399B312262812289D }}
           package: .
